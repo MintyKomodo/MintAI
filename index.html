@@ -15,343 +15,99 @@
         }
 
         :root {
-            --mint: #00ff88;
-            --mint-dim: #00cc6a;
-            --mint-glow: rgba(0, 255, 136, 0.15);
-            --dark: #0a0a0a;
-            --dark-card: #111111;
-            --dark-border: #1a1a1a;
-            --gray: #888888;
-            --white: #f0f0f0;
+            --mint: #00d876;
+            --mint-soft: #e8faf0;
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --card-border: #e0e0e0;
+            --text: #1a1a1a;
+            --text-secondary: #666666;
+            --text-light: #999999;
+            --input-bg: #fafafa;
+            --input-border: #ddd;
         }
 
         body {
             font-family: 'Inter', -apple-system, sans-serif;
-            background: var(--dark);
-            color: var(--white);
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             overflow-x: hidden;
         }
 
-        /* Animated background grid */
-        .bg-grid {
+        /* Nav */
+        nav {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background-image:
-                linear-gradient(rgba(0, 255, 136, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 136, 0.03) 1px, transparent 1px);
-            background-size: 60px 60px;
-            z-index: 0;
+            right: 0;
+            z-index: 10;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 245, 245, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
         }
 
-        /* Glow orbs */
-        .glow-orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(120px);
-            z-index: 0;
-            pointer-events: none;
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
         }
 
-        .glow-orb-1 {
-            width: 600px;
-            height: 600px;
-            background: rgba(0, 255, 136, 0.07);
-            top: -200px;
-            right: -100px;
-            animation: float 8s ease-in-out infinite;
+        .nav-logo span {
+            color: var(--mint);
         }
 
-        .glow-orb-2 {
-            width: 400px;
-            height: 400px;
-            background: rgba(0, 255, 136, 0.05);
-            bottom: -100px;
-            left: -100px;
-            animation: float 10s ease-in-out infinite reverse;
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
         }
 
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(30px, -30px); }
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--mint);
         }
 
         .container {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
+            max-width: 720px;
             margin: 0 auto;
-            padding: 40px 24px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            padding: 140px 24px 80px;
             text-align: center;
-        }
-
-        /* Logo */
-        .logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 60px;
-            animation: fadeInDown 0.8s ease-out;
-        }
-
-        .logo-icon {
-            width: 48px;
-            height: 48px;
-            background: var(--mint);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--dark);
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-
-        .logo-text span {
-            color: var(--mint);
         }
 
         /* Tag */
         .tag {
             display: inline-block;
-            padding: 8px 20px;
-            border: 1px solid rgba(0, 255, 136, 0.3);
+            padding: 6px 16px;
+            border: 1px solid var(--mint);
             border-radius: 100px;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 12px;
+            font-weight: 600;
             color: var(--mint);
-            letter-spacing: 2px;
+            letter-spacing: 1.5px;
             text-transform: uppercase;
-            margin-bottom: 32px;
-            background: rgba(0, 255, 136, 0.05);
-            animation: fadeInDown 0.8s ease-out 0.2s both;
-        }
-
-        /* Heading */
-        h1 {
-            font-size: clamp(40px, 7vw, 72px);
-            font-weight: 800;
-            line-height: 1.05;
-            letter-spacing: -2px;
-            margin-bottom: 24px;
-            animation: fadeInDown 0.8s ease-out 0.4s both;
-        }
-
-        h1 .highlight {
-            background: linear-gradient(135deg, var(--mint), #00ddaa);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .subtitle {
-            font-size: 18px;
-            color: var(--gray);
-            line-height: 1.6;
-            max-width: 520px;
-            margin-bottom: 56px;
-            font-weight: 400;
-            animation: fadeInDown 0.8s ease-out 0.6s both;
-        }
-
-        /* Form card */
-        .form-card {
-            width: 100%;
-            max-width: 520px;
-            background: var(--dark-card);
-            border: 1px solid var(--dark-border);
-            border-radius: 20px;
-            padding: 40px;
-            animation: fadeInUp 0.8s ease-out 0.8s both;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .form-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--mint), transparent);
-            opacity: 0.5;
-        }
-
-        .form-card h2 {
-            font-size: 22px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.5px;
-        }
-
-        .form-card p {
-            font-size: 14px;
-            color: var(--gray);
             margin-bottom: 28px;
+            background: var(--mint-soft);
+            animation: fadeIn 0.6s ease-out;
         }
 
-        .form-group {
-            margin-bottom: 16px;
-            text-align: left;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        label {
-            display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--gray);
-            margin-bottom: 6px;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--dark);
-            border: 1px solid var(--dark-border);
-            border-radius: 10px;
-            color: var(--white);
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            transition: border-color 0.2s, box-shadow 0.2s;
-            outline: none;
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: #444;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--mint);
-            box-shadow: 0 0 0 3px rgba(0, 255, 136, 0.1);
-        }
-
-        select {
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-        }
-
-        select option {
-            background: var(--dark);
-            color: var(--white);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 80px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px 24px;
-            background: var(--mint);
-            color: var(--dark);
-            border: none;
-            border-radius: 10px;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 8px;
-            letter-spacing: -0.3px;
-        }
-
-        .submit-btn:hover {
-            background: #00ff99;
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .submit-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Success state */
-        .form-success {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        .form-success.show {
-            display: block;
-        }
-
-        .form-success .check {
-            width: 64px;
-            height: 64px;
-            border-radius: 50%;
-            background: rgba(0, 255, 136, 0.1);
-            border: 2px solid var(--mint);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 28px;
-        }
-
-        .form-success h3 {
-            font-size: 20px;
-            margin-bottom: 8px;
-        }
-
-        .form-success p {
-            color: var(--gray);
-            font-size: 14px;
-        }
-
-        .form-inner.hidden {
-            display: none;
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 60px;
-            font-size: 13px;
-            color: #444;
-            animation: fadeInUp 0.8s ease-out 1s both;
-        }
-
-        .footer a {
-            color: var(--gray);
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer a:hover {
-            color: var(--mint);
-        }
-
-        /* Pulse dot */
         .pulse-dot {
             display: inline-block;
-            width: 8px;
-            height: 8px;
+            width: 7px;
+            height: 7px;
             background: var(--mint);
             border-radius: 50%;
             margin-right: 8px;
@@ -360,114 +116,240 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.4); }
-            50% { opacity: 0.7; box-shadow: 0 0 0 8px rgba(0, 255, 136, 0); }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        h1 {
+            font-size: clamp(36px, 6vw, 60px);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -2px;
+            margin-bottom: 20px;
+            color: var(--text);
+            animation: fadeIn 0.6s ease-out 0.1s both;
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
+        h1 .highlight {
+            color: var(--mint);
+        }
+
+        .subtitle {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 480px;
+            margin: 0 auto 48px;
+            font-weight: 400;
+            animation: fadeIn 0.6s ease-out 0.2s both;
+        }
+
+        /* Form card */
+        .form-card {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 36px;
+            animation: fadeIn 0.6s ease-out 0.3s both;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .form-card h2 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .form-card > p {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 11px 14px;
+            background: var(--input-bg);
+            border: 1px solid var(--input-border);
+            border-radius: 8px;
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #bbb;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--mint);
+            box-shadow: 0 0 0 3px rgba(0, 216, 118, 0.1);
+        }
+
+        select {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 72px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 13px 24px;
+            background: var(--mint);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 6px;
+        }
+
+        .submit-btn:hover {
+            background: #00c46a;
+            box-shadow: 0 4px 16px rgba(0, 216, 118, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: 56px;
+            font-size: 13px;
+            color: var(--text-light);
+            animation: fadeIn 0.6s ease-out 0.5s both;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: var(--mint);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         @media (max-width: 520px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .form-card {
-                padding: 28px 20px;
-            }
-
-            .container {
-                padding: 32px 16px;
-            }
+            .form-row { grid-template-columns: 1fr; }
+            .form-card { padding: 24px 18px; }
+            .container { padding: 120px 16px 60px; }
+            nav { padding: 16px 20px; }
+            .nav-links { gap: 20px; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="glow-orb glow-orb-1"></div>
-    <div class="glow-orb glow-orb-2"></div>
+    <nav>
+        <a href="/" class="nav-logo">Mint<span>AI</span></a>
+        <div class="nav-links">
+            <a href="/about.html">About</a>
+            <a href="mailto:contact@mint-ai.tech">Contact</a>
+        </div>
+    </nav>
 
     <div class="container">
-        <div class="logo">
-            <div class="logo-icon">M</div>
-            <div class="logo-text">Mint<span>AI</span></div>
-        </div>
-
         <div class="tag"><span class="pulse-dot"></span>Coming Soon</div>
 
-        <h1>The Future of <span class="highlight">AI</span> is Almost Here</h1>
+        <h1>The Future of <span class="highlight">Smart Wearables</span></h1>
 
-        <p class="subtitle">We're building something extraordinary. Be among the first investors to join us on the ground floor.</p>
+        <p class="subtitle">AI-powered smartwatch designed from the ground up. Premium hardware meets intelligent software. Be among the first to know.</p>
 
         <div class="form-card">
-            <div class="form-inner" id="formInner">
-                <h2>Investor Interest</h2>
-                <p>Get early access to our pitch deck and investment details.</p>
+            <h2>Investor Interest</h2>
+            <p>Get early access to our pitch deck and investment details.</p>
 
-                <form id="investorForm" action="https://formsubmit.co/griffin@mint-ai.tech" method="POST">
-                    <input type="hidden" name="_subject" value="New Investor Interest — MintAI">
-                    <input type="hidden" name="_captcha" value="false">
-                    <input type="hidden" name="_next" value="https://mint-ai.tech/thanks.html">
-                    <input type="text" name="_honey" style="display:none">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
-                        </div>
-                    </div>
-
+            <form id="investorForm" action="https://formsubmit.co/griffin@mint-ai.tech" method="POST">
+                <input type="hidden" name="_subject" value="New Investor Interest — MintAI">
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="https://mint-ai.tech/thanks.html">
+                <input type="text" name="_honey" style="display:none">
+                <div class="form-row">
                     <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                        <label for="firstName">First Name</label>
+                        <input type="text" id="firstName" name="firstName" placeholder="John" required>
                     </div>
-
                     <div class="form-group">
-                        <label for="company">Company / Fund</label>
-                        <input type="text" id="company" name="company" placeholder="Acme Ventures">
+                        <label for="lastName">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
                     </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="investmentRange">Investment Range</label>
-                        <select id="investmentRange" name="investmentRange">
-                            <option value="" disabled selected>Select a range</option>
-                            <option value="under-50k">Under $50K</option>
-                            <option value="50k-250k">$50K – $250K</option>
-                            <option value="250k-1m">$250K – $1M</option>
-                            <option value="1m-plus">$1M+</option>
-                        </select>
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                </div>
 
-                    <div class="form-group">
-                        <label for="message">Message (Optional)</label>
-                        <textarea id="message" name="message" placeholder="Tell us about your interest..."></textarea>
-                    </div>
+                <div class="form-group">
+                    <label for="company">Company / Fund</label>
+                    <input type="text" id="company" name="company" placeholder="Acme Ventures">
+                </div>
 
-                    <button type="submit" class="submit-btn">Request Pitch Deck</button>
-                </form>
-            </div>
+                <div class="form-group">
+                    <label for="investmentRange">Investment Range</label>
+                    <select id="investmentRange" name="investmentRange">
+                        <option value="" disabled selected>Select a range</option>
+                        <option value="under-50k">Under $50K</option>
+                        <option value="50k-250k">$50K - $250K</option>
+                        <option value="250k-1m">$250K - $1M</option>
+                        <option value="1m-plus">$1M+</option>
+                    </select>
+                </div>
 
-            <div class="form-success" id="formSuccess">
-                <div class="check">&#10003;</div>
-                <h3>Thank You!</h3>
-                <p>We've received your interest. Our team will be in touch shortly with the pitch deck and next steps.</p>
-            </div>
+                <div class="form-group">
+                    <label for="message">Message (Optional)</label>
+                    <textarea id="message" name="message" placeholder="Tell us about your interest..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Request Pitch Deck</button>
+            </form>
         </div>
 
         <div class="footer">
             &copy; 2026 MintAI &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a>
         </div>
     </div>
-
 </body>
 </html>
