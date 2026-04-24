@@ -411,7 +411,11 @@
                 <h2>Investor Interest</h2>
                 <p>Get early access to our pitch deck and investment details.</p>
 
-                <form id="investorForm" onsubmit="handleSubmit(event)">
+                <form id="investorForm" action="https://formsubmit.co/griffin@mint-ai.tech" method="POST">
+                    <input type="hidden" name="_subject" value="New Investor Interest — MintAI">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://mint-ai.tech/thanks.html">
+                    <input type="text" name="_honey" style="display:none">
                     <div class="form-row">
                         <div class="form-group">
                             <label for="firstName">First Name</label>
@@ -465,19 +469,5 @@
         </div>
     </div>
 
-    <script>
-        function handleSubmit(e) {
-            e.preventDefault();
-
-            const form = document.getElementById('investorForm');
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-
-            console.log('Investor submission:', data);
-
-            document.getElementById('formInner').classList.add('hidden');
-            document.getElementById('formSuccess').classList.add('show');
-        }
-    </script>
 </body>
 </html>
