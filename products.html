@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products — MintAI</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --mint: #00d876;
+            --mint-soft: #e8faf0;
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --card-border: #e0e0e0;
+            --text: #1a1a1a;
+            --text-secondary: #666666;
+            --text-light: #999999;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 10;
+            padding: 20px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(245, 245, 245, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .nav-logo {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            text-decoration: none;
+        }
+
+        .nav-logo span { color: var(--mint); }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover { color: var(--mint); }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 140px 24px 80px;
+        }
+
+        .page-tag {
+            display: inline-block;
+            padding: 5px 14px;
+            border: 1px solid var(--mint);
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--mint);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: var(--mint-soft);
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 40px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            margin-bottom: 16px;
+            line-height: 1.1;
+            text-align: center;
+        }
+
+        h1 span { color: var(--mint); }
+
+        .intro {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 56px;
+            text-align: center;
+        }
+
+        /* Product card */
+        .product-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+            margin-bottom: 32px;
+        }
+
+        .product-hero {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            padding: 60px 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 216, 118, 0.08);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            filter: blur(60px);
+        }
+
+        .watch-icon {
+            position: relative;
+            width: 120px;
+            height: 150px;
+            margin: 0 auto 24px;
+        }
+
+        .watch-body {
+            width: 80px;
+            height: 96px;
+            border: 3px solid var(--mint);
+            border-radius: 20px;
+            margin: 0 auto;
+            position: relative;
+            top: 27px;
+        }
+
+        .watch-screen {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(0, 216, 118, 0.15);
+            margin: 14px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--mint);
+            letter-spacing: -1px;
+        }
+
+        .watch-band-top, .watch-band-bottom {
+            width: 40px;
+            height: 24px;
+            border-left: 3px solid var(--mint);
+            border-right: 3px solid var(--mint);
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .watch-band-top {
+            border-top: 3px solid var(--mint);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .watch-band-bottom {
+            border-bottom: 3px solid var(--mint);
+            border-radius: 0 0 6px 6px;
+            top: 54px;
+        }
+
+        .watch-crown {
+            width: 6px;
+            height: 16px;
+            background: var(--mint);
+            border-radius: 3px;
+            position: absolute;
+            right: -8px;
+            top: 20px;
+        }
+
+        .product-name {
+            font-size: 28px;
+            font-weight: 800;
+            color: #fff;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+            position: relative;
+        }
+
+        .product-name span { color: var(--mint); }
+
+        .coming-soon-badge {
+            display: inline-block;
+            padding: 6px 18px;
+            background: rgba(0, 216, 118, 0.15);
+            border: 1px solid rgba(0, 216, 118, 0.4);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--mint);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+        }
+
+        .product-details {
+            padding: 36px;
+        }
+
+        .product-details p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 28px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            background: var(--bg);
+            border-radius: 10px;
+        }
+
+        .feature-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--mint);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .feature span {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+        }
+
+        .notify-text {
+            text-align: center;
+            font-size: 14px;
+            color: var(--text-light);
+            padding-top: 8px;
+            border-top: 1px solid var(--card-border);
+        }
+
+        .notify-text a {
+            color: var(--mint);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .notify-text a:hover { text-decoration: underline; }
+
+        /* More products */
+        .more-soon {
+            text-align: center;
+            padding: 48px 24px;
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .more-soon h3 {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .more-soon p {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .footer {
+            margin-top: 56px;
+            text-align: center;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+
+        .footer a:hover { color: var(--mint); }
+
+        @media (max-width: 520px) {
+            .container { padding: 120px 16px 60px; }
+            nav { padding: 16px 20px; }
+            .nav-links { gap: 20px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 32px; }
+            .product-hero { padding: 40px 24px; }
+            .product-details { padding: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/" class="nav-logo">Mint<span>AI</span></a>
+        <div class="nav-links">
+            <a href="/about.html">About</a>
+            <a href="/products.html">Products</a>
+            <a href="mailto:contact@mint-ai.tech">Contact</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-tag">Products</div>
+        <h1>What We're <span>Building</span></h1>
+        <p class="intro">Intelligent products designed around the way you live.</p>
+
+        <div class="product-card">
+            <div class="product-hero">
+                <div class="watch-icon">
+                    <div class="watch-band-top"></div>
+                    <div class="watch-body">
+                        <div class="watch-crown"></div>
+                        <div class="watch-screen">M</div>
+                    </div>
+                    <div class="watch-band-bottom"></div>
+                </div>
+                <div class="product-name">Mint<span>Watch</span></div>
+                <div class="coming-soon-badge">Coming Soon</div>
+            </div>
+            <div class="product-details">
+                <p>Our flagship AI-powered smartwatch. Built with premium materials, powered by on-device AI, and designed to get smarter the longer you wear it — all without a monthly subscription.</p>
+
+                <div class="feature-grid">
+                    <div class="feature">
+                        <div class="feature-dot"></div>
+                        <span>On-device AI</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>
+                        <span>Grade 5 titanium</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>
+                        <span>Sapphire crystal</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>
+                        <span>10 ATM waterproof</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>
+                        <span>No subscription</span>
+                    </div>
+                    <div class="feature">
+                        <div class="feature-dot"></div>
+                        <span>Privacy first</span>
+                    </div>
+                </div>
+
+                <div class="notify-text">
+                    Want early access? <a href="/">Request the pitch deck</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="more-soon">
+            <h3>More products on the way</h3>
+            <p>We're just getting started. Stay tuned.</p>
+        </div>
+
+        <div class="footer">
+            &copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a>
+        </div>
+    </div>
+</body>
+</html>

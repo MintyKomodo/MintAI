@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About — MintAI</title>
+    <title>About — Mint Technologies</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -104,72 +104,50 @@
             margin-bottom: 48px;
         }
 
-        .cards {
-            display: grid;
-            gap: 20px;
+        h2 {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            margin-bottom: 20px;
+        }
+
+        .section {
             margin-bottom: 48px;
         }
 
-        .card {
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 14px;
-            padding: 28px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
-        }
-
-        .card h3 {
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            letter-spacing: -0.3px;
-        }
-
-        .card p {
+        .section p {
             font-size: 15px;
             color: var(--text-secondary);
-            line-height: 1.65;
+            line-height: 1.7;
+            margin-bottom: 16px;
         }
 
-        .card-icon {
-            display: inline-block;
-            width: 36px;
-            height: 36px;
-            background: var(--mint-soft);
-            border-radius: 8px;
-            margin-bottom: 14px;
-            line-height: 36px;
-            text-align: center;
-            font-size: 18px;
-        }
-
-        .specs {
+        .values {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
             margin-bottom: 48px;
         }
 
-        .spec {
+        .value-card {
             background: var(--card);
             border: 1px solid var(--card-border);
-            border-radius: 10px;
-            padding: 20px;
-            text-align: center;
+            border-radius: 14px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
         }
 
-        .spec-value {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--mint);
-            letter-spacing: -1px;
-            margin-bottom: 4px;
+        .value-card h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
         }
 
-        .spec-label {
-            font-size: 13px;
-            color: var(--text-light);
-            font-weight: 500;
+        .value-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
 
         .cta-section {
@@ -182,9 +160,6 @@
         }
 
         .cta-section h2 {
-            font-size: 24px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
             margin-bottom: 10px;
         }
 
@@ -230,7 +205,7 @@
             .container { padding: 120px 16px 60px; }
             nav { padding: 16px 20px; }
             .nav-links { gap: 20px; }
-            .specs { grid-template-columns: 1fr; }
+            .values { grid-template-columns: 1fr; }
             h1 { font-size: 32px; }
         }
     </style>
@@ -240,68 +215,58 @@
         <a href="/" class="nav-logo">Mint<span>AI</span></a>
         <div class="nav-links">
             <a href="/about.html">About</a>
+            <a href="/products.html">Products</a>
             <a href="mailto:contact@mint-ai.tech">Contact</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="page-tag">About Us</div>
-        <h1>Intelligence on Your <span>Wrist</span></h1>
-        <p class="intro">MintAI is building a premium AI-powered smartwatch that thinks with you, not just for you. We're combining purpose-built hardware with on-device artificial intelligence to create the most personal wearable ever made.</p>
+        <h1>Meet <span>Mint Technologies</span></h1>
+        <p class="intro">We're a technology company building intelligent products that respect your privacy and enhance your daily life. Our mission is to make AI personal, private, and genuinely useful.</p>
 
-        <div class="cards">
-            <div class="card">
-                <div class="card-icon">&#9889;</div>
-                <h3>AI That Runs On-Device</h3>
-                <p>Our custom AI model runs directly on the watch — no phone required, no cloud dependency. Your data stays private, and your assistant works anywhere, even offline.</p>
+        <div class="section">
+            <h2>Our Story</h2>
+            <p>Mint Technologies was founded on a simple belief: the best technology should work for you, not against you. In a world where most tech companies profit from your data, we chose a different path.</p>
+            <p>We're building products that put AI directly in your hands — no cloud dependency, no data harvesting, no subscriptions. Just smart, premium technology designed around the way people actually live.</p>
+        </div>
+
+        <div class="section">
+            <h2>What We Believe</h2>
+        </div>
+
+        <div class="values">
+            <div class="value-card">
+                <h3>Privacy by Design</h3>
+                <p>Your data belongs to you. We process on-device first, and never sell or share your personal information.</p>
             </div>
-
-            <div class="card">
-                <div class="card-icon">&#9898;</div>
-                <h3>Premium Build Quality</h3>
-                <p>Grade 5 titanium case, sapphire crystal display, and ceramic back. Military-grade durability meets refined design — built for the boardroom and the backcountry.</p>
+            <div class="value-card">
+                <h3>No Subscriptions</h3>
+                <p>We don't believe in charging you monthly for a product you already own. You buy it, you own it — fully.</p>
             </div>
-
-            <div class="card">
-                <div class="card-icon">&#10024;</div>
-                <h3>Truly Personal</h3>
-                <p>MintAI learns how you live — your health patterns, routines, and preferences. The more you wear it, the smarter it gets, delivering insights that actually matter to you.</p>
+            <div class="value-card">
+                <h3>Premium Quality</h3>
+                <p>We use the best materials and engineering available. No corners cut, no compromises on build quality.</p>
             </div>
-
-            <div class="card">
-                <div class="card-icon">&#128274;</div>
-                <h3>Privacy First</h3>
-                <p>No subscriptions. No data harvesting. On-device processing means your health data, conversations, and personal information never leave your wrist unless you want it to.</p>
+            <div class="value-card">
+                <h3>AI That Adapts</h3>
+                <p>Our AI learns your patterns and preferences over time, becoming more useful the longer you use it.</p>
             </div>
         </div>
 
-        <div class="specs">
-            <div class="spec">
-                <div class="spec-value">Titanium</div>
-                <div class="spec-label">Grade 5 Case</div>
-            </div>
-            <div class="spec">
-                <div class="spec-value">On-Device</div>
-                <div class="spec-label">AI Processing</div>
-            </div>
-            <div class="spec">
-                <div class="spec-value">10 ATM</div>
-                <div class="spec-label">Water Resistance</div>
-            </div>
-            <div class="spec">
-                <div class="spec-value">$0/mo</div>
-                <div class="spec-label">No Subscription</div>
-            </div>
+        <div class="section">
+            <h2>Looking Ahead</h2>
+            <p>We're currently developing our first product — an AI-powered smartwatch that brings our vision to life on your wrist. It's just the beginning. We see a future where intelligent, privacy-first technology is woven into everyday objects, making life simpler without giving up what matters most.</p>
         </div>
 
         <div class="cta-section">
-            <h2>Interested in Investing?</h2>
-            <p>We're raising our seed round. Get the pitch deck and learn more.</p>
+            <h2>Join Us Early</h2>
+            <p>We're raising our seed round. Interested in being part of the journey?</p>
             <a href="/" class="cta-btn">Request Pitch Deck</a>
         </div>
 
         <div class="footer">
-            &copy; 2026 MintAI &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a>
+            &copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a>
         </div>
     </div>
 </body>
