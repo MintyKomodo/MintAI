@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Products — MintAI</title>
+    <title>MintWatch — AI Smartwatch Concept | MintAI</title>
+    <meta name="description" content="MintWatch is a concept for a next-generation AI smartwatch combining on-device intelligence, biometric sensing, adaptive coaching, and a personalized watch experience.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -13,6 +14,7 @@
         :root {
             --mint: #00d876;
             --mint-soft: #e8faf0;
+            --mint-dark: #00c46a;
             --bg: #f5f5f5;
             --card: #ffffff;
             --card-border: #e0e0e0;
@@ -26,8 +28,10 @@
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* Nav */
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -67,10 +71,17 @@
 
         .nav-links a:hover { color: var(--mint); }
 
+        /* Container */
         .container {
-            max-width: 720px;
+            max-width: 820px;
             margin: 0 auto;
-            padding: 140px 24px 80px;
+            padding: 120px 24px 80px;
+        }
+
+        /* Hero */
+        .hero {
+            text-align: center;
+            margin-bottom: 64px;
         }
 
         .page-tag {
@@ -85,169 +96,317 @@
             text-transform: uppercase;
             margin-bottom: 20px;
             background: var(--mint-soft);
-            text-align: center;
+            animation: fadeUp 0.5s ease-out;
         }
 
-        h1 {
-            font-size: 40px;
+        .pulse-dot {
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            background: var(--mint);
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s ease-in-out infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+
+        .hero h1 {
+            font-size: clamp(32px, 5vw, 48px);
             font-weight: 800;
             letter-spacing: -1.5px;
-            margin-bottom: 16px;
             line-height: 1.1;
-            text-align: center;
+            margin-bottom: 16px;
+            animation: fadeUp 0.5s ease-out 0.05s both;
         }
 
-        h1 span { color: var(--mint); }
+        .hero h1 .highlight { color: var(--mint); }
 
-        .intro {
-            font-size: 17px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 56px;
-            text-align: center;
-        }
-
-        /* Product card */
-        .product-card {
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
-            margin-bottom: 32px;
-        }
-
-        .product-hero {
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-            padding: 60px 40px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-hero::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 200px;
-            height: 200px;
-            background: rgba(0, 216, 118, 0.08);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            filter: blur(60px);
-        }
-
-        .watch-icon {
-            position: relative;
-            width: 120px;
-            height: 150px;
-            margin: 0 auto 24px;
-        }
-
-        .watch-body {
-            width: 80px;
-            height: 96px;
-            border: 3px solid var(--mint);
-            border-radius: 20px;
-            margin: 0 auto;
-            position: relative;
-            top: 27px;
-        }
-
-        .watch-screen {
-            width: 56px;
-            height: 56px;
-            border-radius: 12px;
-            background: rgba(0, 216, 118, 0.15);
-            margin: 14px auto 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--mint);
-            letter-spacing: -1px;
-        }
-
-        .watch-band-top, .watch-band-bottom {
-            width: 40px;
-            height: 24px;
-            border-left: 3px solid var(--mint);
-            border-right: 3px solid var(--mint);
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .watch-band-top {
-            border-top: 3px solid var(--mint);
-            border-radius: 6px 6px 0 0;
-        }
-
-        .watch-band-bottom {
-            border-bottom: 3px solid var(--mint);
-            border-radius: 0 0 6px 6px;
-            top: 54px;
-        }
-
-        .watch-crown {
-            width: 6px;
-            height: 16px;
-            background: var(--mint);
-            border-radius: 3px;
-            position: absolute;
-            right: -8px;
-            top: 20px;
-        }
-
-        .product-name {
-            font-size: 28px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: -1px;
-            margin-bottom: 8px;
-            position: relative;
-        }
-
-        .product-name span { color: var(--mint); }
-
-        .coming-soon-badge {
+        .hero-badge {
             display: inline-block;
             padding: 6px 18px;
-            background: rgba(0, 216, 118, 0.15);
-            border: 1px solid rgba(0, 216, 118, 0.4);
+            background: var(--mint-soft);
+            border: 1px solid var(--mint);
             border-radius: 100px;
             font-size: 12px;
             font-weight: 600;
             color: var(--mint);
             letter-spacing: 1.5px;
             text-transform: uppercase;
+            margin-bottom: 16px;
+            animation: fadeUp 0.5s ease-out 0.1s both;
+        }
+
+        .hero .lead {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0 auto 12px;
+            animation: fadeUp 0.5s ease-out 0.15s both;
+        }
+
+        .hero .sublead {
+            font-size: 14px;
+            color: var(--text-light);
+            line-height: 1.7;
+            max-width: 560px;
+            margin: 0 auto;
+            font-style: italic;
+            animation: fadeUp 0.5s ease-out 0.2s both;
+        }
+
+        /* Watch visual */
+        .hero-watch {
+            margin: 32px auto 0;
+            width: 100px;
+            height: 140px;
             position: relative;
+            animation: fadeUp 0.6s ease-out 0.25s both;
         }
 
-        .product-details {
-            padding: 36px;
+        .hw-band-top, .hw-band-bottom {
+            width: 36px;
+            height: 20px;
+            border-left: 3px solid var(--mint);
+            border-right: 3px solid var(--mint);
+            margin: 0 auto;
         }
 
-        .product-details p {
+        .hw-band-top {
+            border-top: 3px solid var(--mint);
+            border-radius: 6px 6px 0 0;
+        }
+
+        .hw-band-bottom {
+            border-bottom: 3px solid var(--mint);
+            border-radius: 0 0 6px 6px;
+        }
+
+        .hw-body {
+            width: 72px;
+            height: 86px;
+            border: 3px solid var(--mint);
+            border-radius: 18px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hw-crown {
+            width: 5px;
+            height: 14px;
+            background: var(--mint);
+            border-radius: 3px;
+            position: absolute;
+            right: -7px;
+            top: 18px;
+        }
+
+        .hw-screen {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: var(--mint-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--mint);
+            letter-spacing: -1px;
+        }
+
+        /* Section layout */
+        .section {
+            margin-bottom: 56px;
+            animation: fadeUp 0.5s ease-out both;
+        }
+
+        .section-label {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--mint);
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            background: var(--mint-soft);
+            margin-bottom: 12px;
+        }
+
+        .section h2 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .section h2 .highlight { color: var(--mint); }
+
+        .section > p, .section-body p {
             font-size: 15px;
             color: var(--text-secondary);
             line-height: 1.7;
-            margin-bottom: 28px;
+            margin-bottom: 16px;
         }
 
-        .feature-grid {
+        /* Audience cards */
+        .audience-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-bottom: 28px;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin-top: 20px;
         }
 
-        .feature {
+        .audience-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 24px 20px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .audience-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .audience-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--mint-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+
+        .audience-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--mint);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .audience-card h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.3px;
+        }
+
+        .audience-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Info card (white card with content) */
+        .info-card {
+            background: var(--card);
+            border: 1px solid var(--card-border);
+            border-radius: 14px;
+            padding: 32px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+            margin-bottom: 16px;
+        }
+
+        .info-card h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
             display: flex;
             align-items: center;
             gap: 10px;
-            padding: 12px 16px;
+        }
+
+        .info-card h3 svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--mint);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .info-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 12px;
+        }
+
+        .info-card p:last-child { margin-bottom: 0; }
+
+        /* Pipeline steps */
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--bg);
+            border-radius: 10px;
+        }
+
+        .pipeline-num {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--mint);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 1px;
+        }
+
+        .pipeline-step p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Feature list (dot-prefixed items) */
+        .feature-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
             background: var(--bg);
             border-radius: 10px;
         }
@@ -260,51 +419,206 @@
             flex-shrink: 0;
         }
 
-        .feature span {
+        .feature-item span {
             font-size: 13px;
             font-weight: 500;
             color: var(--text);
         }
 
-        .notify-text {
-            text-align: center;
+        /* Two-column layout for paired cards */
+        .card-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        /* Highlight stat/detail boxes */
+        .highlight-box {
+            background: var(--mint-soft);
+            border: 1px solid rgba(0, 216, 118, 0.2);
+            border-radius: 10px;
+            padding: 16px 20px;
+            margin-top: 12px;
+        }
+
+        .highlight-box p {
+            font-size: 13px;
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Privacy details list */
+        .detail-list {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .detail-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 0;
             font-size: 14px;
-            color: var(--text-light);
-            padding-top: 8px;
-            border-top: 1px solid var(--card-border);
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--card-border);
         }
 
-        .notify-text a {
-            color: var(--mint);
-            text-decoration: none;
-            font-weight: 600;
+        .detail-list li:last-child { border-bottom: none; }
+
+        .detail-list li svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--mint);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
         }
 
-        .notify-text a:hover { text-decoration: underline; }
+        /* Roadmap */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 20px;
+            position: relative;
+        }
 
-        /* More products */
-        .more-soon {
-            text-align: center;
-            padding: 48px 24px;
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 16px;
+            bottom: 16px;
+            width: 2px;
+            background: var(--card-border);
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px 0;
+            position: relative;
+        }
+
+        .roadmap-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--mint);
+            flex-shrink: 0;
+            margin-top: 4px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 0 0 4px var(--bg);
+        }
+
+        .roadmap-item:first-child .roadmap-dot {
+            box-shadow: 0 0 0 4px var(--bg), 0 0 0 6px var(--mint);
+        }
+
+        .roadmap-content h4 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.2px;
+        }
+
+        .roadmap-content p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* CTA section */
+        .cta-section {
             background: var(--card);
             border: 1px solid var(--card-border);
-            border-radius: 14px;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+            border-radius: 16px;
+            padding: 48px 36px;
+            text-align: center;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
         }
 
-        .more-soon h3 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
+        .cta-section h2 {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 12px;
         }
 
-        .more-soon p {
-            font-size: 14px;
+        .cta-section h2 .highlight { color: var(--mint); }
+
+        .cta-section p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 24px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-block;
+            padding: 13px 28px;
+            background: var(--mint);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .cta-btn:hover {
+            background: var(--mint-dark);
+            box-shadow: 0 4px 16px rgba(0, 216, 118, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .cta-btn-outline {
+            display: inline-block;
+            padding: 13px 28px;
+            background: transparent;
+            color: var(--mint);
+            border: 2px solid var(--mint);
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .cta-btn-outline:hover {
+            background: var(--mint-soft);
+            transform: translateY(-1px);
+        }
+
+        /* Disclaimer */
+        .disclaimer {
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
             color: var(--text-light);
+            line-height: 1.6;
+            border-top: 1px solid var(--card-border);
+            margin-top: 12px;
         }
 
+        /* Footer */
         .footer {
-            margin-top: 56px;
+            margin-top: 48px;
             text-align: center;
             font-size: 13px;
             color: var(--text-light);
@@ -317,14 +631,28 @@
 
         .footer a:hover { color: var(--mint); }
 
+        /* Animations */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .audience-grid { grid-template-columns: 1fr; }
+            .card-row { grid-template-columns: 1fr; }
+            .feature-list { grid-template-columns: 1fr; }
+        }
+
         @media (max-width: 520px) {
             .container { padding: 120px 16px 60px; }
             nav { padding: 16px 20px; }
             .nav-links { gap: 20px; }
-            .feature-grid { grid-template-columns: 1fr; }
-            h1 { font-size: 32px; }
-            .product-hero { padding: 40px 24px; }
-            .product-details { padding: 24px; }
+            .hero h1 { font-size: 28px; letter-spacing: -1px; }
+            .section h2 { font-size: 24px; }
+            .info-card { padding: 24px 20px; }
+            .cta-section { padding: 36px 24px; }
+            .cta-buttons { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
@@ -339,64 +667,322 @@
     </nav>
 
     <div class="container">
-        <div class="page-tag">Products</div>
-        <h1>What We're <span>Building</span></h1>
-        <p class="intro">Intelligent products designed around the way you live.</p>
 
-        <div class="product-card">
-            <div class="product-hero">
-                <div class="watch-icon">
-                    <div class="watch-band-top"></div>
-                    <div class="watch-body">
-                        <div class="watch-crown"></div>
-                        <div class="watch-screen">M</div>
-                    </div>
-                    <div class="watch-band-bottom"></div>
+        <!-- Hero -->
+        <div class="hero">
+            <div class="page-tag"><span class="pulse-dot"></span>Product Concept</div>
+            <h1>Mint<span class="highlight">Watch</span> &mdash; AI Smartwatch Concept</h1>
+            <div class="hero-badge">Coming Soon</div>
+            <p class="lead">MintWatch is a concept for a next-generation AI smartwatch. It combines on-device intelligence, biometric sensing, adaptive coaching, and a custom watch experience that changes around the person wearing it.</p>
+            <p class="sublead">Product concept. Not selling yet. Investor interest open.</p>
+
+            <div class="hero-watch">
+                <div class="hw-band-top"></div>
+                <div class="hw-body">
+                    <div class="hw-crown"></div>
+                    <div class="hw-screen">M</div>
                 </div>
-                <div class="product-name">Mint<span>Watch</span></div>
-                <div class="coming-soon-badge">Coming Soon</div>
+                <div class="hw-band-bottom"></div>
             </div>
-            <div class="product-details">
-                <p>Our flagship AI-powered smartwatch. Built with premium materials, powered by on-device AI, and designed to get smarter the longer you wear it — all without a monthly subscription.</p>
+        </div>
 
-                <div class="feature-grid">
-                    <div class="feature">
-                        <div class="feature-dot"></div>
-                        <span>On-device AI</span>
+        <!-- Who It's For -->
+        <div class="section">
+            <div class="section-label">Audience</div>
+            <h2>Who It's <span class="highlight">For</span></h2>
+            <div class="audience-grid">
+                <div class="audience-card">
+                    <div class="audience-icon">
+                        <!-- Shield icon -->
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                     </div>
-                    <div class="feature">
-                        <div class="feature-dot"></div>
-                        <span>Grade 5 titanium</span>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-dot"></div>
-                        <span>Sapphire crystal</span>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-dot"></div>
-                        <span>10 ATM waterproof</span>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-dot"></div>
-                        <span>Free tier included</span>
-                    </div>
-                    <div class="feature">
-                        <div class="feature-dot"></div>
-                        <span>Privacy first</span>
-                    </div>
+                    <h3>Privacy-conscious users</h3>
+                    <p>Anyone who wants serious wearable intelligence without shipping every heartbeat to a corporate cloud.</p>
                 </div>
-
-                <div class="notify-text">
-                    Want early access? <a href="/">Request the pitch deck</a>
+                <div class="audience-card">
+                    <div class="audience-icon">
+                        <!-- Code / builder icon -->
+                        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3>Builders and founders</h3>
+                    <p>People who want their watch to feel personal, programmable, and alive rather than locked into generic modes.</p>
+                </div>
+                <div class="audience-card">
+                    <div class="audience-icon">
+                        <!-- Activity icon -->
+                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3>Holistic health seekers</h3>
+                    <p>People who want recovery, sleep, workouts, and focus to be understood together instead of scattered across apps.</p>
                 </div>
             </div>
         </div>
 
-        <div class="more-soon">
-            <h3>More products on the way</h3>
-            <p>We're just getting started. Stay tuned.</p>
+        <!-- How Mint Thinks -->
+        <div class="section">
+            <div class="section-label">Intelligence</div>
+            <h2>How Mint <span class="highlight">Thinks</span></h2>
+            <p>The AI reads signals like sleep, HRV, activity, calendar context, and habits to create short recommendations instead of endless dashboards.</p>
+
+            <div class="info-card">
+                <h3>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    On-wrist intelligence
+                </h3>
+                <p>MintWatch compares your current signals against your own baseline, not a generic chart. If your HRV is high, sleep was strong, and calendar pressure is low, it can suggest a harder training day. If stress and resting heart rate climb together, it shifts toward recovery, breathing, hydration, or silence.</p>
+                <p>Mint compares that moment to your baseline and asks what changed, what matters, and whether action is useful.</p>
+            </div>
+
+            <div class="pipeline">
+                <div class="pipeline-step">
+                    <div class="pipeline-num">1</div>
+                    <p>Sensors capture biometric signals continuously throughout the day.</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="pipeline-num">2</div>
+                    <p>The AI compares current readings to your personal baseline and recent trends.</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="pipeline-num">3</div>
+                    <p>The output is short, personal, and timed for the moment instead of buried inside a dashboard.</p>
+                </div>
+                <div class="pipeline-step">
+                    <div class="pipeline-num">4</div>
+                    <p>The AI chooses whether to notify, stay quiet, adjust a goal, change a face, or prepare a recommendation.</p>
+                </div>
+            </div>
         </div>
 
+        <!-- Personal MintOS -->
+        <div class="section">
+            <div class="section-label">Operating System</div>
+            <h2>Personal <span class="highlight">MintOS</span></h2>
+            <p>A lightweight watch operating system concept generated around each wearer's preferences, routines, complications, and coaching style.</p>
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Training suggestions based on trend data</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Stress and focus interruption control</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Complications chosen by priority</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Visual language learned during onboarding</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Battery-aware connectivity decisions</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Local-first intelligence when possible</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Context-aware network behavior</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Continuous personalization</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Recovery and readiness briefings</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Daily and workout faces</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Generated watch faces</span>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-dot"></div>
+                    <span>Direct coaching language</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Onboarding & Connectivity -->
+        <div class="section">
+            <div class="section-label">Setup</div>
+            <h2>Natural <span class="highlight">Onboarding</span></h2>
+            <p>Instead of forcing users through menus, Mint can learn from plain language: how direct coaching should be, what notifications matter, what goals are active, and which suggestions should never appear again.</p>
+
+            <div class="card-row">
+                <div class="info-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Setup questions
+                    </h3>
+                    <p>During setup, the wearer tells Mint what matters at a glance. Mint then generates multiple faces for different moments: daily, workout, sleep, travel, focus, and minimal.</p>
+                </div>
+                <div class="info-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                        Connectivity
+                    </h3>
+                    <p>The setup asks whether the watch should depend on a nearby phone or operate independently. That answer changes how aggressively Mint uses connectivity, notifications, cloud AI, and cellular features.</p>
+                    <div class="highlight-box">
+                        <p>Designed for BLE relay when your phone is close and on-demand connectivity when it is not.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Battery-aware AI -->
+        <div class="section">
+            <div class="section-label">Power</div>
+            <h2>Battery-Aware <span class="highlight">AI</span></h2>
+            <p>MintWatch is imagined around a low-power sentinel layer that handles basic sensing and wake triggers, while larger AI tasks run only when they are useful. This protects battery life while still making the product feel intelligent throughout the day.</p>
+
+            <div class="card-row">
+                <div class="info-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                        Always-on sensing
+                    </h3>
+                    <p>A dual-mode concept where low-power sensing stays active while heavier intelligence wakes only when needed.</p>
+                </div>
+                <div class="info-card">
+                    <h3>
+                        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        AI wake triggers
+                    </h3>
+                    <p>Lightweight sentinel handles basic sensing. Full AI wakes only when the context demands it, preserving battery throughout the day.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Privacy -->
+        <div class="section">
+            <div class="section-label">Trust</div>
+            <h2>Privacy-First <span class="highlight">Architecture</span></h2>
+            <p>MintWatch is designed around local processing, encrypted sync, and user-owned health context so personal data stays personal.</p>
+
+            <div class="info-card">
+                <h3>
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Your data, your control
+                </h3>
+                <p>MintWatch should make privacy understandable. The wearer should know what is stored, what leaves the device, what is encrypted, and what can be deleted. The product vision is personal AI that serves the wearer, not a data broker.</p>
+                <ul class="detail-list">
+                    <li>
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        Encrypted personal profile
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        User-owned data
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        Clear data controls
+                    </li>
+                    <li>
+                        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                        Local-first processing
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Product Moat -->
+        <div class="section">
+            <div class="section-label">Defensibility</div>
+            <h2>Product <span class="highlight">Moat</span></h2>
+            <p>MintWatch combines hardware, AI, and a personalized OS into one defensible product vision.</p>
+
+            <div class="info-card">
+                <h3>
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Personalization compounds over time
+                </h3>
+                <p>Every setup answer, dismissed suggestion, preferred coaching style, and routine pattern can make the product harder to replace. The more Mint understands, the more useful the watch becomes.</p>
+                <div class="highlight-box">
+                    <p>The combination of personal data, learned preferences, and generated OS means switching costs increase naturally with use.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Market -->
+        <div class="section">
+            <div class="section-label">Market</div>
+            <h2>Wearable <span class="highlight">AI</span> Market</h2>
+            <p>Wearables are moving from passive tracking into personal intelligence. AI wearables are becoming personal operating systems.</p>
+
+            <div class="info-card">
+                <h3>
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    Market positioning
+                </h3>
+                <p>Users are increasingly aware that health data needs stronger privacy and ownership.</p>
+                <p>The market is moving beyond passive tracking. MintWatch is positioned around contextual intelligence, privacy, and personalized wearable software rather than another generic fitness dashboard.</p>
+            </div>
+        </div>
+
+        <!-- Roadmap -->
+        <div class="section">
+            <div class="section-label">Roadmap</div>
+            <h2>What's <span class="highlight">Next</span></h2>
+            <p>Prototype, hardware, pilots, and privacy architecture.</p>
+
+            <div class="info-card" style="padding-bottom: 24px;">
+                <h3>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Next milestones
+                </h3>
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-content">
+                            <h4>Hardware partner conversations</h4>
+                            <p>Identifying manufacturing and component partners for the first prototype run.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-content">
+                            <h4>Developer and athlete pilot</h4>
+                            <p>Hands-on testing with power users who can stress-test AI coaching and personalization.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-content">
+                            <h4>Private beta</h4>
+                            <p>Controlled rollout to early supporters and investors before any public availability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investor CTA -->
+        <div class="cta-section">
+            <h2>Investor <span class="highlight">Interest</span></h2>
+            <p>MintWatch is not selling to customers yet. This section is for early investor interest, strategic partners, and people who want to help bring a privacy-first AI wearable to market.</p>
+            <p style="font-size: 14px; color: var(--text-light); margin-top: -12px;">Leave your interest as a future user, investor, hardware partner, or pilot tester.</p>
+            <div class="cta-buttons">
+                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Investor%20Interest" class="cta-btn">Investor Inquiry</a>
+                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Interest" class="cta-btn-outline">General Interest</a>
+            </div>
+        </div>
+
+        <!-- Disclaimer -->
+        <div class="disclaimer">
+            MintWatch is not available for purchase yet. This site is a product vision and investor preview. All features described are conceptual and subject to change.
+        </div>
+
+        <!-- Footer -->
         <div class="footer">
             &copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a>
         </div>
