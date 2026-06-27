@@ -3,177 +3,905 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MintAI — Coming Soon</title>
+    <title>MintAI — AI Smartwatch | Mint Technologies</title>
+    <meta name="description" content="MintAI is building MintWatch, a next-generation AI smartwatch combining on-device intelligence, biometric sensing, adaptive coaching, and a personalized watch experience. Privacy-first. Investor interest open.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --mint: #00d876;
-            --mint-soft: #e8faf0;
-            --bg: #f5f5f5;
-            --card: #ffffff;
-            --card-border: #e0e0e0;
-            --text: #1a1a1a;
-            --text-secondary: #666666;
-            --text-light: #999999;
-            --input-bg: #fafafa;
-            --input-border: #ddd;
+            --bg: hsl(222, 47%, 7%);
+            --bg-elevated: hsl(221, 39%, 11%);
+            --card-bg: hsl(221, 39%, 11%);
+            --card-border: hsl(220, 26%, 16%);
+            --input-bg: hsl(221, 39%, 9%);
+            --accent: #2ECC71;
+            --accent-hover: #28b463;
+            --accent-secondary: #6ee0a0;
+            --accent-glow: rgba(46, 204, 113, 0.15);
+            --accent-glow-strong: rgba(46, 204, 113, 0.25);
+            --accent-soft: rgba(46, 204, 113, 0.06);
+            --fg: hsl(220, 38%, 94%);
+            --fg-muted: hsl(222, 15%, 66%);
+            --fg-dim: hsl(222, 12%, 48%);
+            --border-subtle: rgba(255, 255, 255, 0.1);
+            --border-card: rgba(255, 255, 255, 0.08);
         }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Inter', -apple-system, sans-serif;
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
-            color: var(--text);
+            color: var(--fg);
             min-height: 100vh;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Nav */
+        /* Anchor offset for fixed nav */
+        #home, #products, #about, #invest,
+        .section, .cta-section { scroll-margin-top: 84px; }
+
+        /* ========== NAV ========== */
         nav {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            padding: 20px 32px;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 0 40px;
+            height: 64px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(245, 245, 245, 0.9);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--card-border);
+            background: hsla(222, 47%, 7%, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
         }
 
         .nav-logo {
-            font-size: 22px;
+            font-family: 'Sora', sans-serif;
+            font-size: 20px;
             font-weight: 700;
             letter-spacing: -0.5px;
-            color: var(--text);
+            color: var(--fg);
             text-decoration: none;
         }
 
-        .nav-logo span {
-            color: var(--mint);
-        }
+        .nav-logo span { color: var(--accent); }
 
         .nav-links {
             display: flex;
-            gap: 32px;
+            gap: 36px;
             align-items: center;
         }
 
         .nav-links a {
+            font-family: 'DM Sans', sans-serif;
             font-size: 14px;
             font-weight: 500;
-            color: var(--text-secondary);
+            color: var(--fg-muted);
             text-decoration: none;
-            transition: color 0.2s;
+            letter-spacing: 0.02em;
+            transition: color 0.25s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--mint);
-        }
+        .nav-links a:hover,
+        .nav-links a.active { color: var(--accent); }
 
+        /* ========== LAYOUT ========== */
         .container {
-            max-width: 720px;
+            max-width: 900px;
             margin: 0 auto;
-            padding: 140px 24px 80px;
-            text-align: center;
+            padding: 0 24px;
         }
 
-        /* Tag */
-        .tag {
-            display: inline-block;
-            padding: 6px 16px;
-            border: 1px solid var(--mint);
-            border-radius: 100px;
-            font-size: 12px;
+        .container-wide {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ========== HERO ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 24px 80px;
+            position: relative;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .hero > * { position: relative; z-index: 1; }
+
+        .pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 18px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
             font-weight: 600;
-            color: var(--mint);
-            letter-spacing: 1.5px;
+            color: var(--accent);
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            margin-bottom: 28px;
-            background: var(--mint-soft);
-            animation: fadeIn 0.6s ease-out;
+            margin-bottom: 32px;
+            background: var(--accent-soft);
         }
 
         .pulse-dot {
             display: inline-block;
             width: 7px;
             height: 7px;
-            background: var(--mint);
+            background: var(--accent);
             border-radius: 50%;
-            margin-right: 8px;
             animation: pulse 2s ease-in-out infinite;
-            vertical-align: middle;
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.85); }
         }
 
-        h1 {
-            font-size: clamp(36px, 6vw, 60px);
+        .hero-title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(44px, 7vw, 84px);
             font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -2px;
+            letter-spacing: -3px;
+            line-height: 1.02;
             margin-bottom: 20px;
-            color: var(--text);
-            animation: fadeIn 0.6s ease-out 0.1s both;
+            color: var(--fg);
         }
 
-        h1 .highlight {
-            color: var(--mint);
+        .hero-title .accent { color: var(--accent); }
+
+        .hero-subtitle {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(18px, 3vw, 26px);
+            font-weight: 300;
+            color: var(--fg-muted);
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
         }
 
-        .subtitle {
+        .hero-tagline {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--fg-dim);
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 28px;
+        }
+
+        .hero-desc {
             font-size: 17px;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            max-width: 480px;
-            margin: 0 auto 48px;
-            font-weight: 400;
-            animation: fadeIn 0.6s ease-out 0.2s both;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            max-width: 620px;
+            margin: 0 auto;
         }
 
-        /* Form card */
+        .hero-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 36px;
+        }
+
+        /* Watch illustration */
+        .hero-watch {
+            margin-top: 48px;
+            width: 120px;
+            height: 170px;
+            position: relative;
+        }
+
+        .hw-band-top, .hw-band-bottom {
+            width: 42px;
+            height: 22px;
+            border-left: 2px solid var(--accent);
+            border-right: 2px solid var(--accent);
+            margin: 0 auto;
+            opacity: 0.6;
+        }
+
+        .hw-band-top { border-top: 2px solid var(--accent); }
+        .hw-band-bottom { border-bottom: 2px solid var(--accent); }
+
+        .hw-body {
+            width: 84px;
+            height: 100px;
+            border: 2px solid var(--accent);
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px var(--accent-glow), inset 0 0 20px rgba(46, 204, 113, 0.03);
+        }
+
+        .hw-crown {
+            width: 4px;
+            height: 16px;
+            background: var(--accent);
+            position: absolute;
+            right: -6px;
+            top: 20px;
+        }
+
+        .hw-screen {
+            width: 58px;
+            height: 58px;
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Sora', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent);
+            letter-spacing: -1px;
+        }
+
+        /* ========== GLITCH TEXT ========== */
+        .glitch-text {
+            display: inline-block;
+            position: relative;
+            color: var(--fg);
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.8;
+        }
+
+        .glitch-text::before {
+            text-shadow: -2px 0 var(--accent);
+            clip: rect(24px, 9999px, 90px, 0);
+            animation: 3s linear infinite alternate-reverse glitch-before;
+            left: 2px;
+        }
+
+        .glitch-text::after {
+            text-shadow: -2px 0 var(--accent-secondary);
+            clip: rect(85px, 9999px, 140px, 0);
+            animation: 2.5s linear infinite alternate-reverse glitch-after;
+            left: -2px;
+        }
+
+        @keyframes glitch-before {
+            0% { clip: rect(51px, 9999px, 28px, 0); }
+            5% { clip: rect(70px, 9999px, 93px, 0); }
+            10% { clip: rect(14px, 9999px, 60px, 0); }
+            15% { clip: rect(2px, 9999px, 45px, 0); }
+            20% { clip: rect(80px, 9999px, 120px, 0); }
+            25% { clip: rect(38px, 9999px, 72px, 0); }
+            30% { clip: rect(8px, 9999px, 34px, 0); }
+            35% { clip: rect(56px, 9999px, 98px, 0); }
+            40% { clip: rect(22px, 9999px, 55px, 0); }
+            45% { clip: rect(90px, 9999px, 130px, 0); }
+            50% { clip: rect(12px, 9999px, 48px, 0); }
+            55% { clip: rect(62px, 9999px, 85px, 0); }
+            60% { clip: rect(4px, 9999px, 38px, 0); }
+            65% { clip: rect(75px, 9999px, 110px, 0); }
+            70% { clip: rect(30px, 9999px, 65px, 0); }
+            75% { clip: rect(18px, 9999px, 52px, 0); }
+            80% { clip: rect(88px, 9999px, 125px, 0); }
+            85% { clip: rect(42px, 9999px, 78px, 0); }
+            90% { clip: rect(6px, 9999px, 40px, 0); }
+            95% { clip: rect(68px, 9999px, 100px, 0); }
+            100% { clip: rect(25px, 9999px, 58px, 0); }
+        }
+
+        @keyframes glitch-after {
+            0% { clip: rect(65px, 9999px, 95px, 0); }
+            5% { clip: rect(10px, 9999px, 42px, 0); }
+            10% { clip: rect(82px, 9999px, 118px, 0); }
+            15% { clip: rect(28px, 9999px, 62px, 0); }
+            20% { clip: rect(48px, 9999px, 80px, 0); }
+            25% { clip: rect(5px, 9999px, 35px, 0); }
+            30% { clip: rect(72px, 9999px, 105px, 0); }
+            35% { clip: rect(20px, 9999px, 54px, 0); }
+            40% { clip: rect(58px, 9999px, 88px, 0); }
+            45% { clip: rect(15px, 9999px, 46px, 0); }
+            50% { clip: rect(78px, 9999px, 112px, 0); }
+            55% { clip: rect(32px, 9999px, 68px, 0); }
+            60% { clip: rect(50px, 9999px, 82px, 0); }
+            65% { clip: rect(8px, 9999px, 38px, 0); }
+            70% { clip: rect(85px, 9999px, 120px, 0); }
+            75% { clip: rect(22px, 9999px, 56px, 0); }
+            80% { clip: rect(60px, 9999px, 92px, 0); }
+            85% { clip: rect(12px, 9999px, 44px, 0); }
+            90% { clip: rect(76px, 9999px, 108px, 0); }
+            95% { clip: rect(36px, 9999px, 70px, 0); }
+            100% { clip: rect(45px, 9999px, 75px, 0); }
+        }
+
+        /* ========== SECTION DIVIDERS ========== */
+        .section-divider {
+            text-align: center;
+            padding: 96px 24px 8px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .section-divider .pill-tag { margin-bottom: 20px; }
+
+        .section-divider h2 {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(30px, 5vw, 52px);
+            font-weight: 800;
+            letter-spacing: -2px;
+            line-height: 1.05;
+            color: var(--fg);
+        }
+
+        .section-divider h2 .accent { color: var(--accent); }
+
+        .section-divider p {
+            font-size: 16px;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            max-width: 600px;
+            margin: 16px auto 0;
+        }
+
+        /* ========== SECTIONS ========== */
+        .section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .section.no-border { border-top: none; }
+
+        .section-label {
+            display: inline-block;
+            padding: 5px 14px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            background: var(--accent-soft);
+        }
+
+        .section-title {
+            font-family: 'Sora', sans-serif;
+            font-size: clamp(28px, 4vw, 40px);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.15;
+            margin-bottom: 16px;
+            color: var(--fg);
+        }
+
+        .section-title .accent { color: var(--accent); }
+
+        .section-desc {
+            font-size: 16px;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            max-width: 640px;
+            margin-bottom: 24px;
+        }
+
+        /* ========== QUOTE BLOCK ========== */
+        .quote-block {
+            border-left: 3px solid var(--accent);
+            padding: 24px 28px;
+            background: rgba(46, 204, 113, 0.04);
+            margin: 28px 0;
+            position: relative;
+        }
+
+        .quote-block p {
+            font-size: 15px;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            font-style: italic;
+        }
+
+        .quote-block::before,
+        .quote-block::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--border-subtle);
+        }
+
+        .quote-block::before { top: 0; }
+        .quote-block::after { bottom: 0; }
+
+        /* ========== CARDS ========== */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            padding: 32px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(46, 204, 113, 0.2);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.05);
+        }
+
+        .card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            margin-bottom: 10px;
+            color: var(--fg);
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--fg-muted);
+            line-height: 1.7;
+        }
+
+        /* Audience grid */
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2px;
+            margin-top: 32px;
+        }
+
+        .audience-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            padding: 32px 28px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .audience-card:hover {
+            border-color: rgba(46, 204, 113, 0.2);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.05);
+        }
+
+        .audience-icon {
+            width: 44px;
+            height: 44px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+
+        .audience-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .audience-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+            color: var(--fg);
+        }
+
+        .audience-card p {
+            font-size: 14px;
+            color: var(--fg-muted);
+            line-height: 1.7;
+        }
+
+        /* ========== VALUES (ABOUT) ========== */
+        .values {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 32px;
+        }
+
+        .value-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            padding: 28px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .value-card:hover {
+            border-color: rgba(46, 204, 113, 0.2);
+            box-shadow: 0 0 30px rgba(46, 204, 113, 0.05);
+        }
+
+        .value-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+            color: var(--fg);
+        }
+
+        .value-card p {
+            font-size: 14px;
+            color: var(--fg-muted);
+            line-height: 1.7;
+        }
+
+        .about-intro {
+            font-size: 18px;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            max-width: 680px;
+            margin-bottom: 8px;
+        }
+
+        .text-block p {
+            font-size: 15px;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            margin-bottom: 16px;
+        }
+
+        .text-block p:last-child { margin-bottom: 0; }
+
+        /* ========== PIPELINE ========== */
+        .pipeline {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            margin-top: 32px;
+        }
+
+        .pipeline-step {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 24px 28px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .pipeline-step:hover { border-color: rgba(46, 204, 113, 0.2); }
+
+        .pipeline-num {
+            width: 32px;
+            height: 32px;
+            border: 1px solid var(--accent);
+            border-radius: 0;
+            color: var(--accent);
+            font-family: 'Sora', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .pipeline-content h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--fg);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+
+        .pipeline-content p {
+            font-size: 14px;
+            color: var(--fg-muted);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* ========== FEATURE GRID ========== */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2px;
+            margin-top: 28px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            transition: border-color 0.3s ease;
+        }
+
+        .feature-item:hover { border-color: rgba(46, 204, 113, 0.2); }
+
+        .feature-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 0;
+            flex-shrink: 0;
+        }
+
+        .feature-item span {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--fg);
+            letter-spacing: 0.01em;
+        }
+
+        /* ========== SUB-ITEMS ========== */
+        .sub-items, .detail-list {
+            list-style: none;
+            margin-top: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .sub-items li, .detail-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            font-size: 14px;
+            color: var(--fg-muted);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .sub-items li:last-child, .detail-list li:last-child { border-bottom: none; }
+
+        .sub-items li svg, .detail-list li svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        /* ========== HIGHLIGHT BOX ========== */
+        .highlight-box {
+            background: rgba(46, 204, 113, 0.05);
+            border: 1px solid rgba(46, 204, 113, 0.15);
+            border-radius: 0;
+            padding: 18px 22px;
+            margin-top: 16px;
+        }
+
+        .highlight-box p {
+            font-size: 14px;
+            color: var(--fg);
+            line-height: 1.7;
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* ========== ROADMAP ========== */
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+            margin-top: 28px;
+            position: relative;
+            padding-left: 28px;
+        }
+
+        .roadmap::before {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 20px;
+            bottom: 20px;
+            width: 1px;
+            background: var(--border-subtle);
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .roadmap-dot {
+            width: 11px;
+            height: 11px;
+            border: 2px solid var(--accent);
+            border-radius: 0;
+            background: var(--bg);
+            flex-shrink: 0;
+            margin-top: 4px;
+            position: absolute;
+            left: -28px;
+            z-index: 1;
+        }
+
+        .roadmap-item:first-child .roadmap-dot {
+            background: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow-strong);
+        }
+
+        .roadmap-content h4 {
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            letter-spacing: -0.2px;
+            color: var(--fg);
+        }
+
+        .roadmap-content p {
+            font-size: 14px;
+            color: var(--fg-muted);
+            line-height: 1.6;
+        }
+
+        /* ========== USE OF FUNDS TAG ========== */
+        .funds-label {
+            display: inline-block;
+            padding: 4px 12px;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        /* ========== COACHING CALLOUT ========== */
+        .coaching-callout {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 24px 28px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-left: 3px solid var(--accent);
+            border-radius: 0;
+            margin-top: 20px;
+        }
+
+        .coaching-callout .callout-text {
+            font-family: 'Sora', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--accent);
+            letter-spacing: -0.3px;
+        }
+
+        .coaching-callout .callout-sub {
+            font-size: 13px;
+            color: var(--fg-muted);
+            margin-top: 4px;
+        }
+
+        /* ========== INFO CARD ========== */
+        .info-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            padding: 32px;
+            margin-top: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        .info-card:hover { border-color: rgba(46, 204, 113, 0.2); }
+
+        .info-card h3 {
+            font-family: 'Sora', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--fg);
+        }
+
+        .info-card h3 svg {
+            width: 20px;
+            height: 20px;
+            stroke: var(--accent);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .info-card p {
+            font-size: 14px;
+            color: var(--fg-muted);
+            line-height: 1.75;
+            margin-bottom: 12px;
+        }
+
+        .info-card p:last-child { margin-bottom: 0; }
+
+        /* ========== INVESTOR FORM ========== */
+        .cta-section {
+            padding: 96px 0;
+            border-top: 1px solid var(--border-subtle);
+        }
+
         .form-card {
             width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            background: var(--card);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 36px;
-            animation: fadeIn 0.6s ease-out 0.3s both;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+            max-width: 560px;
+            margin: 36px auto 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            border-radius: 0;
+            padding: 40px;
+            text-align: left;
         }
 
-        .form-card h2 {
+        .form-card h3 {
+            font-family: 'Sora', sans-serif;
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 6px;
             letter-spacing: -0.5px;
+            color: var(--fg);
         }
 
         .form-card > p {
             font-size: 14px;
-            color: var(--text-light);
+            color: var(--fg-dim);
             margin-bottom: 24px;
         }
 
-        .form-group {
-            margin-bottom: 14px;
-            text-align: left;
-        }
+        .form-group { margin-bottom: 14px; }
 
         .form-row {
             display: grid;
@@ -185,172 +913,758 @@
             display: block;
             font-size: 13px;
             font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 5px;
+            color: var(--fg-muted);
+            margin-bottom: 6px;
         }
 
         input, select, textarea {
             width: 100%;
-            padding: 11px 14px;
+            padding: 12px 14px;
             background: var(--input-bg);
-            border: 1px solid var(--input-border);
-            border-radius: 8px;
-            color: var(--text);
-            font-family: 'Inter', sans-serif;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0;
+            color: var(--fg);
+            font-family: 'DM Sans', sans-serif;
             font-size: 14px;
             transition: border-color 0.2s, box-shadow 0.2s;
             outline: none;
         }
 
-        input::placeholder, textarea::placeholder {
-            color: #bbb;
-        }
+        input::placeholder, textarea::placeholder { color: var(--fg-dim); }
 
         input:focus, select:focus, textarea:focus {
-            border-color: var(--mint);
-            box-shadow: 0 0 0 3px rgba(0, 216, 118, 0.1);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.12);
         }
 
         select {
             cursor: pointer;
             appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23999' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%232ECC71' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 14px center;
         }
 
-        textarea {
-            resize: vertical;
-            min-height: 72px;
-        }
+        select option { background: var(--bg-elevated); color: var(--fg); }
+
+        textarea { resize: vertical; min-height: 84px; }
 
         .submit-btn {
             width: 100%;
-            padding: 13px 24px;
-            background: var(--mint);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
+            padding: 14px 24px;
+            background: var(--accent);
+            color: var(--bg);
+            border: 1px solid var(--accent);
+            border-radius: 0;
+            font-family: 'DM Sans', sans-serif;
             font-size: 15px;
             font-weight: 600;
+            letter-spacing: 0.04em;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 6px;
+            transition: all 0.25s ease;
+            margin-top: 8px;
         }
 
         .submit-btn:hover {
-            background: #00c46a;
-            box-shadow: 0 4px 16px rgba(0, 216, 118, 0.25);
-            transform: translateY(-1px);
+            background: transparent;
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        .submit-btn:active {
-            transform: translateY(0);
+        /* Role selector buttons */
+        .role-selector {
+            display: flex;
+            gap: 2px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 28px 0 8px;
         }
 
-        /* Footer */
+        .role-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: 0;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--fg-muted);
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .role-btn:hover,
+        .role-btn.active {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-soft);
+        }
+
+        /* CTA buttons */
+        .cta-btn {
+            display: inline-block;
+            padding: 14px 32px;
+            background: var(--accent);
+            color: var(--bg);
+            border-radius: 0;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            border: 1px solid var(--accent);
+        }
+
+        .cta-btn:hover {
+            background: transparent;
+            color: var(--accent);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .cta-btn-outline {
+            display: inline-block;
+            padding: 14px 32px;
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 0;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.06em;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .cta-btn-outline:hover {
+            background: var(--accent-soft);
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        .center { text-align: center; }
+
+        /* ========== FOOTER ========== */
         .footer {
-            margin-top: 56px;
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer .disclaimer {
             font-size: 13px;
-            color: var(--text-light);
-            animation: fadeIn 0.6s ease-out 0.5s both;
+            color: var(--fg-dim);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 16px;
+        }
+
+        .footer .copyright {
+            font-size: 13px;
+            color: var(--fg-dim);
         }
 
         .footer a {
-            color: var(--text-secondary);
+            color: var(--fg-muted);
             text-decoration: none;
-            transition: color 0.2s;
+            transition: color 0.25s;
         }
 
-        .footer a:hover {
-            color: var(--mint);
+        .footer a:hover { color: var(--accent); }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(12px); }
-            to { opacity: 1; transform: translateY(0); }
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-in.delay-1 { transition-delay: 0.1s; }
+        .animate-in.delay-2 { transition-delay: 0.2s; }
+        .animate-in.delay-3 { transition-delay: 0.3s; }
+        .animate-in.delay-4 { transition-delay: 0.4s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-links { gap: 18px; }
+
+            .audience-grid { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .values { grid-template-columns: 1fr; }
+            .role-selector { flex-direction: column; align-items: center; }
+
+            .hero-title { letter-spacing: -2px; }
+            .section { padding: 60px 0; }
+            .section-divider { padding: 72px 24px 8px; }
         }
 
         @media (max-width: 520px) {
+            nav { padding: 0 16px; height: 56px; }
+            .nav-links { gap: 14px; }
+            .nav-links a { font-size: 13px; }
+
+            .hero { padding: 100px 16px 60px; min-height: auto; }
+            .hero-title { font-size: 40px; letter-spacing: -1.5px; }
+            .hero-subtitle { font-size: 18px; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .hero-actions .cta-btn, .hero-actions .cta-btn-outline { width: 100%; text-align: center; }
+
+            .section { padding: 48px 0; }
+            .section-title { font-size: 24px; letter-spacing: -0.8px; }
+
+            .audience-card, .card, .info-card, .value-card { padding: 24px 20px; }
+            .pipeline-step { padding: 18px 20px; flex-direction: column; gap: 12px; }
+            .form-card { padding: 28px 20px; }
             .form-row { grid-template-columns: 1fr; }
-            .form-card { padding: 24px 18px; }
-            .container { padding: 120px 16px 60px; }
-            nav { padding: 16px 20px; }
-            .nav-links { gap: 20px; }
+            .role-selector { flex-direction: column; }
         }
     </style>
 </head>
 <body>
+
+    <!-- NAV -->
     <nav>
-        <a href="/" class="nav-logo">Mint<span>AI</span></a>
+        <a href="#home" class="nav-logo">Mint<span>AI</span></a>
         <div class="nav-links">
-            <a href="/about.html">About</a>
-            <a href="/products.html">Products</a>
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About</a>
+            <a href="#invest">Invest</a>
             <a href="mailto:contact@mint-ai.tech">Contact</a>
         </div>
     </nav>
 
-    <div class="container">
-        <div class="tag"><span class="pulse-dot"></span>Coming Soon</div>
-
-        <h1>The Future of <span class="highlight">Smart Wearables</span></h1>
-
-        <p class="subtitle">AI-powered smartwatch designed from the ground up. Premium hardware meets intelligent software. Be among the first to know.</p>
-
-        <div class="form-card">
-            <h2>Investor Interest</h2>
-            <p>Get early access to our pitch deck and investment details.</p>
-
-            <form id="investorForm" action="https://formsubmit.co/griffin@mint-ai.tech" method="POST">
-                <input type="hidden" name="_subject" value="New Investor Interest — MintAI">
-                <input type="hidden" name="_captcha" value="false">
-                <input type="hidden" name="_next" value="https://mint-ai.tech/thanks.html">
-                <input type="text" name="_honey" style="display:none">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <input type="text" id="firstName" name="firstName" placeholder="John" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name</label>
-                        <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" placeholder="john@example.com" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="company">Company / Fund</label>
-                    <input type="text" id="company" name="company" placeholder="Acme Ventures">
-                </div>
-
-                <div class="form-group">
-                    <label for="investmentRange">Investment Range</label>
-                    <select id="investmentRange" name="investmentRange">
-                        <option value="" disabled selected>Select a range</option>
-                        <option value="under-50k">Under $50K</option>
-                        <option value="50k-250k">$50K - $250K</option>
-                        <option value="250k-1m">$250K - $1M</option>
-                        <option value="1m-plus">$1M+</option>
-                    </select>
-                </div>
-
-                <div class="form-group">
-                    <label for="message">Message (Optional)</label>
-                    <textarea id="message" name="message" placeholder="Tell us about your interest..."></textarea>
-                </div>
-
-                <button type="submit" class="submit-btn">Request Pitch Deck</button>
-            </form>
+    <!-- ===================== HOME / HERO ===================== -->
+    <section class="hero" id="home">
+        <div class="pill-tag">
+            <span class="pulse-dot"></span>
+            Coming Soon
         </div>
-
-        <div class="footer">
-            &copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a>
+        <h1 class="hero-title">The Future of <span class="accent">Smart Wearables</span></h1>
+        <p class="hero-subtitle">A wrist brain.</p>
+        <p class="hero-tagline">Product concept. Not selling yet. Investor interest open.</p>
+        <p class="hero-desc">AI-powered smartwatch designed from the ground up. Premium hardware meets intelligent software. Be among the first to know.</p>
+        <div class="hero-actions">
+            <a href="#products" class="cta-btn">Explore MintWatch</a>
+            <a href="#invest" class="cta-btn-outline">Request Pitch Deck</a>
         </div>
+        <div class="hero-watch">
+            <div class="hw-band-top"></div>
+            <div class="hw-body">
+                <div class="hw-crown"></div>
+                <div class="hw-screen">M</div>
+            </div>
+            <div class="hw-band-bottom"></div>
+        </div>
+    </section>
+
+    <!-- ===================== PRODUCTS ===================== -->
+    <div class="section-divider" id="products">
+        <div class="pill-tag"><span class="pulse-dot"></span>Product Concept</div>
+        <h2><span class="glitch-text" data-text="MintWatch">MintWatch</span></h2>
+        <p>MintWatch is a concept for a next-generation AI smartwatch. It combines on-device intelligence, biometric sensing, adaptive coaching, and a custom watch experience that changes around the person wearing it.</p>
     </div>
+
+    <!-- UNDERSTAND SECTION -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Understand</div>
+                <h2 class="section-title">What MintWatch <span class="accent">Does</span></h2>
+                <p class="section-desc">MintWatch is built around the idea that a wearable should understand context before interrupting you. It learns when you recover, when you focus, when you train, and when you need less noise.</p>
+            </div>
+            <div class="quote-block animate-in delay-1">
+                <p>"You slept 8.2 hours, HRV is above baseline, and your legs recovered faster than usual. Today is a good day to push your strength goal. I'll keep notifications quiet during your 1 PM focus block."</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHO IT'S FOR -->
+    <section class="section">
+        <div class="container-wide">
+            <div class="animate-in">
+                <div class="section-label">Audience</div>
+                <h2 class="section-title">Who It's <span class="accent">For</span></h2>
+            </div>
+            <div class="audience-grid">
+                <div class="audience-card animate-in delay-1">
+                    <div class="audience-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    </div>
+                    <h3>Privacy-conscious users</h3>
+                    <p>Anyone who wants serious wearable intelligence without shipping every heartbeat to a corporate cloud.</p>
+                </div>
+                <div class="audience-card animate-in delay-2">
+                    <div class="audience-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                    </div>
+                    <h3>Builders and founders</h3>
+                    <p>People who want their watch to feel personal, programmable, and alive rather than locked into generic modes.</p>
+                </div>
+                <div class="audience-card animate-in delay-3">
+                    <div class="audience-icon">
+                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    </div>
+                    <h3>Holistic health seekers</h3>
+                    <p>People who want recovery, sleep, workouts, and focus to be understood together instead of scattered across apps.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ON-WRIST INTELLIGENCE -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Intelligence</div>
+                <h2 class="section-title">On-Wrist Intelligence &mdash; How Mint <span class="accent">Thinks</span></h2>
+                <p class="section-desc">The AI reads signals like sleep, HRV, activity, calendar context, and habits to create short recommendations instead of endless dashboards.</p>
+            </div>
+
+            <div class="pipeline">
+                <div class="pipeline-step animate-in delay-1">
+                    <div class="pipeline-num">1</div>
+                    <div class="pipeline-content">
+                        <h4>Signal intake</h4>
+                        <p>The watch reads biometrics, motion, sleep, calendar pressure, habits, and user preferences.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step animate-in delay-2">
+                    <div class="pipeline-num">2</div>
+                    <div class="pipeline-content">
+                        <h4>Baseline comparison</h4>
+                        <p>Mint compares that moment to your baseline and asks what changed, what matters, and whether action is useful.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step animate-in delay-3">
+                    <div class="pipeline-num">3</div>
+                    <div class="pipeline-content">
+                        <h4>Decision</h4>
+                        <p>The AI chooses whether to notify, stay quiet, adjust a goal, change a face, or prepare a recommendation.</p>
+                    </div>
+                </div>
+                <div class="pipeline-step animate-in delay-4">
+                    <div class="pipeline-num">4</div>
+                    <div class="pipeline-content">
+                        <h4>Output</h4>
+                        <p>The output is short, personal, and timed for the moment instead of buried inside a dashboard.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-card animate-in" style="margin-top: 28px;">
+                <h3>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                    Personal baseline
+                </h3>
+                <p>MintWatch compares your current signals against your own baseline, not a generic chart. If your HRV is high, sleep was strong, and calendar pressure is low, it can suggest a harder training day. If stress and resting heart rate climb together, it shifts toward recovery, breathing, hydration, or silence.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ADAPTIVE COACHING -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Coaching</div>
+                <h2 class="section-title">Adaptive <span class="accent">Coaching</span></h2>
+                <p class="section-desc">Short, contextual guidance for recovery, sleep, focus, stress, nutrition, and training.</p>
+                <p class="section-desc" style="margin-top: -12px; font-size: 14px; color: var(--fg-dim);">Not a voice assistant.</p>
+            </div>
+
+            <div class="coaching-callout animate-in delay-1">
+                <div>
+                    <div class="callout-text">"Recovered. Train heavier today."</div>
+                    <div class="callout-sub">Context-driven, not generic</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PERSONAL MINTOS -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Operating System</div>
+                <h2 class="section-title">Personal <span class="accent">MintOS</span></h2>
+                <p class="section-desc">A lightweight watch operating system concept generated around each wearer's preferences, routines, complications, and coaching style.</p>
+            </div>
+
+            <div class="feature-grid">
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Training suggestions based on trend data</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Stress and focus interruption control</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Complications chosen by priority</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Visual language learned during onboarding</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Battery-aware connectivity decisions</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Local-first intelligence when possible</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Context-aware network behavior</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Continuous personalization</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Recovery and readiness briefings</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Daily and workout faces</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Generated watch faces</span></div>
+                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Direct coaching language</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NATURAL ONBOARDING -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Setup</div>
+                <h2 class="section-title">Natural <span class="accent">Onboarding</span></h2>
+                <p class="section-desc">Instead of forcing users through menus, Mint can learn from plain language: how direct coaching should be, what notifications matter, what goals are active, and which suggestions should never appear again.</p>
+                <p class="section-desc">During setup, the wearer tells Mint what matters at a glance. Mint then generates multiple faces for different moments: daily, workout, sleep, travel, focus, and minimal. The goal is a watch face that feels designed for one person, not downloaded by everyone.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FACES AND COMPLICATIONS -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Faces</div>
+                <h2 class="section-title">Faces and <span class="accent">Complications</span></h2>
+                <p class="section-desc">Faces and complications shaped around the information each wearer actually checks.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONNECTIVITY -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Connectivity</div>
+                <h2 class="section-title">Phone nearby or <span class="accent">independent</span></h2>
+                <p class="section-desc">The setup asks whether the watch should depend on a nearby phone or operate independently. That answer changes how aggressively Mint uses connectivity, notifications, cloud AI, and cellular features.</p>
+            </div>
+
+            <div class="info-card animate-in delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+                    Adaptive connectivity
+                </h3>
+                <p>Designed for BLE relay when your phone is close and on-demand connectivity when it is not.</p>
+                <ul class="sub-items">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>BLE relay for efficiency</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Local-first intelligence when possible</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Context-aware network behavior</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- BATTERY-AWARE AI -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Power</div>
+                <h2 class="section-title">Battery-Aware <span class="accent">AI</span></h2>
+                <p class="section-desc">MintWatch is imagined around a low-power sentinel layer that handles basic sensing and wake triggers, while larger AI tasks run only when they are useful.</p>
+            </div>
+
+            <div class="info-card animate-in delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Dual-mode architecture
+                </h3>
+                <p>A dual-mode concept where low-power sensing stays active while heavier intelligence wakes only when needed.</p>
+                <ul class="sub-items">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Always-on lightweight sensing</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>AI wake triggers</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Battery-aware connectivity decisions</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRIVACY-FIRST ARCHITECTURE -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Trust</div>
+                <h2 class="section-title">Privacy-First <span class="accent">Architecture</span></h2>
+                <p class="section-desc">MintWatch is designed around local processing, encrypted sync, and user-owned health context so personal data stays personal.</p>
+            </div>
+
+            <div class="info-card animate-in delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    Your data, your control
+                </h3>
+                <p>MintWatch should make privacy understandable. The wearer should know what is stored, what leaves the device, what is encrypted, and what can be deleted.</p>
+                <ul class="detail-list">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Encrypted personal profile</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>User-owned data</li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Clear data controls</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box animate-in delay-2">
+                <p>Built around encrypted personal context and privacy controls instead of hidden data harvesting.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCT MOAT -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Defensibility</div>
+                <h2 class="section-title">Product <span class="accent">Moat</span></h2>
+                <p class="section-desc">MintWatch combines hardware, AI, and a personalized OS into one defensible product vision.</p>
+            </div>
+
+            <div class="info-card animate-in delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                    Personalization compounds over time
+                </h3>
+                <p>Every setup answer, dismissed suggestion, preferred coaching style, and routine pattern can make the product harder to replace. The more Mint understands, the more useful the watch becomes.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WEARABLE AI MARKET -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Market</div>
+                <h2 class="section-title">Wearable <span class="accent">AI</span> Market</h2>
+                <p class="section-desc">Wearables are moving from passive tracking into personal intelligence.</p>
+            </div>
+
+            <div class="info-card animate-in delay-1">
+                <h3>
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    AI wearables are becoming personal operating systems
+                </h3>
+                <p>Users are increasingly aware that health data needs stronger privacy and ownership.</p>
+                <p>The market is moving beyond passive tracking. MintWatch is positioned around contextual intelligence, privacy, and personalized wearable software rather than another generic fitness dashboard.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROADMAP -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Roadmap</div>
+                <h2 class="section-title">Prototype, hardware, pilots, and <span class="accent">privacy architecture</span></h2>
+                <span class="funds-label">Use of funds</span>
+            </div>
+
+            <div class="info-card animate-in delay-1" style="margin-top: 28px;">
+                <h3>
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                    Next milestones
+                </h3>
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-content">
+                            <h4>Hardware partner conversations</h4>
+                            <p>Identifying manufacturing and component partners for the first prototype run.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-content">
+                            <h4>Developer and athlete pilot</h4>
+                            <p>Hands-on testing with power users who can stress-test AI coaching and personalization.</p>
+                        </div>
+                    </div>
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"></div>
+                        <div class="roadmap-content">
+                            <h4>Private beta</h4>
+                            <p>Controlled rollout to early supporters and investors before any public availability.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== ABOUT ===================== -->
+    <div class="section-divider" id="about">
+        <div class="pill-tag">About Us</div>
+        <h2>Meet <span class="accent">Mint Technologies</span></h2>
+        <p>We're a technology company building intelligent products that respect your privacy and enhance your daily life. Our mission is to make AI personal, private, and genuinely useful.</p>
+    </div>
+
+    <!-- OUR STORY -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Our Story</div>
+                <h2 class="section-title">Technology that works <span class="accent">for you</span></h2>
+            </div>
+            <div class="text-block animate-in delay-1">
+                <p>Mint Technologies was founded on a simple belief: the best technology should work for you, not against you. In a world where most tech companies profit from your data, we chose a different path.</p>
+                <p>We're building products that put AI directly in your hands — no cloud dependency, no data harvesting, no subscriptions. Just smart, premium technology designed around the way people actually live.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT WE BELIEVE -->
+    <section class="section">
+        <div class="container-wide">
+            <div class="animate-in">
+                <div class="section-label">Values</div>
+                <h2 class="section-title">What We <span class="accent">Believe</span></h2>
+            </div>
+            <div class="values">
+                <div class="value-card animate-in delay-1">
+                    <h3>Privacy by Design</h3>
+                    <p>Your data belongs to you. We process on-device first, and never sell or share your personal information.</p>
+                </div>
+                <div class="value-card animate-in delay-2">
+                    <h3>Flexible Plans</h3>
+                    <p>A free tier that covers the basics, and optional plans that scale with how much AI power you need. No ads, no data monetization — ever.</p>
+                </div>
+                <div class="value-card animate-in delay-3">
+                    <h3>Premium Quality</h3>
+                    <p>We use the best materials and engineering available. No corners cut, no compromises on build quality.</p>
+                </div>
+                <div class="value-card animate-in delay-4">
+                    <h3>AI That Adapts</h3>
+                    <p>Our AI learns your patterns and preferences over time, becoming more useful the longer you use it.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOOKING AHEAD -->
+    <section class="section">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Looking Ahead</div>
+                <h2 class="section-title">Just the <span class="accent">beginning</span></h2>
+            </div>
+            <div class="text-block animate-in delay-1">
+                <p>We're currently developing our first product — an AI-powered smartwatch that brings our vision to life on your wrist. It's just the beginning. We see a future where intelligent, privacy-first technology is woven into everyday objects, making life simpler without giving up what matters most.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== INVEST / INVESTOR INTEREST ===================== -->
+    <section class="cta-section" id="invest">
+        <div class="container center">
+            <div class="animate-in">
+                <div class="section-label">Interest</div>
+                <h2 class="section-title">Investor <span class="accent">Interest</span></h2>
+                <p class="section-desc" style="margin: 0 auto;">MintWatch is not selling to customers yet. This is for early investor interest, strategic partners, and people who want to help bring a privacy-first AI wearable to market. We're raising our seed round — interested in being part of the journey?</p>
+            </div>
+
+            <div class="role-selector animate-in delay-1">
+                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Investor%20Interest" class="role-btn">Investor</a>
+                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Future%20User%20Interest" class="role-btn">Future User</a>
+                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Hardware%20Partner" class="role-btn">Hardware Partner</a>
+                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Pilot%20Tester" class="role-btn">Pilot Tester</a>
+            </div>
+
+            <div class="form-card animate-in delay-2">
+                <h3>Request the Pitch Deck</h3>
+                <p>Get early access to our pitch deck and investment details.</p>
+
+                <form id="investorForm" action="https://formsubmit.co/griffin@mint-ai.tech" method="POST">
+                    <input type="hidden" name="_subject" value="New Investor Interest — MintAI">
+                    <input type="hidden" name="_captcha" value="false">
+                    <input type="hidden" name="_next" value="https://mint-ai.tech/thanks.html">
+                    <input type="text" name="_honey" style="display:none">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company">Company / Fund</label>
+                        <input type="text" id="company" name="company" placeholder="Acme Ventures">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="investmentRange">Investment Range</label>
+                        <select id="investmentRange" name="investmentRange">
+                            <option value="" disabled selected>Select a range</option>
+                            <option value="under-50k">Under $50K</option>
+                            <option value="50k-250k">$50K - $250K</option>
+                            <option value="250k-1m">$250K - $1M</option>
+                            <option value="1m-plus">$1M+</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Message (Optional)</label>
+                        <textarea id="message" name="message" placeholder="Tell us about your interest..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Request Pitch Deck</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="footer">
+        <div class="container">
+            <p class="disclaimer">MintWatch is not available for purchase yet. This site is a product vision and investor preview.</p>
+            <p class="copyright">&copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a></p>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        // Scroll-in animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.animate-in').forEach((el) => observer.observe(el));
+
+        // Active nav link on scroll (scroll-spy)
+        const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
+        const sections = navLinks
+            .map((link) => document.querySelector(link.getAttribute('href')))
+            .filter(Boolean);
+
+        const spy = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    const id = '#' + entry.target.id;
+                    navLinks.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === id));
+                }
+            });
+        }, { rootMargin: '-50% 0px -50% 0px' });
+
+        sections.forEach((sec) => spy.observe(sec));
+    </script>
+
 </body>
 </html>
