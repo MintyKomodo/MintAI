@@ -1613,21 +1613,22 @@
                 <p>Be among the first to follow the journey. We&rsquo;ll never share your email.</p>
 
                 <!--
-                    MailerLite subscribe form.
-                    SETUP: replace MAILERLITE_ACCOUNT_ID and MAILERLITE_FORM_ID below with the values
-                    from your MailerLite "Embedded form" -> "Custom HTML" snippet (see the action URL there).
-                    Unsubscribe + your mailing address are handled automatically by MailerLite in sent emails.
+                    MailerLite subscribe form (account 2477841 / form 191634247631504476).
+                    Posts to a hidden iframe so the visitor stays on the page; MailerLite stores
+                    the subscriber and handles unsubscribe + mailing address in sent emails.
                 -->
                 <form id="newsletterForm"
-                      action="https://assets.mailerlite.com/jsonp/MAILERLITE_ACCOUNT_ID/forms/MAILERLITE_FORM_ID/subscribe"
+                      action="https://assets.mailerlite.com/jsonp/2477841/forms/191634247631504476/subscribe"
                       method="post"
                       target="ml-hidden-iframe">
                     <div class="form-group">
                         <label for="nlEmail">Email</label>
-                        <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" required>
+                        <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" autocomplete="email" required>
                     </div>
                     <!-- simple honeypot to deter bots -->
                     <input type="text" name="b_honeypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
+                    <input type="hidden" name="ml-submit" value="1">
+                    <input type="hidden" name="anticsrf" value="true">
                     <button type="submit" class="submit-btn">Subscribe</button>
                     <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
                 </form>
