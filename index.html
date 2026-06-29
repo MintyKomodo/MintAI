@@ -1120,6 +1120,7 @@
             <a href="#products">Products</a>
             <a href="#about">About</a>
             <a href="#invest">Invest</a>
+            <a href="#newsletter">Newsletter</a>
             <a href="mailto:contact@mint-ai.tech">Contact</a>
         </div>
     </nav>
@@ -1598,6 +1599,43 @@
         </div>
     </section>
 
+    <!-- ===================== NEWSLETTER ===================== -->
+    <section class="cta-section" id="newsletter">
+        <div class="container center">
+            <div class="animate-in">
+                <div class="section-label">Build Log</div>
+                <h2 class="section-title">Follow the <span class="accent">MintWatch Build Log</span></h2>
+                <p class="section-desc" style="margin: 0 auto;">An honest, weekly look at how MintWatch is actually getting built &mdash; the wins, the engineering, and the parts we&rsquo;re still wrestling with. No hype, no spam, and you can unsubscribe with one click anytime.</p>
+            </div>
+
+            <div class="form-card animate-in delay-2">
+                <h3>Subscribe to the newsletter</h3>
+                <p>Be among the first to follow the journey. We&rsquo;ll never share your email.</p>
+
+                <!--
+                    MailerLite subscribe form.
+                    SETUP: replace MAILERLITE_ACCOUNT_ID and MAILERLITE_FORM_ID below with the values
+                    from your MailerLite "Embedded form" -> "Custom HTML" snippet (see the action URL there).
+                    Unsubscribe + your mailing address are handled automatically by MailerLite in sent emails.
+                -->
+                <form id="newsletterForm"
+                      action="https://assets.mailerlite.com/jsonp/MAILERLITE_ACCOUNT_ID/forms/MAILERLITE_FORM_ID/subscribe"
+                      method="post"
+                      target="ml-hidden-iframe">
+                    <div class="form-group">
+                        <label for="nlEmail">Email</label>
+                        <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" required>
+                    </div>
+                    <!-- simple honeypot to deter bots -->
+                    <input type="text" name="b_honeypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
+                    <button type="submit" class="submit-btn">Subscribe</button>
+                    <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
+                </form>
+                <iframe name="ml-hidden-iframe" style="display:none;" aria-hidden="true" title="newsletter"></iframe>
+            </div>
+        </div>
+    </section>
+
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
         <div class="container">
@@ -1636,6 +1674,27 @@
         }, { rootMargin: '-50% 0px -50% 0px' });
 
         sections.forEach((sec) => spy.observe(sec));
+
+        // Newsletter signup confirmation (form posts to a hidden iframe, MailerLite stores the subscriber)
+        const nlForm = document.getElementById('newsletterForm');
+        if (nlForm) {
+            nlForm.addEventListener('submit', () => {
+                const honeypot = nlForm.querySelector('[name="b_honeypot"]');
+                if (honeypot && honeypot.value) return; // likely a bot; let it post but don't celebrate
+                const email = document.getElementById('nlEmail');
+                const btn = nlForm.querySelector('.submit-btn');
+                const msg = document.getElementById('newsletterMsg');
+                // Allow the normal POST to the hidden iframe, then show confirmation.
+                setTimeout(() => {
+                    if (email) email.value = '';
+                    if (btn) { btn.textContent = 'Subscribed ✓'; btn.disabled = true; }
+                    if (msg) {
+                        msg.textContent = "You're on the list! Check your inbox to confirm your subscription.";
+                        msg.style.display = 'block';
+                    }
+                }, 500);
+            });
+        }
     </script>
 
 </body>
