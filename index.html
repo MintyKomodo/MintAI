@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MintAI — AI Smartwatch | Mint Technologies</title>
-    <meta name="description" content="MintAI is building MintWatch, a next-generation AI smartwatch combining on-device intelligence, biometric sensing, adaptive coaching, and a personalized watch experience. Privacy-first. Investor interest open.">
+    <meta name="description" content="MintWatch is a next-generation AI smartwatch combining on-device intelligence, biometric sensing, adaptive coaching, and a personalized watch experience. Privacy-first. Join the waitlist to be first to wear it.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -1119,8 +1119,8 @@
             <a href="#home">Home</a>
             <a href="#products">Products</a>
             <a href="#about">About</a>
-            <a href="#invest">Invest</a>
-            <a href="#newsletter">Newsletter</a>
+            <a href="#newsletter">Waitlist</a>
+            <a href="#invest">Investors</a>
             <a href="mailto:contact@mint-ai.tech">Contact</a>
         </div>
     </nav>
@@ -1133,11 +1133,11 @@
         </div>
         <h1 class="hero-title">The Future of <span class="accent">Smart Wearables</span></h1>
         <p class="hero-subtitle">A wrist brain.</p>
-        <p class="hero-tagline">Product concept. Not selling yet. Investor interest open.</p>
-        <p class="hero-desc">AI-powered smartwatch designed from the ground up. Premium hardware meets intelligent software. Be among the first to know.</p>
+        <p class="hero-tagline">Coming soon. Join the waitlist and be first to wear it.</p>
+        <p class="hero-desc">AI-powered smartwatch designed from the ground up. Premium hardware meets intelligent software that adapts to you. Be among the first to wear it.</p>
         <div class="hero-actions">
-            <a href="#products" class="cta-btn">Explore MintWatch</a>
-            <a href="#invest" class="cta-btn-outline">Request Pitch Deck</a>
+            <a href="#newsletter" class="cta-btn">Join the Waitlist</a>
+            <a href="#products" class="cta-btn-outline">Explore MintWatch</a>
         </div>
     </section>
 
@@ -1531,25 +1531,62 @@
         </div>
     </section>
 
-    <!-- ===================== INVEST / INVESTOR INTEREST ===================== -->
+    <!-- ===================== WAITLIST / NEWSLETTER ===================== -->
+    <section class="cta-section" id="newsletter">
+        <div class="container center">
+            <div class="animate-in">
+                <div class="section-label">Waitlist</div>
+                <h2 class="section-title">Be first to wear <span class="accent">MintWatch</span></h2>
+                <p class="section-desc" style="margin: 0 auto;">Join the waitlist for launch news, early-access pricing, and our weekly Build Log &mdash; an honest behind-the-scenes look at how MintWatch is coming together. No spam, one-click unsubscribe anytime.</p>
+            </div>
+
+            <div class="form-card animate-in delay-2">
+                <h3>Join the waitlist</h3>
+                <p>Get early access and follow the journey. We&rsquo;ll never share your email.</p>
+
+                <!--
+                    MailerLite subscribe form (account 2477841 / form 191634247631504476).
+                    Posts to a hidden iframe so the visitor stays on the page; MailerLite stores
+                    the subscriber and handles unsubscribe + mailing address in sent emails.
+                -->
+                <form id="newsletterForm"
+                      action="https://assets.mailerlite.com/jsonp/2477841/forms/191634247631504476/subscribe"
+                      method="post"
+                      target="ml-hidden-iframe">
+                    <div class="form-group">
+                        <label for="nlEmail">Email</label>
+                        <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" autocomplete="email" required>
+                    </div>
+                    <!-- simple honeypot to deter bots -->
+                    <input type="text" name="b_honeypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
+                    <input type="hidden" name="ml-submit" value="1">
+                    <input type="hidden" name="anticsrf" value="true">
+                    <button type="submit" class="submit-btn">Join the Waitlist</button>
+                    <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
+                </form>
+                <iframe name="ml-hidden-iframe" style="display:none;" aria-hidden="true" title="newsletter"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== INVESTORS & PARTNERS ===================== -->
     <section class="cta-section" id="invest">
         <div class="container center">
             <div class="animate-in">
-                <div class="section-label">Interest</div>
-                <h2 class="section-title">Investor <span class="accent">Interest</span></h2>
-                <p class="section-desc" style="margin: 0 auto;">MintWatch is not selling to customers yet. This is for early investor interest, strategic partners, and people who want to help bring a privacy-first AI wearable to market. We're raising our seed round — interested in being part of the journey?</p>
+                <div class="section-label">Investors &amp; Partners</div>
+                <h2 class="section-title">Want to help build <span class="accent">MintWatch?</span></h2>
+                <p class="section-desc" style="margin: 0 auto;">Not here to buy a watch? If you&rsquo;re an investor, hardware partner, or potential pilot tester who wants to help bring a privacy-first AI wearable to market, we&rsquo;d love to talk.</p>
             </div>
 
             <div class="role-selector animate-in delay-1">
                 <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Investor%20Interest" class="role-btn">Investor</a>
-                <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Future%20User%20Interest" class="role-btn">Future User</a>
                 <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Hardware%20Partner" class="role-btn">Hardware Partner</a>
                 <a href="mailto:griffin@mint-ai.tech?subject=MintWatch%20Pilot%20Tester" class="role-btn">Pilot Tester</a>
             </div>
 
             <div class="form-card animate-in delay-2">
                 <h3>Request the Pitch Deck</h3>
-                <p>Get early access to our pitch deck and investment details.</p>
+                <p>For investors and strategic partners &mdash; get our deck and details.</p>
 
                 <form id="investorForm" action="https://formsubmit.co/griffin@mint-ai.tech" method="POST">
                     <input type="hidden" name="_subject" value="New Investor Interest — MintAI">
@@ -1599,48 +1636,10 @@
         </div>
     </section>
 
-    <!-- ===================== NEWSLETTER ===================== -->
-    <section class="cta-section" id="newsletter">
-        <div class="container center">
-            <div class="animate-in">
-                <div class="section-label">Build Log</div>
-                <h2 class="section-title">Follow the <span class="accent">MintWatch Build Log</span></h2>
-                <p class="section-desc" style="margin: 0 auto;">An honest, weekly look at how MintWatch is actually getting built &mdash; the wins, the engineering, and the parts we&rsquo;re still wrestling with. No hype, no spam, and you can unsubscribe with one click anytime.</p>
-            </div>
-
-            <div class="form-card animate-in delay-2">
-                <h3>Subscribe to the newsletter</h3>
-                <p>Be among the first to follow the journey. We&rsquo;ll never share your email.</p>
-
-                <!--
-                    MailerLite subscribe form (account 2477841 / form 191634247631504476).
-                    Posts to a hidden iframe so the visitor stays on the page; MailerLite stores
-                    the subscriber and handles unsubscribe + mailing address in sent emails.
-                -->
-                <form id="newsletterForm"
-                      action="https://assets.mailerlite.com/jsonp/2477841/forms/191634247631504476/subscribe"
-                      method="post"
-                      target="ml-hidden-iframe">
-                    <div class="form-group">
-                        <label for="nlEmail">Email</label>
-                        <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" autocomplete="email" required>
-                    </div>
-                    <!-- simple honeypot to deter bots -->
-                    <input type="text" name="b_honeypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
-                    <input type="hidden" name="ml-submit" value="1">
-                    <input type="hidden" name="anticsrf" value="true">
-                    <button type="submit" class="submit-btn">Subscribe</button>
-                    <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
-                </form>
-                <iframe name="ml-hidden-iframe" style="display:none;" aria-hidden="true" title="newsletter"></iframe>
-            </div>
-        </div>
-    </section>
-
     <!-- ===================== FOOTER ===================== -->
     <footer class="footer">
         <div class="container">
-            <p class="disclaimer">MintWatch is not available for purchase yet. This site is a product vision and investor preview.</p>
+            <p class="disclaimer">MintWatch is not available for purchase yet. Join the waitlist to be first when it launches.</p>
             <p class="copyright">&copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a></p>
         </div>
     </footer>
