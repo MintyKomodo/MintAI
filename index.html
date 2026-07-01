@@ -1744,13 +1744,16 @@
     (function(){
       var KB=[
         {k:["price","cost","how much","expensive","pricing","money","799"],a:"MintWatch is a premium device at <b>$799</b>. On-device AI is included free &mdash; optional paid tiers add more cloud-powered AI, and core features are never locked behind a paywall."},
-        {k:["when","launch","release","date","available","ship","coming out","out yet","how soon"],a:"We're targeting a <b>2026 launch</b>. Join the waitlist and you'll be first to know the exact date, plus early-access offers."},
-        {k:["operating system","mintos","watch os","the os","which os","what os","software","runs on"],a:"MintWatch runs <b>MintOS</b> &mdash; a personal operating system generated around you. Your watch faces, complications, and coaching adapt to how you actually live, instead of a one-size-fits-all interface."},
+        {k:["operating system","mintos","watch os"," os ","the os","which os","what os","software","runs on"],a:"MintWatch runs <b>MintOS</b> &mdash; a personal operating system generated around you. Your watch faces, complications, and coaching adapt to how you actually live, instead of a one-size-fits-all interface."},
+        {k:["when","launch","release","date","available","ship","ships","shipping","coming out","out yet","how soon"],a:"We're targeting a <b>2026 launch</b>. Join the waitlist and you'll be first to know the exact date, plus early-access offers."},
         {k:["what is","whats mint","about it","tell me about","what does it do","overview","explain"],a:"MintWatch is an AI smartwatch whose software adapts to <i>you</i> &mdash; combining on-device intelligence, biometric sensing, and adaptive coaching in a premium, privacy-first design."},
+        {k:["charge","charging","usb","usbc","usb c","cable","plug","connector"],a:"MintWatch charges over <b>USB-C</b>, and we're designing for multi-day battery &mdash; so no nightly charging required."},
+        {k:["battery","last","power","how long","multi day","days on"],a:"We're designing for multi-day battery with a low-power mode for longer trips. Exact figures will be confirmed closer to launch."},
+        {k:["gps","gnss","location","navigation","navigate","route","maps","track my"],a:"MintWatch has <b>built-in GPS</b>, so you can track routes and workouts without your phone. Support for external accessories will be shared closer to launch."},
+        {k:["water","waterproof","swim","shower","rain","dive"],a:"MintWatch is built to be water-resistant for everyday wear, swims, and showers. The exact rating will be confirmed at launch."},
         {k:["buy","order","preorder","pre order","get one","purchase","where can","how do i get","sign up","waitlist","join","reserve"],a:"It's not for sale yet &mdash; join the <b>Waitlist</b> section on this page and you'll be first in line at launch, with early-access pricing."},
         {k:["privacy","private","data","secure","security","tracking","sell my"],a:"Privacy-first by design: the intelligence that matters runs on your wrist and your personal data stays yours. We don't sell your data."},
         {k:["subscription","subscribe","monthly","tier","free","plan","pay"],a:"On-device AI is free. There are optional paid tiers for more cloud AI usage, but the core experience is never gated."},
-        {k:["battery","charge","last","power","how long"],a:"We're designing for multi-day battery with a low-power mode for longer trips. Exact figures will be confirmed closer to launch."},
         {k:["iphone","ios","android","phone","samsung","compatible","work with","pixel"],a:"MintWatch is built to work with both iOS and Android &mdash; and to stand on its own with its own connectivity, so you can leave your phone behind."},
         {k:["coach","fitness","health","sleep","hrv","workout","training","recovery","exercise"],a:"MintWatch reads signals like sleep, HRV, recovery and training together, then gives short, adaptive coaching &mdash; when to push and when to rest &mdash; instead of just more charts."},
         {k:["invest","investor","partner","partnership","pitch","deck","fund"],a:"For investment or partnership, check the <b>Investors &amp; Partners</b> section, or email <b>griffin@mint-ai.tech</b>."},
@@ -1759,11 +1762,16 @@
       var DEEP=["chip","processor","cpu","soc","component","schematic","hardware spec","board","pcb","sensor model","architecture","imx","stm32","nordic","nrf","mah","teardown","bom","supplier","manufactur","patent","source code","how is it built","how do you build","how does it work internally","whats inside","what is inside","internals","firmware","model size","which ai model","what model","who makes","made of","technical details"];
       var DEEP_A="I can't get into our components, chips, or internal architecture &mdash; that's proprietary. But I'm happy to talk about what MintWatch does, its price, or when it launches!";
       var FALLBACK="Good question! I can help with price, launch timing, features, privacy, or how to get one. For anything else, email griffin@mint-ai.tech or join the waitlist.";
+      var GREET="Hey! 👋 I can tell you about MintWatch's price, 2026 launch, MintOS, features, privacy, or how to get one. What would you like to know?";
       var CHIPS=["Price?","When does it launch?","What is MintWatch?","How do I get one?","Privacy?"];
       var log=document.getElementById('mbLog'),panel=document.getElementById('mbPanel'),chips=document.getElementById('mbChips');
       function add(text,who){var d=document.createElement('div');d.className='mb-msg '+(who==='user'?'mb-user':'mb-bot');d.innerHTML=text;log.appendChild(d);log.scrollTop=log.scrollHeight;}
       function answer(q){
-        var s=q.toLowerCase().replace(/['’]/g,'').replace(/-/g,' ');
+        var raw=q.toLowerCase().trim();
+        var gw=raw.replace(/[^a-z ]/g,'').split(/\s+/).filter(Boolean);
+        var greet=['hi','hello','hey','yo','sup','hola','howdy','hiya','heya'];
+        if(gw.length<=2){for(var g=0;g<gw.length;g++){if(greet.indexOf(gw[g])>-1)return GREET;}}
+        var s=(' '+raw+' ').replace(/['’]/g,'').replace(/-/g,' ');
         for(var i=0;i<DEEP.length;i++){if(s.indexOf(DEEP[i])>-1)return DEEP_A;}
         var best=null,score=0;
         for(var j=0;j<KB.length;j++){var c=0;for(var m=0;m<KB[j].k.length;m++){if(s.indexOf(KB[j].k[m])>-1)c++;}if(c>score){score=c;best=KB[j];}}
