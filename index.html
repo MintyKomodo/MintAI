@@ -277,6 +277,29 @@
         .spec-item svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 2; flex-shrink: 0; }
         .spec-item b { color: var(--fg); font-weight: 600; }
 
+        .founder {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            max-width: 520px;
+            margin: 28px auto 0;
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            padding: 24px;
+            text-align: left;
+        }
+        .founder img {
+            width: 82px; height: 82px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 2px solid var(--accent);
+        }
+        .founder h4 { font-family: 'Sora', sans-serif; font-size: 18px; color: var(--fg); margin: 0; }
+        .founder .role { font-size: 13px; color: var(--accent); font-weight: 600; margin: 2px 0 8px; }
+        .founder p { font-size: 14px; color: var(--fg-muted); margin: 0; line-height: 1.6; }
+        @media (max-width: 520px) { .founder { flex-direction: column; text-align: center; } }
+
         /* Watch illustration */
         .hero-watch {
             margin-top: 48px;
@@ -1502,7 +1525,14 @@
         <div class="pill-tag">About Us</div>
         <h2>Meet <span class="accent">Mint Technologies</span></h2>
         <p>We're a technology company building intelligent products that respect your privacy and enhance your daily life. Our mission is to make AI personal, private, and genuinely useful.</p>
-        <p style="margin-top:16px;font-size:14px;color:var(--fg-dim);">Founded by <span style="color:var(--fg);font-weight:600;">Griffin Wyler</span></p>
+        <div class="founder">
+            <img src="/img/founder.jpg" alt="Griffin Wyler, Founder & CEO of Mint Technologies" width="82" height="82" loading="lazy">
+            <div>
+                <h4>Griffin Wyler</h4>
+                <div class="role">Founder &amp; CEO</div>
+                <p>Building MintWatch to make AI genuinely personal, private, and useful &mdash; a watch that works for you, not the other way around.</p>
+            </div>
+        </div>
     </div>
 
     <!-- OUR STORY -->
