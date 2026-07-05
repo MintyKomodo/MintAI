@@ -1105,384 +1105,74 @@
         <a href="#home" class="nav-logo"><img src="/img/mint-tech-logo.png" alt="Mint Technologies" height="60"></a>
         <div class="nav-links">
             <a href="#home">Home</a>
-            <a href="#products">Products</a>
-            <a href="#about">About</a>
+            <a href="#why">Why Us</a>
+            <a href="#what">What We Do</a>
             <a href="#newsletter">Waitlist</a>
-            <a href="investors.html">Investors</a>
-            <a href="mailto:contact@mint-ai.tech">Contact</a>
+            <a href="#contact">Contact</a>
         </div>
         <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
             <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
     </nav>
 
-    <!-- ===================== HOME / HERO ===================== -->
+    <!-- 1. INTRO -->
     <section class="hero" id="home">
-        <div class="pill-tag">
-            <span class="pulse-dot"></span>
-            Beta 2026
-        </div>
+        <div class="pill-tag"><span class="pulse-dot"></span>Beta 2026</div>
         <h1 class="hero-title">The watch that <span class="accent">builds itself around you</span></h1>
-        <p class="hero-subtitle">A private AI on your wrist &mdash; and a personal OS built around how you actually live.</p>
-        <p class="hero-desc">Every other smartwatch ships one interface for everyone. MintWatch assembles your interface, faces, and coaching around how you live, runs a private AI on-device, and keeps your data yours.</p>
+        <p class="hero-subtitle">A private AI on your wrist. An OS that adapts to you.</p>
         <div class="hero-actions">
             <a href="#newsletter" class="cta-btn">Join the Waitlist</a>
-            <a href="#products" class="cta-btn-outline">Explore MintWatch</a>
         </div>
-        <p class="hero-meta"><b>From $799</b> &middot; On-device AI free &middot; Beta 2026, ships 2027</p>
-        <p class="hero-render-soon">Renders coming soon.</p>
+        <p class="hero-meta"><b>From $799</b> &middot; Beta 2026, ships 2027</p>
     </section>
 
-    <!-- ===================== SPECS BAR ===================== -->
-    <section class="specs-bar">
-        <div class="container-wide">
+    <!-- 2. WHY US -->
+    <section class="section" id="why">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Why Us</div>
+                <h2 class="section-title">No other watch <span class="accent">does this</span></h2>
+            </div>
+            <div class="audience-grid animate-in delay-1">
+                <div class="audience-card"><h4>Yours, not everyone's</h4><p>Faces, coaching, and interface shaped around you &mdash; not one layout for all.</p></div>
+                <div class="audience-card"><h4>Private by design</h4><p>The AI runs on your wrist. Your data stays yours.</p></div>
+                <div class="audience-card"><h4>Weeks, not days</h4><p>~15-day battery. Up to 77 days in adventure mode.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. WHAT WE DO -->
+    <section class="section" id="what">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">What We Do</div>
+                <h2 class="section-title">One watch. <span class="accent">Built around you.</span></h2>
+                <p class="section-desc">MintWatch learns your routine and coaches your health, fitness, and focus &mdash; all from your wrist.</p>
+            </div>
+        </div>
+        <div class="container-wide" style="margin-top:32px;">
+            <div class="specs-bar" style="border:none;">
+            <div class="container-wide">
             <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg><span><b>On-device</b> AI</span></div>
             <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><b>Built-in</b> GPS</span></div>
             <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="10" x2="22" y2="14"/></svg><span><b>15-day</b> battery</span></div>
             <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><span><b>15 ATM</b> water-resistant</span></div>
             <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg><span><b>iOS + Android</b></span></div>
             <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M13 2L4.5 12.5H11l-1 9.5L18.5 11H12z"/></svg><span><b>USB-C</b> charging</span></div>
-        </div>
-    </section>
-
-    <!-- ===================== PRODUCTS ===================== -->
-    <div class="section-divider" id="products">
-        <div class="pill-tag"><span class="pulse-dot"></span>The Product</div>
-        <h2><span class="glitch-text" data-text="MintWatch">MintWatch</span></h2>
-        <p>MintWatch is a next-generation AI smartwatch. It combines on-device intelligence, biometric sensing, adaptive coaching, and a custom watch experience that reshapes itself around the person wearing it.</p>
-    </div>
-
-    <!-- UNDERSTAND SECTION -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Understand</div>
-                <h2 class="section-title">What MintWatch <span class="accent">Does</span></h2>
-                <p class="section-desc">MintWatch is built around the idea that a wearable should understand context before interrupting you. It learns when you recover, when you focus, when you train, and when you need less noise.</p>
             </div>
-            <div class="quote-block animate-in delay-1">
-                <p>"You slept 8.2 hours and your HRV is above baseline, so recovery looks strong. Today is a good day to push your strength goal. I'll keep notifications quiet during your 1 PM focus block."</p>
             </div>
         </div>
     </section>
 
-    <!-- WHO IT'S FOR -->
-    <section class="section">
-        <div class="container-wide">
-            <div class="animate-in">
-                <div class="section-label">Made for you</div>
-                <h2 class="section-title">Built for the way <span class="accent">you live</span></h2>
-                <p class="section-desc">MintWatch adapts to your day &mdash; whether you&rsquo;re running a business, chasing a PR, or just want one device that finally makes sense.</p>
-            </div>
-            <div class="audience-grid">
-                <div class="audience-card animate-in delay-1">
-                    <div class="audience-icon">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                    </div>
-                    <h3>Business professionals</h3>
-                    <p>Calendar-aware focus, quiet hours that protect deep work, and standalone cellular so you can leave the phone behind &mdash; in a watch that looks the part.</p>
-                </div>
-                <div class="audience-card animate-in delay-2">
-                    <div class="audience-icon">
-                        <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-                    </div>
-                    <h3>Health &amp; fitness people</h3>
-                    <p>Sleep, HRV, recovery, and training read together &mdash; with adaptive coaching that tells you when to push and when to rest, not just more charts.</p>
-                </div>
-                <div class="audience-card animate-in delay-3">
-                    <div class="audience-icon">
-                        <svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                    </div>
-                    <h3>Ease-of-use seekers</h3>
-                    <p>One watch that ties your apps and devices together. Natural voice setup, sensible defaults, and no fiddly menus &mdash; it just works.</p>
-                </div>
-                <div class="audience-card animate-in delay-4">
-                    <div class="audience-icon">
-                        <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/><line x1="9" y1="1" x2="9" y2="4"/><line x1="15" y1="1" x2="15" y2="4"/><line x1="9" y1="20" x2="9" y2="23"/><line x1="15" y1="20" x2="15" y2="23"/><line x1="20" y1="9" x2="23" y2="9"/><line x1="20" y1="14" x2="23" y2="14"/><line x1="1" y1="9" x2="4" y2="9"/><line x1="1" y1="14" x2="4" y2="14"/></svg>
-                    </div>
-                    <h3>Tech enthusiasts</h3>
-                    <p>Real on-device AI, a privacy-first architecture, and hardware you can geek out over &mdash; programmable and personal instead of locked down.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ON-WRIST INTELLIGENCE -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Intelligence</div>
-                <h2 class="section-title">On-Wrist Intelligence &mdash; How Mint <span class="accent">Thinks</span></h2>
-                <p class="section-desc">The AI reads signals like sleep, HRV, activity, calendar context, and habits to create short recommendations instead of endless dashboards.</p>
-            </div>
-
-            <div class="pipeline">
-                <div class="pipeline-step animate-in delay-1">
-                    <div class="pipeline-num">1</div>
-                    <div class="pipeline-content">
-                        <h4>Signal intake</h4>
-                        <p>The watch reads biometrics, motion, sleep, calendar pressure, habits, and user preferences.</p>
-                    </div>
-                </div>
-                <div class="pipeline-step animate-in delay-2">
-                    <div class="pipeline-num">2</div>
-                    <div class="pipeline-content">
-                        <h4>Baseline comparison</h4>
-                        <p>Mint compares that moment to your baseline and asks what changed, what matters, and whether action is useful.</p>
-                    </div>
-                </div>
-                <div class="pipeline-step animate-in delay-3">
-                    <div class="pipeline-num">3</div>
-                    <div class="pipeline-content">
-                        <h4>Decision</h4>
-                        <p>The AI chooses whether to notify, stay quiet, adjust a goal, change a face, or prepare a recommendation.</p>
-                    </div>
-                </div>
-                <div class="pipeline-step animate-in delay-4">
-                    <div class="pipeline-num">4</div>
-                    <div class="pipeline-content">
-                        <h4>Output</h4>
-                        <p>The output is short, personal, and timed for the moment instead of buried inside a dashboard.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="info-card animate-in" style="margin-top: 28px;">
-                <h3>
-                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                    Personal baseline
-                </h3>
-                <p>MintWatch compares your current signals against your own baseline, not a generic chart. If your HRV is high, sleep was strong, and calendar pressure is low, it can suggest a harder training day. If stress and resting heart rate climb together, it shifts toward recovery, breathing, hydration, or silence.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ADAPTIVE COACHING -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Coaching</div>
-                <h2 class="section-title">Adaptive <span class="accent">Coaching</span></h2>
-                <p class="section-desc">Short, contextual guidance for recovery, sleep, focus, stress, nutrition, and training.</p>
-                <p class="section-desc" style="margin-top: -12px; font-size: 14px; color: var(--fg-dim);">Not a voice assistant.</p>
-            </div>
-
-            <div class="coaching-callout animate-in delay-1">
-                <div>
-                    <div class="callout-text">"Recovered. Train heavier today."</div>
-                    <div class="callout-sub">Context-driven, not generic</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- PERSONAL MINTOS -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Operating System</div>
-                <h2 class="section-title">Personal <span class="accent">MintOS</span></h2>
-                <p class="section-desc">A lightweight watch operating system built around each wearer's preferences, routines, complications, and coaching style.</p>
-            </div>
-
-            <div class="feature-grid">
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Training suggestions based on trend data</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Stress and focus interruption control</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Complications chosen by priority</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Visual language learned during onboarding</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Continuous personalization</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Recovery and readiness briefings</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Daily and workout faces</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Personalized watch faces</span></div>
-                <div class="feature-item animate-in"><div class="feature-dot"></div><span>Direct coaching language</span></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NATURAL ONBOARDING -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Setup</div>
-                <h2 class="section-title">Natural <span class="accent">Onboarding</span></h2>
-                <p class="section-desc">Instead of forcing users through menus, Mint can learn from plain language: how direct coaching should be, what notifications matter, what goals are active, and which suggestions should never appear again.</p>
-                <p class="section-desc">During setup, the wearer tells Mint what matters at a glance. Mint then generates multiple faces for different moments: daily, workout, sleep, travel, focus, and minimal. The goal is a watch face that feels designed for one person, not downloaded by everyone.</p>
-            </div>
-        </div>
-    </section>
-
-
-    <!-- CONNECTIVITY -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Connectivity</div>
-                <h2 class="section-title">Phone nearby or <span class="accent">independent</span></h2>
-                <p class="section-desc">The setup asks whether the watch should depend on a nearby phone or operate independently. That answer changes how aggressively Mint uses connectivity, notifications, cloud AI, and cellular features.</p>
-            </div>
-
-            <div class="info-card animate-in delay-1">
-                <h3>
-                    <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
-                    Adaptive connectivity
-                </h3>
-                <p>Designed for BLE relay when your phone is close and on-demand connectivity when it is not.</p>
-                <ul class="sub-items">
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>BLE relay for efficiency</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Local-first intelligence when possible</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Context-aware network behavior</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- BATTERY-AWARE AI -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Power</div>
-                <h2 class="section-title">Battery-Aware <span class="accent">AI</span></h2>
-                <p class="section-desc">Engineered for about <b>15 days</b> on a charge with typical use &mdash; and up to <b>77 days in adventure mode</b>. A low-power sentinel layer handles basic sensing and wake triggers, while larger AI tasks run only when they're useful.</p>
-            </div>
-
-            <div class="info-card animate-in delay-1">
-                <h3>
-                    <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-                    Dual-mode architecture
-                </h3>
-                <p>A dual-mode design where low-power sensing stays active while heavier intelligence wakes only when needed.</p>
-                <ul class="sub-items">
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>~15-day battery on average use</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Up to 77 days in adventure mode</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Always-on lightweight sensing</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Battery-aware connectivity decisions</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- PRIVACY-FIRST ARCHITECTURE -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Trust</div>
-                <h2 class="section-title">Privacy-First <span class="accent">Architecture</span></h2>
-                <p class="section-desc">MintWatch is designed around local processing, encrypted sync, and user-owned health context so personal data stays personal.</p>
-            </div>
-
-            <div class="info-card animate-in delay-1">
-                <h3>
-                    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    Your data, your control
-                </h3>
-                <p>MintWatch should make privacy understandable. The wearer should know what is stored, what leaves the device, what is encrypted, and what can be deleted.</p>
-                <ul class="detail-list">
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Encrypted personal profile</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>User-owned data</li>
-                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Clear data controls</li>
-                </ul>
-            </div>
-
-            <div class="highlight-box animate-in delay-2">
-                <p>Built around encrypted personal context and privacy controls instead of hidden data harvesting.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== MID CTA ===================== -->
-    <section class="cta-section">
-        <div class="container center">
-            <div class="animate-in">
-                <h2 class="section-title">Be first to wear <span class="accent">MintWatch</span></h2>
-                <p class="section-desc" style="margin:0 auto 24px;">Join the waitlist for launch news and early-access pricing &mdash; no spam, one-click unsubscribe.</p>
-                <a href="#newsletter" class="cta-btn">Join the Waitlist</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== ABOUT ===================== -->
-    <div class="section-divider" id="about">
-        <div class="pill-tag">About Us</div>
-        <h2>Meet <span class="accent">Mint Technologies</span></h2>
-        <p>We're a technology company building intelligent products that respect your privacy and enhance your daily life. Our mission is to make AI personal, private, and genuinely useful.</p>
-        <div class="founder">
-            <img src="/img/founder.jpg" alt="Griffin Wyler, Founder & CEO of Mint Technologies" width="82" height="82" loading="lazy">
-            <div>
-                <h4>Griffin Wyler</h4>
-                <div class="role">Founder &amp; CEO</div>
-                <p>I designed MintOS and trained the on-device AI model myself, and lead hardware with our PCB engineer &mdash; building a watch that works for you, not the other way around.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- OUR STORY -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Our Story</div>
-                <h2 class="section-title">Technology that works <span class="accent">for you</span></h2>
-            </div>
-            <div class="text-block animate-in delay-1">
-                <p>Mint Technologies was founded on a simple belief: the best technology should work for you, not against you. In a world where most tech companies profit from your data, we chose a different path.</p>
-                <p>We're building products that put AI directly in your hands. The intelligence that matters runs privately on your wrist, your personal data stays yours, and the core experience is never locked behind a paywall &mdash; just smart, premium technology designed around the way people actually live.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- WHAT WE BELIEVE -->
-    <section class="section">
-        <div class="container-wide">
-            <div class="animate-in">
-                <div class="section-label">Values</div>
-                <h2 class="section-title">What We <span class="accent">Believe</span></h2>
-            </div>
-            <div class="values">
-                <div class="value-card animate-in delay-1">
-                    <h3>Privacy by Design</h3>
-                    <p>Your data belongs to you. We process on-device first, and never sell or share your personal information.</p>
-                </div>
-                <div class="value-card animate-in delay-2">
-                    <h3>Flexible Plans</h3>
-                    <p>A free tier that covers the basics, and optional plans that scale with how much AI power you need. No ads, no data monetization — ever.</p>
-                </div>
-                <div class="value-card animate-in delay-3">
-                    <h3>Premium Quality</h3>
-                    <p>We use the best materials and engineering available. No corners cut, no compromises on build quality.</p>
-                </div>
-                <div class="value-card animate-in delay-4">
-                    <h3>AI That Adapts</h3>
-                    <p>Our AI learns your patterns and preferences over time, becoming more useful the longer you use it.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- LOOKING AHEAD -->
-    <section class="section">
-        <div class="container">
-            <div class="animate-in">
-                <div class="section-label">Looking Ahead</div>
-                <h2 class="section-title">Just the <span class="accent">beginning</span></h2>
-            </div>
-            <div class="text-block animate-in delay-1">
-                <p>We're currently developing our first product — an AI-powered smartwatch that brings our vision to life on your wrist. It's just the beginning. We see a future where intelligent, privacy-first technology is woven into everyday objects, making life simpler without giving up what matters most.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- ===================== WAITLIST / NEWSLETTER ===================== -->
+    <!-- 4. WAITLIST -->
     <section class="cta-section" id="newsletter">
         <div class="container center">
             <div class="animate-in">
                 <div class="section-label">Waitlist</div>
                 <h2 class="section-title">Be first to wear <span class="accent">MintWatch</span></h2>
-                <p class="section-desc" style="margin: 0 auto;">Join the waitlist for launch news, early-access pricing, and our weekly Build Log &mdash; an honest behind-the-scenes look at how MintWatch is coming together. No spam, one-click unsubscribe anytime.</p>
             </div>
-
             <div class="form-card animate-in delay-2">
-                <h3>Join the waitlist</h3>
-                <p>Get early access and follow the journey. We&rsquo;ll never share your email.</p>
-
+                <p>Launch news + early-access pricing. No spam, one-click unsubscribe.</p>
                 <!--
                     MailerLite subscribe form (account 2477841 / form 191634247631504476).
                     Posts to a hidden iframe so the visitor stays on the page; MailerLite stores
@@ -1504,6 +1194,17 @@
                     <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
                 </form>
                 <iframe name="ml-hidden-iframe" style="display:none;" aria-hidden="true" title="newsletter"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. CONTACT -->
+    <section class="section" id="contact">
+        <div class="container center">
+            <div class="animate-in">
+                <div class="section-label">Contact</div>
+                <h2 class="section-title">Talk to <span class="accent">us</span></h2>
+                <p class="section-desc" style="margin:0 auto;"><a href="mailto:contact@mint-ai.tech" style="color:var(--accent);">contact@mint-ai.tech</a><br>Griffin Wyler &mdash; Founder &amp; CEO, Mint Technologies</p>
             </div>
         </div>
     </section>
