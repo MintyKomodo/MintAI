@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Docs — MintWatch</title>
-    <meta name="description" content="MintWatch is a next-generation AI smartwatch combining on-device intelligence, biometric sensing, adaptive coaching, and a personalized watch experience. Privacy-first. Join the waitlist to be first to wear it.">
+    <title>Support the Build — MintWatch</title>
+    <meta name="description" content="Back the MintWatch build — voluntary support that helps fund prototype boards, tooling, and certification for a privacy-first AI smartwatch. Securely processed by Stripe.">
     <link rel="icon" type="image/png" href="/img/favicon.png">
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
     <meta name="theme-color" content="#2ECC71">
@@ -1104,8 +1104,144 @@
             <a href="/#why">Why Us</a>
             <a href="/#newsletter">Waitlist</a>
             <a href="/#contact">Contact</a>
+            <a href="docs.html">Docs</a>
+            <a href="donate.html" class="active">Support</a>
+        </div>
+        <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
+            <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+    </nav>
+
+    <section class="hero" style="min-height:40vh;padding-top:140px;" id="top">
+        <h1 class="hero-title">Back the <span class="accent">build</span></h1>
+        <p class="hero-subtitle">Help bring MintWatch to your wrist sooner.</p>
+    </section>
+    <section class="section" id="support">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Support</div>
+                <h2 class="section-title">Support the <span class="accent">MintWatch</span> build</h2>
+                <p class="section-desc">We're a small team building a privacy-first AI smartwatch from the ground up. If you believe in what we're making, you can chip in to help us get there faster. Every dollar goes straight into the hardware &mdash; not marketing.</p>
+                <p class="section-desc">Your support helps fund prototype boards for each new revision, tooling and machining for the titanium case, testing and safety certification, and the work to keep MintAI running privately on-device.</p>
+                <p class="section-desc" style="margin-top:12px;">
+                    <!-- STRIPE PAYMENT LINK: replace STRIPE_PAYMENT_LINK_HERE with your Stripe Payment Link (looks like https://buy.stripe.com/xxxx). In Stripe, enable "Let customers choose what to pay" so donors pick their own amount. -->
+                    <a href="STRIPE_PAYMENT_LINK_HERE" target="_blank" rel="noopener" style="display:inline-block;padding:14px 30px;background:var(--accent);color:var(--bg);font-weight:600;letter-spacing:0.03em;text-decoration:none;">Support the build &rarr;</a>
+                </p>
+                <p class="section-desc" style="font-size:14px;color:var(--fg-dim);">Give any amount &mdash; most supporters chip in $25&ndash;$100. Payments are securely handled by Stripe; we never see your card details.</p>
+                <p class="section-desc" style="font-size:13px;color:var(--fg-dim);margin-top:20px;">MintWatch is a product of Mint Technologies, a for-profit company. Contributions here are voluntary support for our development &mdash; not a purchase, pre-order, or investment. They don't entitle you to a product or equity and aren't tax-deductible. Want a watch instead? <a href="/#newsletter" style="color:var(--accent);">Join the waitlist.</a></p>
+            </div>
+        </div>
+    </section>
+
+            /* ========== FOOTER ========== */
+        .footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 0;
+            text-align: center;
+        }
+
+        .footer .disclaimer {
+            font-size: 13px;
+            color: var(--fg-dim);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 16px;
+        }
+
+        .footer .copyright {
+            font-size: 13px;
+            color: var(--fg-dim);
+        }
+
+        .footer a {
+            color: var(--fg-muted);
+            text-decoration: none;
+            transition: color 0.25s;
+        }
+
+        .footer a:hover { color: var(--accent); }
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        .animate-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .animate-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-in.delay-1 { transition-delay: 0.1s; }
+        .animate-in.delay-2 { transition-delay: 0.2s; }
+        .animate-in.delay-3 { transition-delay: 0.3s; }
+        .animate-in.delay-4 { transition-delay: 0.4s; }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            nav { padding: 0 20px; }
+            .nav-toggle { display: block; }
+            .nav-links {
+                position: fixed;
+                top: 64px; left: 0; right: 0;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0;
+                background: hsla(222, 47%, 7%, 0.98);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid var(--border-subtle);
+                padding: 8px 20px 16px;
+                display: none;
+            }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: 13px 0; font-size: 16px; border-bottom: 1px solid var(--border-card); }
+            .nav-links a:last-child { border-bottom: none; }
+
+            .audience-grid { grid-template-columns: 1fr; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .values { grid-template-columns: 1fr; }
+            .role-selector { flex-direction: column; align-items: center; }
+
+            .hero-title { letter-spacing: -2px; }
+            .section { padding: 60px 0; }
+            .section-divider { padding: 72px 24px 8px; }
+        }
+
+        @media (max-width: 520px) {
+            nav { padding: 0 16px; height: 56px; }
+            .nav-links { top: 56px; }
+
+            .hero { padding: 100px 16px 60px; min-height: auto; }
+            .hero-title { font-size: 40px; letter-spacing: -1.5px; }
+            .hero-subtitle { font-size: 18px; }
+            .hero-actions { flex-direction: column; align-items: center; }
+            .hero-actions .cta-btn, .hero-actions .cta-btn-outline { width: 100%; text-align: center; }
+
+            .section { padding: 48px 0; }
+            .section-title { font-size: 24px; letter-spacing: -0.8px; }
+
+            .audience-card, .card, .info-card, .value-card { padding: 24px 20px; }
+            .pipeline-step { padding: 18px 20px; flex-direction: column; gap: 12px; }
+            .form-card { padding: 28px 20px; }
+            .form-row { grid-template-columns: 1fr; }
+            .role-selector { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav>
+        <a href="/" class="nav-logo"><img src="/img/mint-tech-logo.png" alt="Mint Technologies" height="44"></a>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/#what">What We Do</a>
+            <a href="/#why">Why Us</a>
+            <a href="/#newsletter">Waitlist</a>
+            <a href="/#contact">Contact</a>
             <a href="docs.html" class="active">Docs</a>
-            <a href="donate.html">Support</a>
         </div>
         <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
             <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
@@ -1192,7 +1328,7 @@
     <footer class="footer">
         <div class="container">
             <p class="disclaimer">MintWatch is not available for purchase yet. Join the waitlist to be first when it launches.</p>
-            <p class="copyright">&copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a> &middot; <a href="donate.html">Support the build</a></p>
+            <p class="copyright">&copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a></p>
         </div>
     </footer>
 
