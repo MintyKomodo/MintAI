@@ -252,17 +252,14 @@
             letter-spacing: 0.04em;
         }
         .specs-bar {
-            border-top: 1px solid var(--border-subtle);
-            border-bottom: 1px solid var(--border-subtle);
-            background: var(--accent-soft);
-        }
-        .specs-bar .container-wide {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 14px 38px;
-            padding-top: 18px;
-            padding-bottom: 18px;
+            padding: 18px 20px;
+            margin-top: 2px;
+            border: 1px solid var(--border-card);
+            background: var(--accent-soft);
         }
         .spec-item {
             display: flex;
@@ -335,16 +332,18 @@
         .section.no-border { border-top: none; }
 
         .section-label {
-            display: flex;
+            display: inline-flex;
             align-items: center;
             gap: 10px;
+            padding: 7px 16px;
+            border: 1px solid var(--border-subtle);
             font-family: 'DM Sans', sans-serif;
-            font-size: 10px;
+            font-size: 12px;
             font-weight: 600;
             color: var(--accent);
             letter-spacing: 0.18em;
             text-transform: uppercase;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             background: var(--accent-soft);
         }
 
@@ -433,15 +432,18 @@
         .audience-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            gap: 24px;
+            gap: 2px;
             margin-top: 32px;
         }
 
         .audience-card {
-            background: none;
-            border: none;
-            padding: 24px 20px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-card);
+            padding: 24px;
+            transition: border-color 0.3s ease;
         }
+
+        .audience-card:hover { border-color: rgba(46, 204, 113, 0.2); }
 
         .audience-icon {
             width: 44px;
@@ -465,7 +467,8 @@
             stroke-linejoin: round;
         }
 
-        .audience-card h3 {
+        .audience-card h3,
+        .audience-card h4 {
             font-family: 'Sora', sans-serif;
             font-size: 16px;
             font-weight: 600;
@@ -474,7 +477,7 @@
             color: var(--fg);
         }
 
-        .audience-card p { font-size: 14px !important; color: var(--fg-muted) !important; line-height: 1.7 !important;
+        .audience-card p {
             font-size: 14px;
             color: var(--fg-muted);
             line-height: 1.7;
@@ -1134,18 +1137,14 @@
                 <div class="audience-card"><h4><span class="accent">01</span> &nbsp;MintOS</h4><p>Your operating system, personalized. During a short setup it learns your routine, then arranges your faces, apps, and glanceable info so what you need is already there. It keeps rearranging itself as your day, week, and goals change.</p></div>
                 <div class="audience-card"><h4><span class="accent">02</span> &nbsp;MintAI</h4><p>An AI companion that runs on the watch, not in the cloud. Talk to it and it acts: change any setting, start a workout, set reminders, summarize your notifications, explain your health in plain language. It answers instantly and works even with your phone left at home.</p></div>
             </div>
-        </div>
-        <div class="container-wide" style="margin-top:32px;">
-            <div class="specs-bar" style="border:none;">
-            <div class="container-wide">
-            <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg><span><b>On-device</b> AI</span></div>
-            <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><b>Built-in</b> GPS</span></div>
-            <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="10" x2="22" y2="14"/></svg><span><b>15-day</b> battery</span></div>
-            <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><span><b>15 ATM</b> water-resistant</span></div>
-            <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg><span><b>iOS + Android</b></span></div>
-            <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></svg><span><b>Wi-Fi + 5G</b></span></div>
-            <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M13 2L4.5 12.5H11l-1 9.5L18.5 11H12z"/></svg><span><b>USB-C</b> charging</span></div>
-            </div>
+            <div class="specs-bar animate-in delay-2">
+                <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6"/></svg><span><b>On-device</b> AI</span></div>
+                <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span><b>Built-in</b> GPS</span></div>
+                <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="18" height="10" rx="2"/><line x1="22" y1="10" x2="22" y2="14"/></svg><span><b>15-day</b> battery</span></div>
+                <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><span><b>15 ATM</b> water-resistant</span></div>
+                <div class="spec-item"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg><span><b>iOS + Android</b></span></div>
+                <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></svg><span><b>Wi-Fi + 5G</b></span></div>
+                <div class="spec-item"><svg viewBox="0 0 24 24"><path d="M13 2L4.5 12.5H11l-1 9.5L18.5 11H12z"/></svg><span><b>USB-C</b> charging</span></div>
             </div>
         </div>
     </section>
