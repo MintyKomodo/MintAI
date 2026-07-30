@@ -1115,14 +1115,10 @@
         .price-was { font-size:18px; color:var(--fg-dim); text-decoration:line-through; }
         .price-save { font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid var(--accent); padding:5px 10px; }
         .price-note { font-size:14px; color:var(--fg-muted); margin-top:12px; }
-        .qty-row { display:flex; align-items:center; gap:12px; margin:22px 0 16px; }
-        .qty-row label { font-size:13px; font-weight:600; color:var(--fg-muted); letter-spacing:0.02em; }
-        .qty-box { display:flex; align-items:center; border:1px solid var(--border-card); background:var(--input-bg); }
-        .qty-box button { width:40px; height:42px; background:none; border:none; color:var(--fg); font-size:19px; cursor:pointer; }
-        .qty-box button:hover { color:var(--accent); }
-        .qty-box span { min-width:40px; text-align:center; font-size:15px; font-weight:600; }
-        .qty-total { font-size:15px; color:var(--fg-muted); }
-        .qty-total b { color:var(--fg); }
+        /* .donate-btn is reused as an <a> here, so it needs link resets */
+        a.donate-btn { display:block; margin-top:22px; text-align:center; text-decoration:none; }
+        a.donate-btn.is-disabled { opacity:.45; cursor:not-allowed; background:transparent; color:var(--fg-dim); border-color:var(--border-card); box-shadow:none; }
+        .testmode { font-size:13px; font-weight:600; line-height:1.5; color:#ffca6b; background:rgba(255,202,107,0.08); border:1px solid rgba(255,202,107,0.35); padding:10px 12px; margin-top:20px; }
         .tier-list { display:grid; gap:12px; margin-top:24px; max-width:560px; }
         .tier { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 18px; border:1px solid var(--card-border); background:var(--card-bg); }
         .tier.live { border-color:var(--accent); background:var(--accent-soft); }
@@ -1183,22 +1179,13 @@
                     </div>
                     <p class="price-note">One MintWatch, Founders wave. Price is locked the moment you reserve, even if the launch price moves.</p>
 
-                    <div class="qty-row">
-                        <label for="qty">Quantity</label>
-                        <div class="qty-box">
-                            <button type="button" id="qty-minus" aria-label="Decrease quantity">&minus;</button>
-                            <span id="qty" aria-live="polite">1</span>
-                            <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
-                        </div>
-                        <span class="qty-total">Total <b id="qty-total">$639</b></span>
-                    </div>
-
                     <div id="preorder-widget">
                         <div id="buy-step">
-                            <button type="button" id="preorder-btn" class="donate-btn">Reserve for $639 &rarr;</button>
+                            <p id="testmode-banner" class="testmode" style="display:none;"></p>
+                            <a id="preorder-btn" class="donate-btn" href="#" role="button">Reserve for $639 &rarr;</a>
+                            <p class="price-note" style="margin-top:12px;">Quantity, shipping address, and payment are handled on Stripe's secure page. Up to 3 watches per person.</p>
                             <p id="preorder-error" class="donate-error" style="display:none;"></p>
                         </div>
-                        <div id="checkout" style="margin-top:20px;"></div>
                         <div id="preorder-return" style="display:none;"></div>
                     </div>
 
@@ -1325,91 +1312,66 @@
         }
     </script>
 
-    <!-- Stripe Embedded Checkout -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Stripe Payment Link checkout -->
     <script>
     (function () {
-        // ====== SITE OWNER: fill these two in ======
-        var STRIPE_PUBLISHABLE_KEY = "pk_live_REPLACE_ME";        // Stripe publishable key (safe to expose)
-        var WORKER_URL = "https://REPLACE_ME.workers.dev";        // deployed Cloudflare Worker URL (no trailing slash)
-        // ===========================================
+        // ====== SITE OWNER: the ONLY thing to change here ======
+        // Stripe Dashboard -> Payment links -> the MintWatch Founders preorder link.
+        // A LIVE link looks like  https://book.stripe.com/xxxxxxxx
+        // A TEST link looks like  https://book.stripe.com/test_xxxxxxxx  and takes test cards only.
+        var PAYMENT_LINK = "https://book.stripe.com/test_9B6dRb1A53d9gss9oXbbG00";
+        // =======================================================
 
-        var UNIT_PRICE = 639;   // display only. The real charge is fixed server-side in worker.js
-        var MAX_QTY = 3;
-
-        var params = new URLSearchParams(window.location.search);
-        var sessionId = params.get("session_id");
         var buyStep = document.getElementById("buy-step");
         var returnEl = document.getElementById("preorder-return");
         var errorEl = document.getElementById("preorder-error");
+        var bannerEl = document.getElementById("testmode-banner");
         var buyBtn = document.getElementById("preorder-btn");
-        var qtyEl = document.getElementById("qty");
-        var qtyTotalEl = document.getElementById("qty-total");
-        var qty = 1;
 
-        function showError(msg) { errorEl.textContent = msg; errorEl.style.display = "block"; }
-        function clearError() { errorEl.style.display = "none"; }
-
-        function renderQty() {
-            qtyEl.textContent = String(qty);
-            qtyTotalEl.textContent = "$" + (qty * UNIT_PRICE).toLocaleString();
-            buyBtn.innerHTML = "Reserve for $" + (qty * UNIT_PRICE).toLocaleString() + " &rarr;";
-        }
-
-        if (sessionId) {
-            document.getElementById("preorder-widget").querySelector("#buy-step").style.display = "none";
-            document.querySelector(".qty-row").style.display = "none";
+        // Someone who just paid comes back here via the link's redirect.
+        if (new URLSearchParams(window.location.search).has("reserved")) {
+            buyStep.style.display = "none";
             returnEl.style.display = "block";
-            returnEl.innerHTML = "<p class=\"section-desc\">Checking your reservation&hellip;</p>";
-            fetch(WORKER_URL + "/session-status?session_id=" + encodeURIComponent(sessionId))
-                .then(function (r) { return r.json(); })
-                .then(function (d) {
-                    if (d.status === "complete" || d.payment_status === "paid") {
-                        returnEl.innerHTML = "<h2 class=\"section-title\" style=\"font-size:26px;\">You're in. &#10003;</h2><p class=\"section-desc\">Your MintWatch is reserved at $639 and your Founders number is locked. A receipt is on its way to your inbox, and we will email you before your unit ships.</p><p class=\"section-desc\">Changed your mind? Email <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);\">contact@mint-ai.tech</a> any time before it ships for a full refund.</p>";
-                    } else {
-                        returnEl.innerHTML = "<p class=\"section-desc\">Your reservation was not completed and you have not been charged. <a href=\"preorder.html\" style=\"color:var(--accent);\">Try again</a>.</p>";
-                    }
-                })
-                .catch(function () {
-                    returnEl.innerHTML = "<p class=\"section-desc\">We could not confirm the reservation from here. If your card was charged you are on the list. <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);\">Email us</a> and we will check.</p>";
-                });
+            returnEl.innerHTML =
+                "<h2 class=\"section-title\" style=\"font-size:26px;\">You're in. &#10003;</h2>" +
+                "<p class=\"section-desc\">Your MintWatch is reserved at $639 and your Founders number is locked. " +
+                "Stripe has emailed your receipt, and we will be in touch well before your unit ships.</p>" +
+                "<p class=\"section-desc\">Changed your mind? Email " +
+                "<a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);\">contact@mint-ai.tech</a> " +
+                "any time before it ships for a full refund.</p>";
             return;
         }
 
-        document.getElementById("qty-minus").addEventListener("click", function () {
-            if (qty > 1) { qty--; renderQty(); clearError(); }
-        });
-        document.getElementById("qty-plus").addEventListener("click", function () {
-            if (qty < MAX_QTY) { qty++; renderQty(); clearError(); }
-            else { showError("Founders wave is limited to " + MAX_QTY + " watches per person."); }
-        });
+        // Guard 1: nobody has filled the link in.
+        if (PAYMENT_LINK.indexOf("REPLACE_ME") !== -1 || !/^https:\/\/(book|buy)\.stripe\.com\//.test(PAYMENT_LINK)) {
+            buyBtn.removeAttribute("href");
+            buyBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                errorEl.textContent = "Preorders are not switched on yet. (Site owner: paste the Stripe payment link into preorder.html.)";
+                errorEl.style.display = "block";
+            });
+            return;
+        }
 
-        buyBtn.addEventListener("click", async function () {
-            clearError();
-            if (STRIPE_PUBLISHABLE_KEY.indexOf("REPLACE_ME") !== -1 || WORKER_URL.indexOf("REPLACE_ME") !== -1) {
-                showError("Preorders are not switched on yet. (Site owner: add your Stripe publishable key and Worker URL in preorder.html.)"); return;
+        // Guard 2: a TEST link must never quietly take fake orders on the real site.
+        // It stays clickable on localhost so we can rehearse the whole flow.
+        var isTestLink = PAYMENT_LINK.indexOf("/test_") !== -1;
+        var isProdHost = /(^|\.)mint-ai\.tech$/.test(window.location.hostname);
+        if (isTestLink) {
+            bannerEl.style.display = "block";
+            bannerEl.textContent = isProdHost
+                ? "Preorders are in test mode and disabled. No real order can be placed right now."
+                : "Test mode. This link only accepts Stripe test cards, e.g. 4242 4242 4242 4242.";
+            if (isProdHost) {
+                buyBtn.removeAttribute("href");
+                buyBtn.classList.add("is-disabled");
+                buyBtn.setAttribute("aria-disabled", "true");
+                buyBtn.addEventListener("click", function (e) { e.preventDefault(); });
+                return;
             }
-            buyBtn.disabled = true; buyBtn.innerHTML = "Loading&hellip;";
-            try {
-                var res = await fetch(WORKER_URL + "/create-preorder-session", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ qty: qty })
-                });
-                var data = await res.json();
-                if (!res.ok || !data.clientSecret) { throw new Error(data.error || "Could not start checkout."); }
-                var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-                var checkout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
-                buyStep.style.display = "none";
-                document.querySelector(".qty-row").style.display = "none";
-                checkout.mount("#checkout");
-            } catch (e) {
-                showError(e.message || "Something went wrong. Please try again.");
-                buyBtn.disabled = false; renderQty();
-            }
-        });
+        }
 
-        renderQty();
+        buyBtn.setAttribute("href", PAYMENT_LINK);
     })();
     </script>
 

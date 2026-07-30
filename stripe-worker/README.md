@@ -1,13 +1,23 @@
 # MintWatch payments — Stripe embedded checkout backend
 
-This is the tiny serverless backend behind two pages:
+> ### `preorder.html` does NOT use this Worker
+> Preorders run on a **Stripe Payment Link**, which is a hosted checkout URL. No Worker, no
+> secret key, no publishable key in the HTML. The only thing `preorder.html` holds is the link
+> itself, in the `PAYMENT_LINK` constant near the bottom of the file. See
+> [Preorders](#preorders-payment-link) below.
+>
+> This Worker is still what `donate.html` needs, and its `/create-preorder-session` route is
+> kept as the **alternative** path if you ever want preorder checkout embedded in the page
+> instead of hosted by Stripe. Nothing calls it today.
+
+This is the tiny serverless backend behind `donate.html`:
 
 | Page | Route | What it charges |
 |---|---|---|
-| `preorder.html` | `POST /create-preorder-session` | **$639 per MintWatch**, fixed in `worker.js`. The browser only sends a quantity (1 to 3). |
 | `donate.html` | `POST /create-checkout-session` | A donor-chosen amount, $1 to $10,000. |
+| *(unused)* | `POST /create-preorder-session` | $639 per MintWatch, fixed in `worker.js`. Kept for the embedded-checkout option. |
 
-Both show an **embedded** Stripe form, so nobody leaves the site.
+It shows an **embedded** Stripe form, so donors never leave the site.
 
 A static GitHub Pages site can't safely talk to Stripe on its own (it can't hold a
 secret key), so this one small Cloudflare Worker does it. It's free.
@@ -59,6 +69,46 @@ Commit + deploy the site and preorders are live.
    in `worker.js`, not from the browser.
 6. When happy, swap both keys to **live** (`sk_live_` / `pk_live_`) and redeploy.
 
+---
+
+## Preorders (Payment Link)
+
+`preorder.html` points at a Stripe Payment Link. Everything below already exists in the
+**sandbox** account `acct_1TyzHXQms4FVknLq` ("Mint Technologies sandbox"):
+
+| Object | ID | Notes |
+|---|---|---|
+| Product | `prod_UyyOgp7NEPVlcm` | MintWatch — Founders Preorder, shippable, unit label "watch" |
+| Price | `price_1Tz0ReQms4FVknLqFttwF7gp` | $639.00 USD one-time, tax behavior `exclusive` |
+| Payment Link | `plink_1Tz0RsQms4FVknLqssGVKOZb` | `https://book.stripe.com/test_9B6dRb1A53d9gss9oXbbG00` |
+
+Link configuration: quantity adjustable 1 to 3, billing address required, shipping address
+limited to 25 countries, phone collected, promo codes on, submit button reads "Book",
+redirects to `/preorder.html?reserved=1` when paid, and **`restrictions.completed_sessions.limit`
+is 250**, so Stripe closes the Founders wave by itself and then shows the `inactive_message`.
+
+### These are TEST objects
+The account is a sandbox, so that URL contains `/test_` and accepts **only** Stripe test cards.
+No real money can move through it. To take real preorders you must recreate the product, price,
+and link in **live mode**, then paste the live URL (`https://book.stripe.com/…` with no `test_`)
+into `PAYMENT_LINK` in `preorder.html`.
+
+The page defends against getting this wrong:
+- A link that is not `https://book.stripe.com/…` or `https://buy.stripe.com/…` disables the button.
+- A `/test_` link **on mint-ai.tech** disables the button and says preorders are in test mode.
+- A `/test_` link on localhost stays clickable, with a test-mode banner, so you can rehearse.
+
+So publishing the site with the test link still in place cannot take fake orders. It just shows
+a disabled button.
+
+### Rehearse the flow
+1. Serve the site locally and open `/preorder.html`.
+2. Click **Reserve for $639**. You land on Stripe with "MintWatch — Founders Preorder", "$639.00
+   per watch", and a Qty control.
+3. Pay with `4242 4242 4242 4242`, any future expiry, any CVC and postcode.
+4. You should be redirected to `/preorder.html?reserved=1`, which shows "You're in."
+5. Check the Stripe Dashboard for the payment, the shipping address, and the phone number.
+
 ## Before you take real money
 - Set your **refund policy, terms, and support email** in Stripe → Settings → Public details.
   Card networks expect a preorder to state its ship window, and Stripe may ask for it.
@@ -68,6 +118,11 @@ Commit + deploy the site and preorders are live.
   deliver, that money has to go back.
 - Stripe holds funds for a physical good shipping far out; expect a reserve or a rolling payout
   hold on a new account. Talk to Stripe support before a launch push.
+- **Review the buy-now-pay-later methods.** The link currently offers Affirm, Klarna, Cash App,
+  and Amazon Pay alongside cards, because payment methods default to whatever is enabled on the
+  account. BNPL providers underwrite against prompt delivery, and a 2027 ship date is far outside
+  what they normally expect. If you want cards only, set `payment_method_types` to `["card"]` on
+  the payment link, or turn the others off in Dashboard → Settings → Payment methods.
 
 ## Notes
 - Preorder price is `PREORDER_CENTS` and the per-person cap is `PREORDER_MAX_QTY`, both in `worker.js`.
