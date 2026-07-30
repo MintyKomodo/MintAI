@@ -18,6 +18,7 @@
  *
  * ROUTES:
  *   POST /create-checkout-session   body {"amount": <dollars>}   -> { clientSecret }
+ *   POST /create-preorder-session   body {"qty": 1..3}           -> { clientSecret }
  *   GET  /session-status?session_id=cs_...                       -> { status, payment_status }
  */
 
@@ -25,6 +26,17 @@ const ALLOWED_ORIGIN = "https://mint-ai.tech";
 const RETURN_URL = "https://mint-ai.tech/donate.html?session_id={CHECKOUT_SESSION_ID}";
 const MIN_CENTS = 100;       // $1 minimum
 const MAX_CENTS = 1000000;   // $10,000 maximum
+
+// ---- MintWatch Founders preorder ----
+// The price is fixed HERE, on the server. The browser only sends a quantity, so a
+// visitor cannot edit the page and reserve a watch for $1.
+const PREORDER_CENTS = 60000;   // $600 per watch
+const PREORDER_MAX_QTY = 3;     // per-person cap for the Founders wave
+const PREORDER_RETURN_URL = "https://mint-ai.tech/preorder.html?session_id={CHECKOUT_SESSION_ID}";
+const PREORDER_COUNTRIES = [
+  "US", "CA", "GB", "IE", "AU", "NZ", "DE", "FR", "NL", "BE", "LU", "AT", "CH",
+  "ES", "PT", "IT", "SE", "NO", "DK", "FI", "PL", "CZ", "JP", "SG", "KR",
+];
 
 function cors(resp) {
   resp.headers.set("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
@@ -86,6 +98,44 @@ export default {
       return json({ clientSecret: session.client_secret });
     }
 
+    // Create an embedded Checkout Session for a MintWatch Founders preorder.
+    // Only the quantity comes from the browser; the price is PREORDER_CENTS above.
+    if (request.method === "POST" && url.pathname === "/create-preorder-session") {
+      let body;
+      try { body = await request.json(); } catch (e) { return json({ error: "Bad request." }, 400); }
+      const qty = Math.round(Number(body.qty));
+      if (!Number.isFinite(qty) || qty < 1 || qty > PREORDER_MAX_QTY) {
+        return json({ error: "Please choose between 1 and " + PREORDER_MAX_QTY + " watches." }, 400);
+      }
+      const form = new URLSearchParams();
+      form.set("mode", "payment");
+      form.set("ui_mode", "embedded");
+      form.set("return_url", PREORDER_RETURN_URL);
+      form.set("submit_type", "book");
+      form.set("line_items[0][quantity]", String(qty));
+      form.set("line_items[0][price_data][currency]", "usd");
+      form.set("line_items[0][price_data][unit_amount]", String(PREORDER_CENTS));
+      form.set("line_items[0][price_data][product_data][name]", "MintWatch Founders preorder");
+      form.set(
+        "line_items[0][price_data][product_data][description]",
+        "Reserves one MintWatch at $600 instead of the $799 launch price. Ships 2027. Fully refundable until it ships."
+      );
+      // We need a real shipping address and a way to reach the buyer before the run.
+      PREORDER_COUNTRIES.forEach(function (c, i) {
+        form.set("shipping_address_collection[allowed_countries][" + i + "]", c);
+      });
+      form.set("phone_number_collection[enabled]", "true");
+      form.set("allow_promotion_codes", "true");
+      form.set("metadata[type]", "preorder");
+      form.set("metadata[wave]", "founders");
+      form.set("metadata[qty]", String(qty));
+      const session = await stripeApi("checkout/sessions", env.STRIPE_SECRET_KEY, "POST", form);
+      if (session.error) {
+        return json({ error: (session.error && session.error.message) || "Stripe error." }, 400);
+      }
+      return json({ clientSecret: session.client_secret });
+    }
+
     // Report a session's status for the thank-you page
     if (request.method === "GET" && url.pathname === "/session-status") {
       const id = url.searchParams.get("session_id");
@@ -94,7 +144,12 @@ export default {
       if (session.error) {
         return json({ error: (session.error && session.error.message) || "Stripe error." }, 400);
       }
-      return json({ status: session.status, payment_status: session.payment_status });
+      return json({
+        status: session.status,
+        payment_status: session.payment_status,
+        amount_total: session.amount_total,
+        type: (session.metadata && session.metadata.type) || "donation",
+      });
     }
 
     return json({ error: "Not found." }, 404);

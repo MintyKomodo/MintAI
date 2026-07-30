@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support the Build — MintWatch</title>
-    <meta name="description" content="Back the MintWatch build — voluntary support that helps fund prototype boards, tooling, and certification for a privacy-first AI smartwatch. Securely processed by Stripe.">
+    <title>Preorder MintWatch: $600, save $199</title>
+    <meta name="description" content="Join early and get up to 20% off. Reserve a MintWatch for $600 instead of $799 at launch. Fully refundable until it ships. Securely processed by Stripe.">
     <link rel="icon" type="image/png" href="/img/favicon.png">
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
     <meta name="theme-color" content="#2ECC71">
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MintWatch">
-    <meta property="og:title" content="MintWatch — The AI smartwatch that adapts to you">
-    <meta property="og:description" content="A premium AI smartwatch with on-device intelligence and a personal OS. Privacy-first. Join the waitlist to be first to wear it.">
-    <meta property="og:url" content="https://mint-ai.tech/">
+    <meta property="og:title" content="Preorder MintWatch: join early, get up to 20% off">
+    <meta property="og:description" content="Join early and get up to 20% off. Reserve a MintWatch for $600 instead of $799 at launch. Fully refundable until it ships. Securely processed by Stripe.">
+    <meta property="og:url" content="https://mint-ai.tech/preorder.html">
     <meta property="og:image" content="https://mint-ai.tech/img/og-image-v2.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MintWatch — The AI smartwatch that adapts to you">
-    <meta name="twitter:description" content="A premium AI smartwatch with on-device intelligence and a personal OS. Privacy-first. Join the waitlist.">
+    <meta name="twitter:title" content="Preorder MintWatch: join early, get up to 20% off">
+    <meta name="twitter:description" content="Join early and get up to 20% off. Reserve a MintWatch for $600 instead of $799 at launch. Fully refundable until it ships. Securely processed by Stripe.">
     <meta name="twitter:image" content="https://mint-ai.tech/img/og-image-v2.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1107,6 +1107,40 @@
         .donate-btn:disabled { opacity:.6; cursor:not-allowed; }
         .donate-error { color:#ff6b6b; font-size:14px; margin-top:12px; }
     </style>
+    <style>
+        /* ===== preorder page ===== */
+        .price-card { max-width:520px; border:1px solid var(--card-border); background:var(--card-bg); padding:28px; margin-top:26px; }
+        .price-row { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+        .price-now { font-family:'Sora',sans-serif; font-size:52px; font-weight:800; letter-spacing:-2px; color:var(--fg); line-height:1; }
+        .price-was { font-size:18px; color:var(--fg-dim); text-decoration:line-through; }
+        .price-save { font-size:13px; font-weight:700; letter-spacing:0.04em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); border:1px solid var(--accent); padding:5px 10px; }
+        .price-note { font-size:14px; color:var(--fg-muted); margin-top:12px; }
+        .qty-row { display:flex; align-items:center; gap:12px; margin:22px 0 16px; }
+        .qty-row label { font-size:13px; font-weight:600; color:var(--fg-muted); letter-spacing:0.02em; }
+        .qty-box { display:flex; align-items:center; border:1px solid var(--border-card); background:var(--input-bg); }
+        .qty-box button { width:40px; height:42px; background:none; border:none; color:var(--fg); font-size:19px; cursor:pointer; }
+        .qty-box button:hover { color:var(--accent); }
+        .qty-box span { min-width:40px; text-align:center; font-size:15px; font-weight:600; }
+        .qty-total { font-size:15px; color:var(--fg-muted); }
+        .qty-total b { color:var(--fg); }
+        .tier-list { display:grid; gap:12px; margin-top:24px; max-width:560px; }
+        .tier { display:flex; justify-content:space-between; align-items:center; gap:16px; padding:16px 18px; border:1px solid var(--card-border); background:var(--card-bg); }
+        .tier.live { border-color:var(--accent); background:var(--accent-soft); }
+        .tier h5 { font-family:'Sora',sans-serif; font-size:15px; font-weight:600; color:var(--fg); margin-bottom:4px; }
+        .tier p { font-size:13px; color:var(--fg-dim); }
+        .tier .tier-price { font-family:'Sora',sans-serif; font-size:20px; font-weight:700; white-space:nowrap; }
+        .tier.live .tier-price { color:var(--accent); }
+        .tier.done .tier-price, .tier.done h5 { color:var(--fg-dim); }
+        .perk-list { list-style:none; margin-top:22px; display:grid; gap:12px; max-width:560px; }
+        .perk-list li { display:flex; gap:12px; align-items:flex-start; font-size:15px; color:var(--fg-muted); line-height:1.6; }
+        .perk-list svg { flex:0 0 18px; width:18px; height:18px; margin-top:3px; stroke:var(--accent); fill:none; stroke-width:2.4; }
+        .perk-list b { color:var(--fg); font-weight:600; }
+        @media (max-width: 640px) {
+            .price-card { padding:22px 18px; }
+            .price-now { font-size:42px; }
+            .tier { flex-direction:column; align-items:flex-start; gap:8px; }
+        }
+    </style>
 </head>
 <body>
 
@@ -1115,57 +1149,139 @@
         <a href="/" class="nav-logo"><img src="/img/mint-tech-logo.png" alt="Mint Technologies" height="44"></a>
         <div class="nav-links">
             <a href="/">Home</a>
-            <a href="/#what">What We Do</a>
-            <a href="/#why">Why Us</a>
-            <a href="/#newsletter">Waitlist</a>
-            <a href="/#contact">Contact</a>
-            <a href="preorder.html">Preorder</a>
+            <a href="/#what">Features</a>
+            <a href="/#safety">Safety</a>
+            <a href="/#privacy">Privacy</a>
+            <a href="preorder.html" class="active">Preorder</a>
             <a href="docs.html">Docs</a>
-            <a href="donate.html" class="active">Support</a>
         </div>
         <button class="nav-toggle" id="navToggle" aria-label="Menu" aria-expanded="false">
             <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
         </button>
     </nav>
 
-    <section class="hero" style="min-height:34vh;padding-top:140px;" id="top">
-        <h1 class="hero-title">Back the <span class="accent">build</span></h1>
-        <p class="hero-subtitle">Help bring MintWatch to your wrist sooner.</p>
+    <section class="hero" style="min-height:38vh;padding-top:140px;" id="top">
+        <div class="pill-tag"><span class="pulse-dot"></span>Founders wave open</div>
+        <h1 class="hero-title" style="max-width:880px;margin-left:auto;margin-right:auto;">Join early, get up to <span class="accent">20% off</span></h1>
+        <p class="hero-subtitle">Reserve a MintWatch today for $600. It is $799 at launch.</p>
+        <p class="hero-meta">Fully refundable until it ships &middot; Beta 2026, ships 2027</p>
     </section>
-    <section class="section" id="support">
+
+    <!-- PREORDER -->
+    <section class="section" id="preorder">
         <div class="container">
             <div class="animate-in">
-                <div class="section-label">Support</div>
-                <h2 class="section-title">Support the <span class="accent">MintWatch</span> build</h2>
-                <p class="section-desc">We're a small team building a privacy-first AI smartwatch from the ground up. If you believe in what we're making, you can chip in to help us get there faster. Every dollar goes straight into the hardware &mdash; not marketing.</p>
-                <p class="section-desc">Your support funds prototype boards, tooling for the titanium case, testing and certification, and keeping MintAI running privately on-device.</p>
+                <div class="section-label">Preorder</div>
+                <h2 class="section-title">Reserve your <span class="accent">MintWatch</span></h2>
+                <p class="section-desc">Preorders fund the parts we buy next: boards, the titanium case tooling, and certification. The earlier you join, the less you pay and the sooner yours ships.</p>
 
-                <div id="donate-widget" style="margin-top:28px;max-width:480px;">
-                    <div id="amount-step">
-                        <label class="donate-label">Choose an amount</label>
-                        <div class="amount-grid">
-                            <button type="button" class="amount-chip" data-amount="10">$10</button>
-                            <button type="button" class="amount-chip" data-amount="25">$25</button>
-                            <button type="button" class="amount-chip selected" data-amount="50">$50</button>
-                            <button type="button" class="amount-chip" data-amount="100">$100</button>
-                            <button type="button" class="amount-chip" data-amount="250">$250</button>
-                        </div>
-                        <div class="amount-custom">
-                            <span class="dollar">$</span>
-                            <input type="number" id="custom-amount" min="1" max="10000" step="1" inputmode="decimal" placeholder="Other amount">
-                        </div>
-                        <button type="button" id="continue-btn" class="donate-btn">Continue to payment &rarr;</button>
-                        <p id="donate-error" class="donate-error" style="display:none;"></p>
+                <div class="price-card animate-in delay-1">
+                    <div class="price-row">
+                        <span class="price-now">$600</span>
+                        <span class="price-was">$799</span>
+                        <span class="price-save">Save $199</span>
                     </div>
-                    <div id="checkout" style="margin-top:20px;"></div>
-                    <div id="donate-return" style="display:none;"></div>
-                </div>
+                    <p class="price-note">One MintWatch, Founders wave. Price is locked the moment you reserve, even if the launch price moves.</p>
 
-                <p class="section-desc" style="font-size:13px;color:var(--fg-dim);margin-top:22px;display:flex;align-items:center;gap:8px;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Payments are securely processed by Stripe. We never see your card details.
-                </p>
-                <p class="section-desc" style="font-size:13px;color:var(--fg-dim);margin-top:16px;">MintWatch is a product of Mint Technologies, a for-profit company. Contributions here are voluntary support for our development &mdash; not a purchase, pre-order, or investment. They don't entitle you to a product or equity and aren't tax-deductible. Want a watch instead? <a href="preorder.html" style="color:var(--accent);">Preorder one for $600.</a></p>
+                    <div class="qty-row">
+                        <label for="qty">Quantity</label>
+                        <div class="qty-box">
+                            <button type="button" id="qty-minus" aria-label="Decrease quantity">&minus;</button>
+                            <span id="qty" aria-live="polite">1</span>
+                            <button type="button" id="qty-plus" aria-label="Increase quantity">+</button>
+                        </div>
+                        <span class="qty-total">Total <b id="qty-total">$600</b></span>
+                    </div>
+
+                    <div id="preorder-widget">
+                        <div id="buy-step">
+                            <button type="button" id="preorder-btn" class="donate-btn">Reserve for $600 &rarr;</button>
+                            <p id="preorder-error" class="donate-error" style="display:none;"></p>
+                        </div>
+                        <div id="checkout" style="margin-top:20px;"></div>
+                        <div id="preorder-return" style="display:none;"></div>
+                    </div>
+
+                    <p class="price-note" style="display:flex;align-items:center;gap:8px;margin-top:18px;">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                        Securely processed by Stripe. We never see your card details.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WAVES -->
+    <section class="section" id="waves">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">Pricing</div>
+                <h2 class="section-title">The price goes <span class="accent">up, not down</span></h2>
+                <p class="section-desc">Every wave is a fixed number of watches. When one sells out the next one opens at a higher price, all the way to $799 on launch day.</p>
+                <div class="tier-list animate-in delay-1">
+                    <div class="tier live">
+                        <div>
+                            <h5>Founders wave &middot; open now</h5>
+                            <p>First 250 watches. Ships in the first production run.</p>
+                        </div>
+                        <div class="tier-price">$600</div>
+                    </div>
+                    <div class="tier">
+                        <div>
+                            <h5>Early wave</h5>
+                            <p>Next 750 watches. Ships in the second run.</p>
+                        </div>
+                        <div class="tier-price">$679</div>
+                    </div>
+                    <div class="tier">
+                        <div>
+                            <h5>Preorder</h5>
+                            <p>Open until launch day.</p>
+                        </div>
+                        <div class="tier-price">$729</div>
+                    </div>
+                    <div class="tier done">
+                        <div>
+                            <h5>Launch price</h5>
+                            <p>General availability, 2027.</p>
+                        </div>
+                        <div class="tier-price">$799</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHAT YOU GET -->
+    <section class="section" id="included">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">What you get</div>
+                <h2 class="section-title">More than a <span class="accent">discount</span></h2>
+                <ul class="perk-list animate-in delay-1">
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>$199 off the launch price.</b> Your $600 is locked in for good.</span></li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>First production run.</b> Founders ship before anyone else.</span></li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Engraved Founders serial.</b> A numbered case back, only on this wave.</span></li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>Build updates from the bench.</b> Real photos, real schedules, including the parts that slip.</span></li>
+                    <li><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg><span><b>A say in MintOS.</b> Founders vote on watchfaces and features before they ship.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- TERMS -->
+    <section class="section" id="terms">
+        <div class="container">
+            <div class="animate-in">
+                <div class="section-label">The fine print</div>
+                <h2 class="section-title">Straight answers, <span class="accent">no traps</span></h2>
+                <div class="audience-grid animate-in delay-1">
+                    <div class="audience-card"><h4>When does it ship?</h4><p>MintWatch is in development. Beta hardware runs in 2026 and Founders units ship in 2027. If that date moves we will tell you the day we know, not the week before.</p></div>
+                    <div class="audience-card"><h4>Can I get my money back?</h4><p>Yes. Your preorder is fully refundable at any time before your watch ships. Email <a href="mailto:contact@mint-ai.tech" style="color:var(--accent);">contact@mint-ai.tech</a> and we refund it in full, no questions asked.</p></div>
+                    <div class="audience-card"><h4>What am I paying today?</h4><p>The full $600 for one MintWatch, charged now. Shipping and any sales tax or import duty are calculated later, before your watch goes out.</p></div>
+                    <div class="audience-card"><h4>Is this an investment?</h4><p>No. A preorder buys a product, not equity. Mint Technologies is a for-profit company and this is a purchase.</p></div>
+                </div>
+                <p class="section-desc" style="font-size:13px;color:var(--fg-dim);margin-top:22px;">By reserving a MintWatch you agree that the product is not yet in production, that the 2027 ship window is an estimate and not a guarantee, and that you may cancel for a full refund at any point before your unit ships. Preorder pricing applies to the watch only. Questions: <a href="mailto:contact@mint-ai.tech" style="color:var(--accent);">contact@mint-ai.tech</a>.</p>
             </div>
         </div>
     </section>
@@ -1174,7 +1290,7 @@
     <footer class="footer">
         <div class="container">
             <p class="disclaimer">MintWatch is in development. Preorders are reservations for a 2027 shipment and are fully refundable until your unit ships.</p>
-            <p class="copyright">&copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a> &middot; <a href="preorder.html">Preorder</a> &middot; <a href="donate.html">Support the build</a></p>
+            <p class="copyright">&copy; 2026 Mint Technologies &mdash; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a> &middot; <a href="donate.html">Support the build</a></p>
         </div>
     </footer>
 
@@ -1192,74 +1308,20 @@
 
         document.querySelectorAll('.animate-in').forEach((el) => observer.observe(el));
 
-        // Active nav link on scroll (scroll-spy)
-        const navLinks = Array.from(document.querySelectorAll('.nav-links a[href^="#"]'));
-        const sections = navLinks
-            .map((link) => document.querySelector(link.getAttribute('href')))
-            .filter(Boolean);
-
-        const spy = new IntersectionObserver((entries) => {
-            entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    const id = '#' + entry.target.id;
-                    navLinks.forEach((l) => l.classList.toggle('active', l.getAttribute('href') === id));
-                }
+        // Mobile nav
+        const navToggle = document.getElementById('navToggle');
+        const navLinksEl = document.querySelector('.nav-links');
+        if (navToggle && navLinksEl) {
+            navToggle.addEventListener('click', () => {
+                const open = navLinksEl.classList.toggle('open');
+                navToggle.setAttribute('aria-expanded', String(open));
             });
-        }, { rootMargin: '-50% 0px -50% 0px' });
-
-        sections.forEach((sec) => spy.observe(sec));
-
-        // Mobile nav toggle
-        const navToggleBtn = document.getElementById('navToggle');
-        const navMenu = document.querySelector('.nav-links');
-        if (navToggleBtn && navMenu) {
-            navToggleBtn.addEventListener('click', () => {
-                const open = navMenu.classList.toggle('open');
-                navToggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-            });
-            navMenu.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => {
-                navMenu.classList.remove('open');
-                navToggleBtn.setAttribute('aria-expanded', 'false');
-            }));
-        }
-
-        // Newsletter signup — confirmation is tied to the actual submit round-trip (hidden iframe load),
-        // not a blind timer, so a failed/blocked POST does not show a false success.
-        const nlForm = document.getElementById('newsletterForm');
-        const nlFrame = document.querySelector('iframe[name="ml-hidden-iframe"]');
-        if (nlForm) {
-            const email = document.getElementById('nlEmail');
-            const btn = nlForm.querySelector('.submit-btn');
-            const msg = document.getElementById('newsletterMsg');
-            let submitting = false, failTimer = null;
-            function show(text, ok) {
-                if (!msg) return;
-                msg.textContent = text;
-                msg.style.color = ok ? 'var(--accent)' : '#ff6b6b';
-                msg.style.display = 'block';
-            }
-            nlForm.addEventListener('submit', () => {
-                const honeypot = nlForm.querySelector('[name="b_honeypot"]');
-                if (honeypot && honeypot.value) return; // bot; let it post but don't react
-                submitting = true;
-                if (btn) { btn.textContent = 'Joining…'; btn.disabled = true; }
-                failTimer = setTimeout(() => {
-                    if (!submitting) return;
-                    submitting = false;
-                    if (btn) { btn.textContent = 'Join the Waitlist'; btn.disabled = false; }
-                    show("Hmm, that didn't go through. Please try again, or email griffin@mint-ai.tech.", false);
-                }, 12000);
-            });
-            if (nlFrame) {
-                nlFrame.addEventListener('load', () => {
-                    if (!submitting) return; // ignore the initial about:blank load
-                    submitting = false;
-                    if (failTimer) clearTimeout(failTimer);
-                    if (email) email.value = '';
-                    if (btn) { btn.textContent = 'Subscribed ✓'; }
-                    show("You're on the list! Check your inbox to confirm your subscription.", true);
+            navLinksEl.querySelectorAll('a').forEach((a) => {
+                a.addEventListener('click', () => {
+                    navLinksEl.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
                 });
-            }
+            });
         }
     </script>
 
@@ -1272,77 +1334,82 @@
         var WORKER_URL = "https://REPLACE_ME.workers.dev";        // deployed Cloudflare Worker URL (no trailing slash)
         // ===========================================
 
+        var UNIT_PRICE = 600;   // display only. The real charge is fixed server-side in worker.js
+        var MAX_QTY = 3;
+
         var params = new URLSearchParams(window.location.search);
         var sessionId = params.get("session_id");
-        var amountStep = document.getElementById("amount-step");
-        var returnEl = document.getElementById("donate-return");
-        var errorEl = document.getElementById("donate-error");
-        var continueBtn = document.getElementById("continue-btn");
-        var customInput = document.getElementById("custom-amount");
-        var chips = document.querySelectorAll(".amount-chip");
-        var amount = 50;
+        var buyStep = document.getElementById("buy-step");
+        var returnEl = document.getElementById("preorder-return");
+        var errorEl = document.getElementById("preorder-error");
+        var buyBtn = document.getElementById("preorder-btn");
+        var qtyEl = document.getElementById("qty");
+        var qtyTotalEl = document.getElementById("qty-total");
+        var qty = 1;
 
         function showError(msg) { errorEl.textContent = msg; errorEl.style.display = "block"; }
         function clearError() { errorEl.style.display = "none"; }
 
+        function renderQty() {
+            qtyEl.textContent = String(qty);
+            qtyTotalEl.textContent = "$" + (qty * UNIT_PRICE).toLocaleString();
+            buyBtn.innerHTML = "Reserve for $" + (qty * UNIT_PRICE).toLocaleString() + " &rarr;";
+        }
+
         if (sessionId) {
-            amountStep.style.display = "none";
+            document.getElementById("preorder-widget").querySelector("#buy-step").style.display = "none";
+            document.querySelector(".qty-row").style.display = "none";
             returnEl.style.display = "block";
-            returnEl.innerHTML = "<p class=\"section-desc\">Checking your payment&hellip;</p>";
+            returnEl.innerHTML = "<p class=\"section-desc\">Checking your reservation&hellip;</p>";
             fetch(WORKER_URL + "/session-status?session_id=" + encodeURIComponent(sessionId))
                 .then(function (r) { return r.json(); })
                 .then(function (d) {
                     if (d.status === "complete" || d.payment_status === "paid") {
-                        returnEl.innerHTML = "<h2 class=\"section-title\" style=\"font-size:26px;\">Thank you! &#10003;</h2><p class=\"section-desc\">Your support means the world to a small team. It goes straight into building MintWatch.</p><p class=\"section-desc\"><a href=\"/#newsletter\" style=\"color:var(--accent);\">Join the waitlist</a> to follow along.</p>";
+                        returnEl.innerHTML = "<h2 class=\"section-title\" style=\"font-size:26px;\">You're in. &#10003;</h2><p class=\"section-desc\">Your MintWatch is reserved at $600 and your Founders number is locked. A receipt is on its way to your inbox, and we will email you before your unit ships.</p><p class=\"section-desc\">Changed your mind? Email <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);\">contact@mint-ai.tech</a> any time before it ships for a full refund.</p>";
                     } else {
-                        returnEl.innerHTML = "<p class=\"section-desc\">Your payment was not completed. <a href=\"donate.html\" style=\"color:var(--accent);\">Try again</a>.</p>";
+                        returnEl.innerHTML = "<p class=\"section-desc\">Your reservation was not completed and you have not been charged. <a href=\"preorder.html\" style=\"color:var(--accent);\">Try again</a>.</p>";
                     }
                 })
                 .catch(function () {
-                    returnEl.innerHTML = "<p class=\"section-desc\">Thanks! If your card was charged, your support came through. <a href=\"donate.html\" style=\"color:var(--accent);\">Back to support</a>.</p>";
+                    returnEl.innerHTML = "<p class=\"section-desc\">We could not confirm the reservation from here. If your card was charged you are on the list. <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);\">Email us</a> and we will check.</p>";
                 });
             return;
         }
 
-        chips.forEach(function (chip) {
-            chip.addEventListener("click", function () {
-                chips.forEach(function (c) { c.classList.remove("selected"); });
-                chip.classList.add("selected");
-                amount = Number(chip.getAttribute("data-amount"));
-                customInput.value = "";
-                clearError();
-            });
+        document.getElementById("qty-minus").addEventListener("click", function () {
+            if (qty > 1) { qty--; renderQty(); clearError(); }
         });
-        customInput.addEventListener("input", function () {
-            chips.forEach(function (c) { c.classList.remove("selected"); });
-            amount = Number(customInput.value);
-            clearError();
+        document.getElementById("qty-plus").addEventListener("click", function () {
+            if (qty < MAX_QTY) { qty++; renderQty(); clearError(); }
+            else { showError("Founders wave is limited to " + MAX_QTY + " watches per person."); }
         });
 
-        continueBtn.addEventListener("click", async function () {
+        buyBtn.addEventListener("click", async function () {
             clearError();
-            if (!amount || amount < 1 || amount > 10000) { showError("Please choose an amount between $1 and $10,000."); return; }
             if (STRIPE_PUBLISHABLE_KEY.indexOf("REPLACE_ME") !== -1 || WORKER_URL.indexOf("REPLACE_ME") !== -1) {
-                showError("Donations are not switched on yet. (Site owner: add your Stripe key and Worker URL in donate.html.)"); return;
+                showError("Preorders are not switched on yet. (Site owner: add your Stripe publishable key and Worker URL in preorder.html.)"); return;
             }
-            continueBtn.disabled = true; continueBtn.innerHTML = "Loading&hellip;";
+            buyBtn.disabled = true; buyBtn.innerHTML = "Loading&hellip;";
             try {
-                var res = await fetch(WORKER_URL + "/create-checkout-session", {
+                var res = await fetch(WORKER_URL + "/create-preorder-session", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ amount: amount })
+                    body: JSON.stringify({ qty: qty })
                 });
                 var data = await res.json();
                 if (!res.ok || !data.clientSecret) { throw new Error(data.error || "Could not start checkout."); }
                 var stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
                 var checkout = await stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
-                amountStep.style.display = "none";
+                buyStep.style.display = "none";
+                document.querySelector(".qty-row").style.display = "none";
                 checkout.mount("#checkout");
             } catch (e) {
                 showError(e.message || "Something went wrong. Please try again.");
-                continueBtn.disabled = false; continueBtn.innerHTML = "Continue to payment &rarr;";
+                buyBtn.disabled = false; renderQty();
             }
         });
+
+        renderQty();
     })();
     </script>
 
