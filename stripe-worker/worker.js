@@ -30,7 +30,7 @@ const MAX_CENTS = 1000000;   // $10,000 maximum
 // ---- MintWatch Founders preorder ----
 // The price is fixed HERE, on the server. The browser only sends a quantity, so a
 // visitor cannot edit the page and reserve a watch for $1.
-const PREORDER_CENTS = 60000;   // $600 per watch
+const PREORDER_CENTS = 63900;   // $639 per watch (20% off the $799 launch price)
 const PREORDER_MAX_QTY = 3;     // per-person cap for the Founders wave
 const PREORDER_RETURN_URL = "https://mint-ai.tech/preorder.html?session_id={CHECKOUT_SESSION_ID}";
 const PREORDER_COUNTRIES = [
@@ -118,7 +118,7 @@ export default {
       form.set("line_items[0][price_data][product_data][name]", "MintWatch Founders preorder");
       form.set(
         "line_items[0][price_data][product_data][description]",
-        "Reserves one MintWatch at $600 instead of the $799 launch price. Ships 2027. Fully refundable until it ships."
+        "Reserves one MintWatch at $639 instead of the $799 launch price. Ships 2027. Fully refundable until it ships."
       );
       // We need a real shipping address and a way to reach the buyer before the run.
       PREORDER_COUNTRIES.forEach(function (c, i) {

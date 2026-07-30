@@ -4,7 +4,7 @@ This is the tiny serverless backend behind two pages:
 
 | Page | Route | What it charges |
 |---|---|---|
-| `preorder.html` | `POST /create-preorder-session` | **$600 per MintWatch**, fixed in `worker.js`. The browser only sends a quantity (1 to 3). |
+| `preorder.html` | `POST /create-preorder-session` | **$639 per MintWatch**, fixed in `worker.js`. The browser only sends a quantity (1 to 3). |
 | `donate.html` | `POST /create-checkout-session` | A donor-chosen amount, $1 to $10,000. |
 
 Both show an **embedded** Stripe form, so nobody leaves the site.
@@ -50,12 +50,12 @@ Commit + deploy the site and preorders are live.
 
 ## Test it
 1. Use Stripe **test mode** keys first (`sk_test_...` on the Worker, `pk_test_...` in the pages).
-2. On `preorder.html`, pick a quantity → **Reserve for $600** → the form appears inline.
+2. On `preorder.html`, pick a quantity → **Reserve for $639** → the form appears inline.
 3. Pay with Stripe's test card `4242 4242 4242 4242`, any future date, any CVC/ZIP.
-4. You should land back on the page with **"You're in."**, and see a $600 payment plus the
+4. You should land back on the page with **"You're in."**, and see a $639 payment plus the
    shipping address in your Stripe Dashboard (test mode).
 5. Confirm the price cannot be tampered with: in DevTools, change `UNIT_PRICE` to `1` and reserve
-   again. Stripe should still charge **$600**, because the amount comes from `PREORDER_CENTS`
+   again. Stripe should still charge **$639**, because the amount comes from `PREORDER_CENTS`
    in `worker.js`, not from the browser.
 6. When happy, swap both keys to **live** (`sk_live_` / `pk_live_`) and redeploy.
 
