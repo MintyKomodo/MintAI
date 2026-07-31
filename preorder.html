@@ -1353,22 +1353,23 @@
             return;
         }
 
-        // Guard 2: a TEST link must never quietly take fake orders on the real site.
-        // It stays clickable on localhost so we can rehearse the whole flow.
+        // Guard 2: a TEST link must never take fake orders on the real site. Rather than
+        // leave a dead button on the page, fall back to the waitlist so the visitor still
+        // has somewhere to go. On localhost it stays clickable so we can rehearse.
         var isTestLink = PAYMENT_LINK.indexOf("/test_") !== -1;
         var isProdHost = /(^|\.)mint-ai\.tech$/.test(window.location.hostname);
         if (isTestLink) {
-            bannerEl.style.display = "block";
-            bannerEl.textContent = isProdHost
-                ? "Preorders are in test mode and disabled. No real order can be placed right now."
-                : "Test mode. This link only accepts Stripe test cards, e.g. 4242 4242 4242 4242.";
             if (isProdHost) {
-                buyBtn.removeAttribute("href");
-                buyBtn.classList.add("is-disabled");
-                buyBtn.setAttribute("aria-disabled", "true");
-                buyBtn.addEventListener("click", function (e) { e.preventDefault(); });
+                bannerEl.style.display = "block";
+                bannerEl.textContent = "Card payments are being switched on right now. Reservations open within days.";
+                buyBtn.setAttribute("href", "/#newsletter");
+                buyBtn.innerHTML = "Get told the moment it opens &rarr;";
+                buyBtn.nextElementSibling.textContent =
+                    "Join the list and we will email you the hour reservations go live, before we announce it anywhere else.";
                 return;
             }
+            bannerEl.style.display = "block";
+            bannerEl.textContent = "Test mode. This link only accepts Stripe test cards, e.g. 4242 4242 4242 4242.";
         }
 
         buyBtn.setAttribute("href", PAYMENT_LINK);
