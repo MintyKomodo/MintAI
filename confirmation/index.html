@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Support the build — MintWatch by Mint Technologies</title>
-    <meta name="description" content="Chip in to help build MintWatch, a privacy-first AI smartwatch. Every dollar goes into hardware, tooling, testing and certification.">
+    <title>Payment confirmation — MintWatch by Mint Technologies</title>
+    <meta name="description" content="Confirmation for your MintWatch payment.">
     <link rel="icon" type="image/png" href="/img/favicon.png">
     <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
     <meta name="theme-color" content="#F7FAF6" id="themeColor">
     <meta name="color-scheme" content="light dark">
+    <meta name="robots" content="noindex">
     <!--
         Set the theme before the first paint. If this ran at the bottom of the page
         a dark-mode visitor would get a white flash on every navigation.
@@ -284,8 +285,59 @@
             color: var(--fg-muted);
             margin-bottom: 16px;
         }
-        /* five presets, one row: auto-fit wrapped them 4 + 1 and the orphan
-           chip read as a mistake rather than a choice */
+        .amount-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .amount-chip {
+            padding: 14px 8px;
+            border-radius: 14px;
+            border: 1px solid var(--border);
+            background: var(--card);
+            color: var(--fg);
+            font-family: inherit;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+        }
+        .amount-chip:hover { border-color: var(--accent-bright); transform: translateY(-2px); }
+        .amount-chip.selected {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent-deep);
+        }
+        .amount-custom {
+            position: relative;
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .amount-custom .dollar {
+            position: absolute;
+            left: 18px;
+            font-size: 16px;
+            color: var(--fg-dim);
+            pointer-events: none;
+        }
+        .amount-custom input {
+            width: 100%;
+            padding: 14px 18px 14px 34px;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            background: var(--card);
+            color: var(--fg);
+            font-family: inherit;
+            font-size: 16px;
+            text-align: center;
+        }
+        .amount-custom input:focus {
+            outline: none;
+            border-color: var(--accent-bright);
+            box-shadow: 0 0 0 4px var(--focus-ring);
+        }
         .donate-btn {
             display: inline-flex;
             align-items: center;
@@ -336,6 +388,44 @@
             color: var(--fg-dim);
             margin-top: 18px;
         }
+
+        /* ========== PAYMENT CONFIRMATION ========== */
+        /* One mark, three states. Showing the wrong one for even a moment reads
+           as "it failed", so the page opens on the neutral clock and only
+           commits once Stripe has actually answered. */
+        .status-mark {
+            width: 74px; height: 74px;
+            margin: 0 auto 22px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            background: var(--accent-soft);
+        }
+        .status-mark svg { width: 34px; height: 34px; fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; display: none; }
+        .status-mark[data-state="checking"] .ico-wait { display: block; stroke: var(--fg-muted); }
+        .status-mark[data-state="checking"] { background: var(--card-alt); }
+        .status-mark[data-state="paid"] .ico-tick { display: block; stroke: var(--accent); }
+        .status-mark[data-state="failed"] .ico-warn { display: block; stroke: #C4762B; }
+        .status-mark[data-state="failed"] { background: rgba(196, 118, 43, 0.14); }
+
+        .receipt {
+            text-align: left;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 24px;
+        }
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 13px 18px;
+            font-size: 15px;
+            border-bottom: 1px solid var(--border-soft);
+        }
+        .receipt-row:last-child { border-bottom: none; }
+        .receipt-row span { color: var(--fg-muted); }
+        .receipt-row b { font-weight: 600; text-align: right; }
+        .receipt .mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; word-break: break-all; }
 
         /* ========== FOOTER ========== */
         .footer {
@@ -390,8 +480,8 @@
             <a href="/#colours">Colours</a>
             <a href="/#health">Health</a>
             <a href="/#privacy">Privacy</a>
-            <a href="docs.html">Docs</a>
-            <a href="donate.html" class="active">Support</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/donate.html">Support</a>
             <a href="/#newsletter" class="nav-cta">Waitlist</a>
         </div>
         <div class="nav-right">
@@ -407,39 +497,36 @@
     </nav>
 
     <section class="hero" id="top">
-        <h1 class="hero-title">Back the <span class="accent">build</span></h1>
-        <p class="hero-subtitle">Help bring MintWatch to your wrist sooner.</p>
+        <div class="status-mark" id="statusMark" data-state="checking">
+            <svg class="ico-tick" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+            <svg class="ico-wait" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
+            <svg class="ico-warn" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l9 16H3z"/><path d="M12 10v4"/><path d="M12 17.2v.1"/></svg>
+        </div>
+        <h1 class="hero-title" id="statusTitle">Checking your <span class="accent">payment</span></h1>
+        <p class="hero-subtitle" id="statusLead">One moment while we confirm it with Stripe.</p>
     </section>
 
-    <section class="section" id="support">
+    <section class="section">
         <div class="container center">
-            <div class="animate-in">
-                <div class="section-label">Support</div>
-                <h2 class="section-title">Support the <span class="accent">MintWatch</span> build</h2>
-                <p class="section-desc">We are a small team building a privacy-first AI smartwatch from the ground up. If you believe in what we are making, you can chip in and help us get there faster. Every dollar goes into the hardware, not into marketing.</p>
-                <p class="section-desc">Your support funds prototype boards, tooling for the case, testing and certification, and keeping MintAI running privately on the watch.</p>
+            <div class="support-card animate-in">
+                <div id="receipt" class="receipt" hidden>
+                    <div class="receipt-row"><span>Amount</span><b id="rAmount">&mdash;</b></div>
+                    <div class="receipt-row"><span>Status</span><b id="rStatus">&mdash;</b></div>
+                    <div class="receipt-row"><span>Reference</span><b id="rRef" class="mono">&mdash;</b></div>
+                </div>
+                <p class="section-desc" id="statusBody" style="margin-bottom:0;">Hold tight.</p>
+                <div style="margin-top:26px;" id="statusActions">
+                    <a href="/" class="donate-btn" style="width:auto;padding-left:34px;padding-right:34px;">Back to MintWatch</a>
+                </div>
             </div>
-
-            <div class="support-card animate-in delay-1" id="donate-widget">
-                <p class="donate-label">Support the build</p>
-                <p class="section-desc" style="margin-bottom:22px;">Any amount helps. Payment is handled on Stripe's secure page, and you can stop at any point before you confirm.</p>
-                <a id="continue-btn" class="donate-btn" href="https://buy.stripe.com/00w00l4KyaOrc1x3FpcQU00">Continue to payment &rarr;</a>
-                <p id="donate-error" class="donate-error" style="display:none;"></p>
-
-                <p class="secure">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Securely processed by Stripe. We never see your card details.
-                </p>
-            </div>
-
-            <p class="fineprint animate-in">MintWatch is a product of Mint Technologies, a for-profit company. Contributions here are voluntary support for development, not a purchase, a preorder or an investment. They do not entitle you to a product or to equity, and they are not tax-deductible. Want a watch instead? <a href="/#newsletter">Join the waitlist.</a></p>
+            <p class="fineprint animate-in">Questions about a payment? Write to <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a> with your reference and a person will answer. Want to follow the build? <a href="/#newsletter">Join the waitlist</a> or read <a href="/docs.html">the docs</a>.</p>
         </div>
     </section>
 
     <footer class="footer">
         <div class="container">
             <p class="disclaimer">MintWatch is in development and not available for purchase yet. Join the waitlist to be first when it launches.</p>
-            <p class="copyright">&copy; 2026 Mint Technologies &middot; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a> &middot; <a href="/">Home</a> &middot; <a href="docs.html">Docs</a> &middot; <a href="donate.html">Support the build</a></p>
+            <p class="copyright">&copy; 2026 Mint Technologies &middot; <a href="mailto:contact@mint-ai.tech">contact@mint-ai.tech</a> &middot; <a href="/">Home</a> &middot; <a href="/docs.html">Docs</a> &middot; <a href="/donate.html">Support the build</a></p>
         </div>
     </footer>
 
@@ -497,14 +584,112 @@
                 });
             });
         }
-
     </script>
-    <!-- Payments run on a Stripe Payment Link, so this page needs no Stripe.js,
-         no Cloudflare Worker and no secret key. The only thing that lives here is
-         the link itself, which is public by design.
 
-         SITE OWNER: set the link's "after payment" redirect in the Stripe dashboard to
-             https://mint-ai.tech/confirmation/?session_id={CHECKOUT_SESSION_ID}
-         or payers will land on Stripe's own generic receipt page instead of ours. -->
+    <!-- Payment confirmation -->
+    <script>
+    (function () {
+        // Must match donate.html. When it is still a placeholder the page cannot
+        // verify anything, so it says so rather than inventing a confirmation.
+        var WORKER_URL = "https://REPLACE_ME.workers.dev";
+
+        var params = new URLSearchParams(window.location.search);
+        var sessionId = params.get("session_id");
+        var mark = document.getElementById("statusMark");
+        var title = document.getElementById("statusTitle");
+        var lead = document.getElementById("statusLead");
+        var body = document.getElementById("statusBody");
+        var actions = document.getElementById("statusActions");
+        var receipt = document.getElementById("receipt");
+
+        function money(cents, currency) {
+            try {
+                return new Intl.NumberFormat(undefined, {
+                    style: "currency",
+                    currency: (currency || "usd").toUpperCase()
+                }).format(cents / 100);
+            } catch (e) {
+                return "$" + (cents / 100).toFixed(2);
+            }
+        }
+
+        function set(state, h1, sub, text) {
+            mark.setAttribute("data-state", state);
+            title.innerHTML = h1;
+            lead.textContent = sub;
+            body.innerHTML = text;
+        }
+
+        function showReceipt(amount, currency, status) {
+            document.getElementById("rAmount").textContent =
+                amount == null ? "—" : money(amount, currency);
+            document.getElementById("rStatus").textContent = status;
+            document.getElementById("rRef").textContent = sessionId || "—";
+            receipt.hidden = false;
+        }
+
+        function paid(amount, currency) {
+            set("paid",
+                "Payment <span class=\"accent\">confirmed</span>",
+                "Thank you. That goes straight into the build.",
+                "Stripe has emailed your receipt. Keep it: it is the record of the payment, and it has everything support would need.");
+            if (sessionId) showReceipt(amount, currency, "Paid");
+            actions.innerHTML =
+                '<a href="/" class="donate-btn" style="width:auto;padding-left:34px;padding-right:34px;">Back to MintWatch</a>';
+        }
+
+        function notPaid(msg) {
+            set("failed",
+                "Payment <span class=\"accent\">not completed</span>",
+                "Nothing has been charged.",
+                msg || "The checkout was closed before it finished. You can pick up where you left off whenever you like.");
+            actions.innerHTML =
+                '<a href="/donate.html" class="donate-btn" style="width:auto;padding-left:34px;padding-right:34px;">Try again</a>';
+        }
+
+        // No session id at all: someone reached this page directly rather than
+        // through a checkout. Do not claim a payment happened.
+        if (!sessionId) {
+            set("paid",
+                "Thank <span class=\"accent\">you</span>",
+                "That genuinely helps, and it goes straight into the build.",
+                "If you have just paid, Stripe has emailed your receipt. Anything look wrong? Write to <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);font-weight:600;\">contact@mint-ai.tech</a>.");
+            return;
+        }
+
+        // A session id but nowhere to verify it. Stripe only redirects here after
+        // a successful payment, so treat it as paid, but be honest that the
+        // receipt is the authority and not this page.
+        if (WORKER_URL.indexOf("REPLACE_ME") !== -1) {
+            set("paid",
+                "Payment <span class=\"accent\">received</span>",
+                "Thank you. That goes straight into the build.",
+                "Stripe has emailed your receipt, which is the record of the payment. If anything looks wrong, send us that reference at <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);font-weight:600;\">contact@mint-ai.tech</a>.");
+            showReceipt(null, null, "Confirmed by Stripe");
+            return;
+        }
+
+        fetch(WORKER_URL + "/session-status?session_id=" + encodeURIComponent(sessionId))
+            .then(function (r) { return r.json(); })
+            .then(function (d) {
+                if (d.status === "complete" || d.payment_status === "paid") {
+                    paid(d.amount_total, d.currency);
+                } else if (d.payment_status === "unpaid" || d.status === "open") {
+                    notPaid();
+                } else {
+                    notPaid("Stripe reports this checkout as “" + (d.status || "unknown") + "”.");
+                }
+            })
+            .catch(function () {
+                // The lookup failed, which says nothing about the payment itself.
+                set("checking",
+                    "We could not <span class=\"accent\">reach Stripe</span>",
+                    "Your payment may well have gone through.",
+                    "Check your email for a receipt. If one arrived, you are done. If not, nothing was charged. Either way <a href=\"mailto:contact@mint-ai.tech\" style=\"color:var(--accent);font-weight:600;\">contact@mint-ai.tech</a> can confirm.");
+                showReceipt(null, null, "Unverified");
+            });
+    })();
+    </script>
+
 </body>
 </html>

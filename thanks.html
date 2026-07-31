@@ -2,88 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thank You — MintWatch</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-        :root {
-            --bg: hsl(222, 47%, 7%);
-            --accent: #2ECC71;
-            --accent-glow: rgba(46, 204, 113, 0.15);
-            --accent-soft: rgba(46, 204, 113, 0.06);
-            --fg: hsl(220, 38%, 94%);
-            --fg-muted: hsl(222, 15%, 66%);
-            --border-subtle: rgba(255, 255, 255, 0.1);
-        }
-        body {
-            font-family: 'DM Sans', -apple-system, sans-serif;
-            background: var(--bg);
-            color: var(--fg);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            -webkit-font-smoothing: antialiased;
-            position: relative;
-            overflow: hidden;
-        }
-        body::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 400px;
-            background: radial-gradient(ellipse at center, var(--accent-glow) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 0;
-        }
-        .container {
-            text-align: center;
-            padding: 40px 24px;
-            max-width: 480px;
-            position: relative;
-            z-index: 1;
-        }
-        .check {
-            width: 72px; height: 72px;
-            background: var(--accent-soft);
-            border: 2px solid var(--accent);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 24px; font-size: 32px; color: var(--accent);
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
-        h1 {
-            font-family: 'Sora', sans-serif;
-            font-size: 32px; font-weight: 800; margin-bottom: 12px; letter-spacing: -1px;
-            color: var(--fg);
-        }
-        p {
-            font-size: 16px; color: var(--fg-muted); line-height: 1.6; margin-bottom: 32px;
-        }
-        a {
-            display: inline-block; padding: 14px 32px;
-            background: var(--accent); color: var(--bg);
-            border: 1px solid var(--accent);
-            font-weight: 600; font-size: 14px; letter-spacing: 0.06em;
-            text-decoration: none; transition: all 0.25s ease;
-        }
-        a:hover {
-            background: transparent; color: var(--accent);
-            box-shadow: 0 0 20px var(--accent-glow);
-        }
-    </style>
+    <title>Redirecting&hellip;</title>
+    <meta name="robots" content="noindex">
+    <script>
+        // Carry the Stripe session through, or the confirmation page lands with
+        // nothing to look up and has to fall back to a generic thank-you.
+        location.replace("/confirmation/" + window.location.search + window.location.hash);
+    </script>
+    <meta http-equiv="refresh" content="0; url=/confirmation/">
 </head>
 <body>
-    <div class="container">
-        <div class="check">&#10003;</div>
-        <h1>Thank You!</h1>
-        <p>We've received your interest. Our team will be in touch shortly with the pitch deck and next steps.</p>
-        <a href="/">Back to MintWatch</a>
-    </div>
+    <p>This page has moved to <a href="/confirmation/">mint-ai.tech/confirmation</a>.</p>
 </body>
 </html>

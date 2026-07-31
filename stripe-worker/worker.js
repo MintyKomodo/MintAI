@@ -22,7 +22,7 @@
  */
 
 const ALLOWED_ORIGIN = "https://mint-ai.tech";
-const RETURN_URL = "https://mint-ai.tech/donate.html?session_id={CHECKOUT_SESSION_ID}";
+const RETURN_URL = "https://mint-ai.tech/confirmation/?session_id={CHECKOUT_SESSION_ID}";
 const MIN_CENTS = 100;       // $1 minimum
 const MAX_CENTS = 1000000;   // $10,000 maximum
 
