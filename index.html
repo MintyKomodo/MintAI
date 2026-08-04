@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MintWatch — AI Smartwatch by Mint Technologies</title>
     <meta name="description" content="MintWatch is a friendly AI smartwatch. It learns how you live, keeps an eye on your health, and answers right on your wrist. Private by default. Join the waitlist to be first to wear it.">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
     <meta name="theme-color" content="#F7FAF6" id="themeColor">
     <meta name="color-scheme" content="light dark">
     <!--
@@ -57,7 +57,6 @@
             /* warm daylight palette: the page should read like a bright room, not a terminal */
             --bg: #FBFBF7;
             --bg-tint: #F1F8F2;
-            --bg-warm: #FAF6EE;
             --card: #FFFFFF;
             --card-alt: #F6F8F4;
             --border: #E7E9E1;
@@ -79,6 +78,15 @@
             --btn-glow-hover: rgba(14, 146, 86, 0.28);
             --focus-ring: rgba(46, 204, 113, 0.14);
             --img-filter: none;
+            /* Veil over the light theme's alpha cutout (dark mode uses
+               --scrim-flat over its black render). One flat pass, no local lift
+               under the copy: a soft ellipse there keeps the text crisp but
+               reads as a white glow parked in the middle of the frame. Flat
+               means this one number serves both the copy's contrast and the
+               watch's presence, so the copy carries its own weight instead. */
+            --veil: rgba(251, 251, 247, 0.48);
+            --bg-a: rgba(251, 251, 247, 0.96);
+            --bg-tint-a: rgba(241, 248, 242, 0.96);
             --shadow-sm: 0 2px 8px rgba(26, 37, 31, 0.05);
             --shadow: 0 10px 30px rgba(26, 37, 31, 0.07);
             --shadow-lg: 0 24px 60px rgba(26, 37, 31, 0.10);
@@ -91,7 +99,6 @@
             /* a warm near-black with a green cast, not the blue-black of a terminal */
             --bg: #0F1512;
             --bg-tint: #121B16;
-            --bg-warm: #17150F;
             --card: #18201B;
             --card-alt: #141B17;
             --border: #26302A;
@@ -112,9 +119,12 @@
             --btn-glow: rgba(46, 204, 113, 0.20);
             --btn-glow-hover: rgba(46, 204, 113, 0.30);
             --focus-ring: rgba(63, 217, 140, 0.20);
-            /* the renders are transparent cutouts now, so there is no backdrop to
-               knock back and dimming the product just muddies it */
+            /* the renders are shot on pure black now, so there is no plate to knock
+               back and dimming the product just muddies it */
             --img-filter: none;
+            --scrim-flat: rgba(0, 0, 0, 0.46);
+            --bg-a: rgba(15, 21, 18, 0.94);
+            --bg-tint-a: rgba(18, 27, 22, 0.94);
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
             --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.46);
@@ -123,9 +133,11 @@
 
         html { scroll-behavior: smooth; }
 
+        html { background: var(--bg); }
+
         body {
             font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg);
+            background: transparent;
             color: var(--fg);
             min-height: 100vh;
             overflow-x: hidden;
@@ -134,12 +146,35 @@
             line-height: 1.6;
         }
 
+        /* The watch in profile, filling the window behind everything. It is a fixed
+           layer rather than a body background so the scrim can ride on top of it in
+           the same paint, and so it holds still while the page scrolls past.
+           background-attachment: fixed is skipped on iOS, hence position: fixed. */
+        /* Two versions of the same backdrop. Light mode gets a cut out watch over the
+           page colour, dark mode gets the render shot on black. The light layer
+           stack is: soft ellipse under the copy, light overall veil, the cutout,
+           then the page colour. */
+        .page-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background:
+                linear-gradient(var(--veil), var(--veil)),
+                url('img/view-side-cut.webp') center center / cover no-repeat var(--bg);
+            pointer-events: none;
+        }
+        :root[data-theme="dark"] .page-bg {
+            background:
+                linear-gradient(var(--scrim-flat), var(--scrim-flat)),
+                url('img/view-side.webp') center center / cover no-repeat;
+        }
+
         /* height:auto is load bearing: every <img> carries width/height attributes for
            layout stability, and without it the presentational height wins and stretches
            the render once CSS scales the width down. */
         img { max-width: 100%; height: auto; display: block; }
 
-        #home, #what, #colours, #control, #safety, #health, #battery,
+        #home, #what, #build, #control, #safety, #health, #battery,
         #privacy, #newsletter, #contact { scroll-margin-top: 90px; }
 
         /* ========== NAV ========== */
@@ -156,6 +191,35 @@
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
             border-bottom: 1px solid var(--border-soft);
+            transition: background 0.25s ease, border-color 0.25s ease;
+        }
+
+        /* At the top of the page the bar floats over the hero, and a filled bar there
+           cuts a hard seam across the top of the picture. So while it is unscrolled it
+           goes transparent. The scrolled state is the base rule above. */
+        nav:not(.scrolled) {
+            background: transparent;
+            border-bottom-color: transparent;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+        /* only dark mode puts the bar on a dark hero, so only dark mode flips its ink */
+        :root[data-theme="dark"] nav:not(.scrolled) {
+            --fg: #F1F6F2;
+            --fg-muted: #C8D5CD;
+            --accent: #4FE39A;
+            --accent-deep: #7BEEB6;
+            --btn-fg: #06150E;
+            --card: rgba(255, 255, 255, 0.10);
+            --border: rgba(255, 255, 255, 0.20);
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.30);
+        }
+        /* the mobile drop panel would inherit that translucent white and turn to soup */
+        :root[data-theme="dark"] nav:not(.scrolled) .nav-links.open {
+            background: rgba(10, 16, 13, 0.96);
+            border-bottom-color: rgba(255, 255, 255, 0.14);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
         }
 
         /* Leaf plus wordmark. The mark on its own reads as decoration; the
@@ -269,10 +333,45 @@
         }
 
         /* ========== HERO ========== */
+        /* The hero has no render of its own any more: the watch behind the page is
+           the picture. So it is sized to leave that backdrop room to be seen. */
         .hero {
             position: relative;
-            padding: 132px 24px 72px;
+            padding: 150px 24px 96px;
+            min-height: 100vh;
+            min-height: 100svh;   /* mobile browsers: discount the URL bar, not the viewport */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
             overflow: hidden;
+            text-align: center;
+        }
+
+        /* Light mode: the copy sits on the case, not on paper, and the backdrop is
+           only lightly veiled so the watch stays visible. Measured over the veiled
+           dial, the usual muted grey lands at 2.7:1. So the hero drops the muted
+           tier entirely and runs the body copy at full strength: that buys 4.5:1
+           without a local white glow behind the text. */
+        :root[data-theme="light"] .hero {
+            --fg-muted: #1A251F;
+            --fg-dim: #1A251F;
+        }
+
+        /* In dark mode the hero sits on the unkeyed render, so it borrows a light on
+           dark palette locally. In light mode it sits on the cut out over the page
+           colour, where the ordinary theme variables are already right. */
+        :root[data-theme="dark"] .hero {
+            --fg: #F1F6F2;
+            --fg-muted: #C3D0C8;
+            --fg-dim: #9DABA3;
+            --accent: #4FE39A;
+            --accent-deep: #7BEEB6;
+            --accent-soft: rgba(79, 227, 154, 0.16);
+            --btn-fg: #06150D;
+            --card: rgba(255, 255, 255, 0.09);
+            --border: rgba(255, 255, 255, 0.18);
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+            color: var(--fg);
         }
         .hero::before {
             content: '';
@@ -286,11 +385,8 @@
         .hero-inner {
             position: relative;
             max-width: 1160px;
+            width: 100%;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1.05fr 1fr;
-            gap: 56px;
-            align-items: center;
         }
 
         .hero-title {
@@ -299,35 +395,21 @@
             font-weight: 700;
             letter-spacing: -1.6px;
             line-height: 1.06;
-            margin: 22px 0 18px;
+            max-width: 900px;
+            margin: 22px auto 18px;
         }
         .hero-title .accent { color: var(--accent); }
 
         .hero-subtitle {
             font-size: clamp(18px, 2.2vw, 21px);
             color: var(--fg-muted);
-            max-width: 520px;
-            margin-bottom: 14px;
+            max-width: 620px;
+            margin: 0 auto;
         }
-        .hero-desc {
-            font-size: 16.5px;
-            color: var(--fg-muted);
-            max-width: 520px;
-        }
-
-        .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
+        .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
 
         .hero-meta { margin-top: 22px; font-size: 14px; color: var(--fg-dim); }
         .hero-meta b { color: var(--fg); font-weight: 600; }
-
-        .hero-shot {
-            position: relative;
-            border-radius: var(--r-lg);
-            overflow: hidden;
-            box-shadow: var(--shadow-lg);
-            background: var(--card-alt);
-        }
-        .hero-shot img { width: 100%; height: auto; }
 
         /* trust row under the hero */
         .trust-row {
@@ -353,12 +435,19 @@
             box-shadow: var(--shadow-sm);
         }
         .trust-chip b { color: var(--fg); font-weight: 600; }
+        /* both of these are translucent white inside the hero, so they need the blur
+           or the render shows straight through the label */
+        .hero .trust-chip, .hero .btn-outline {
+            backdrop-filter: blur(9px);
+            -webkit-backdrop-filter: blur(9px);
+        }
         .trust-chip svg { width: 17px; height: 17px; stroke: var(--accent); fill: none; stroke-width: 2; flex-shrink: 0; }
 
         /* ========== SECTIONS ========== */
-        .section { padding: 88px 0; }
-        .section.tint { background: var(--bg-tint); }
-        .section.warm { background: var(--bg-warm); }
+        /* Every section below the fold is near opaque: the backdrop is meant to carry
+           the hero, not to sit under body copy where it would fight the text. */
+        .section { padding: 88px 0; background: var(--bg-a); }
+        .section.tint { background: var(--bg-tint-a); }
 
         .section-label {
             display: inline-block;
@@ -454,65 +543,6 @@
             background: var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E9256' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
         }
         .check-list li b { color: var(--fg); font-weight: 600; }
-
-        /* ========== GALLERY (every angle) ========== */
-        /* every tile is square so the rows stay flush; a mixed-aspect tile leaves
-           a ragged gap under whichever neighbour is shorter */
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-            align-items: start;
-        }
-        .shot {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-            text-align: left;
-        }
-        .shot:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-        .shot img { width: 100%; }
-        .shot figcaption { padding: 16px 20px 20px; }
-        .shot b { display: block; font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 600; margin-bottom: 3px; }
-        .shot span { font-size: 14px; color: var(--fg-muted); }
-
-        /* ========== COLOURWAYS ========== */
-        .colour-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-            gap: 20px;
-            margin-top: 40px;
-        }
-        .colour {
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            overflow: hidden;
-            box-shadow: var(--shadow-sm);
-            transition: transform 0.22s ease, box-shadow 0.22s ease;
-            text-align: left;
-        }
-        .colour:hover { transform: translateY(-5px); box-shadow: var(--shadow); }
-        .colour img { width: 100%; }
-        .colour .name {
-            padding: 15px 18px 17px;
-            font-size: 15px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 9px;
-        }
-        .colour .swatch {
-            width: 14px; height: 14px;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 0, 0, 0.12);
-            flex-shrink: 0;
-        }
-        .colour small { display: block; font-weight: 400; color: var(--fg-dim); font-size: 13px; }
 
         /* ========== SPEC STRIP ========== */
         .spec-strip {
@@ -695,7 +725,7 @@
             background: var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233FD98C' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
         }
         /* every product render sits on a bright studio plate; knock it back on dark */
-        .hero-shot img, .split-media img, .shot img, .colour img { filter: var(--img-filter); }
+        .split-media img { filter: var(--img-filter); }
 
         /* ========== ANIMATION ========== */
         .animate-in {
@@ -714,11 +744,7 @@
 
         /* ========== RESPONSIVE ========== */
         @media (max-width: 900px) {
-            .hero { padding-top: 116px; text-align: center; }
-            .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-            .hero-subtitle, .hero-desc { margin-left: auto; margin-right: auto; }
-            .hero-actions { justify-content: center; }
-            .hero-shot { max-width: 460px; margin: 0 auto; }
+            .hero { padding-top: 116px; min-height: 0; }
             .split { grid-template-columns: 1fr; gap: 32px; }
             .split.flip .split-media { order: 0; }
         }
@@ -746,12 +772,13 @@
 </head>
 <body>
 
+    <div class="page-bg" aria-hidden="true"></div>
+
     <!-- NAV -->
     <nav>
-        <a href="#home" class="nav-logo"><img src="/img/mint-tech-logo.png" alt="" height="34" aria-hidden="true"><span class="wordmark">Mint<span>Watch</span></span></a>
+        <a href="#home" class="nav-logo" aria-label="Mint Technologies"><img src="img/mint-tech-logo.png" alt="" width="55" height="34" aria-hidden="true"><span class="wordmark">Mint<span> Technologies</span></span></a>
         <div class="nav-links">
             <a href="#what">Features</a>
-            <a href="#colours">Colours</a>
             <a href="#health">Health</a>
             <a href="#privacy">Privacy</a>
             <a href="docs.html">Docs</a>
@@ -777,7 +804,6 @@
                 <div class="pill-tag"><span class="pulse-dot"></span>Beta 2026</div>
                 <h1 class="hero-title">A watch that gets to know <span class="accent">you</span>.</h1>
                 <p class="hero-subtitle">MintWatch learns how you live, looks after your health, and answers right there on your wrist.</p>
-                <p class="hero-desc">Most smartwatches hand everyone the same screens. MintWatch has a small AI living on the watch itself, so the things you actually use rise to the top and everything else gets out of the way.</p>
                 <div class="hero-actions">
                     <!-- PREORDER OFF (2/5): the primary button becomes
                          <a href="preorder.html" class="btn">Preorder for $639</a>
@@ -789,14 +815,11 @@
                      <p class="hero-meta"><b>$639 preorder</b>, $799 at launch. Join early and save up to 20%. Ships 2027.</p> -->
                 <p class="hero-meta"><b>From $799</b>. Beta 2026, ships 2027.</p>
             </div>
-            <div class="hero-shot animate-in delay-1">
-                <img src="/img/render-hero.webp" width="1200" height="1200" alt="MintWatch seen face on, showing the date, the time and a heart rate reading on mint coloured activity rings">
-            </div>
         </div>
 
         <div class="trust-row animate-in delay-2">
             <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg><b>The AI runs on the watch</b></span>
-            <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg><b>Works with iPhone and Android</b></span>
+            <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg><b>Works with any device</b></span>
             <span class="trust-chip"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/></svg><b>Your data stays yours</b></span>
         </div>
     </section>
@@ -812,11 +835,11 @@
                     <ul class="check-list">
                         <li><b>MintOS arranges itself.</b> Over a short setup it picks up your routine, then puts your faces, your apps and the numbers you glance at where you already reach. It keeps adjusting as your week changes.</li>
                         <li><b>MintAI is a companion that lives on the watch</b>, not in a data centre. Ask it something and it acts: change a setting, start a workout, sum up your notifications, explain a health reading in plain words.</li>
-                        <li><b>It answers instantly</b>, and it still works with your phone left at home.</li>
+                        <li><b>It answers on the watch</b>, and it still works with your phone left at home.</li>
                     </ul>
                 </div>
                 <div class="split-media animate-in delay-1">
-                    <img src="/img/render-angle.webp" width="1200" height="900" alt="MintWatch at an angle, showing the machined case, the side buttons and the mint activity rings on the display" loading="lazy">
+                    <img src="img/render-angle.webp" width="1600" height="1200" alt="MintWatch at an angle, showing the machined case, the side buttons and the mint activity rings on the display" loading="lazy">
                 </div>
             </div>
 
@@ -825,39 +848,20 @@
                 <div class="spec"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-7-10a7 7 0 0 1 14 0c0 5.4-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg><b>Built in</b><span>GPS</span></div>
                 <div class="spec"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="17" height="10" rx="3"/><line x1="22" y1="10" x2="22" y2="14"/></svg><b>Up to 15 days</b><span>on a charge</span></div>
                 <div class="spec"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><b>15 ATM</b><span>swim and dive ready</span></div>
-                <div class="spec"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg><b>iOS + Android</b><span>no new ecosystem</span></div>
+                <div class="spec"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg><b>Any device</b><span>no new ecosystem</span></div>
                 <div class="spec"><svg viewBox="0 0 24 24"><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></svg><b>Wi-Fi + 5G</b><span>connected anywhere</span></div>
             </div>
         </div>
     </section>
 
-    <!-- COLOURWAYS -->
-    <section class="section tint" id="colours">
+    <!-- BUILD / MATERIALS -->
+    <section class="section tint" id="build">
         <div class="container-wide center">
             <div class="animate-in">
-                <div class="section-label">Colours</div>
-                <h2 class="section-title">Pick the one that <span class="accent">feels like you</span></h2>
-                <p class="section-desc">A 47 mm case in a ceramic finish that shrugs off the knocks of a normal day, on a soft 24 mm strap you can swap in seconds.</p>
+                <div class="section-label">The build</div>
+                <h2 class="section-title">Made to be worn <span class="accent">every single day</span></h2>
+                <p class="section-desc" style="margin:0 auto;">A 47 mm case in a ceramic finish that shrugs off the knocks of a normal day, on a soft 24 mm strap you can swap in seconds.</p>
             </div>
-            <div class="colour-grid animate-in delay-1">
-                <figure class="colour">
-                    <img src="/img/col-black.webp" width="700" height="700" alt="MintWatch in Midnight, a deep black case" loading="lazy">
-                    <figcaption class="name"><span class="swatch" style="background:#1C1C1C"></span><span>Midnight<small>the everyday one</small></span></figcaption>
-                </figure>
-                <figure class="colour">
-                    <img src="/img/col-white.webp" width="700" height="700" alt="MintWatch in Chalk, an off white case" loading="lazy">
-                    <figcaption class="name"><span class="swatch" style="background:#EDEDE8"></span><span>Chalk<small>light and clean</small></span></figcaption>
-                </figure>
-                <figure class="colour">
-                    <img src="/img/col-green.webp" width="700" height="700" alt="MintWatch in Forest, a deep green case" loading="lazy">
-                    <figcaption class="name"><span class="swatch" style="background:#0F5132"></span><span>Forest<small>our house colour</small></span></figcaption>
-                </figure>
-                <figure class="colour">
-                    <img src="/img/col-rose.webp" width="700" height="700" alt="MintWatch in Copper, a warm rose gold case" loading="lazy">
-                    <figcaption class="name"><span class="swatch" style="background:#B87351"></span><span>Copper<small>a little warmer</small></span></figcaption>
-                </figure>
-            </div>
-            <p class="section-desc" style="margin:26px auto 0;font-size:14.5px;color:var(--fg-dim);">Final colours are confirmed closer to launch.</p>
         </div>
     </section>
 
@@ -887,12 +891,12 @@
                     <p>Take a call, move a song from your headphones to the kitchen speaker, find the phone you left on the sofa. No digging in pockets.</p>
                 </div>
             </div>
-            <p class="section-desc center" style="margin:30px auto 0;">It fits around what you already own: iPhone or Android, your headphones, your smart home. There is no new ecosystem to buy into.</p>
+            <p class="section-desc center" style="margin:30px auto 0;">It fits around what you already own: any phone, your headphones, your smart home. There is no new ecosystem to buy into.</p>
         </div>
     </section>
 
     <!-- HEALTH -->
-    <section class="section warm" id="health">
+    <section class="section tint" id="health">
         <div class="container-wide">
             <div class="split flip">
                 <div class="animate-in">
@@ -906,7 +910,7 @@
                     </ul>
                 </div>
                 <div class="split-media animate-in delay-1">
-                    <img src="/img/render-face.webp" width="1200" height="800" alt="Close up of the MintWatch dial showing the date, the time and a 62 bpm heart rate on mint coloured activity rings" loading="lazy">
+                    <img src="img/render-face.webp" width="1600" height="1067" alt="Close up of the MintWatch dial showing the date, the time and a 62 bpm heart rate on mint coloured activity rings" loading="lazy">
                 </div>
             </div>
         </div>
@@ -950,12 +954,13 @@
                     <p class="section-desc">Set it down on the puck, pick it up later. No cable to line up, no nightly ritual, no watch that quits halfway through a hike.</p>
                     <ul class="check-list">
                         <li><b>Days, not hours.</b> About 7 days with the display always on, about 10 on automatic, and up to 15 in power saver.</li>
+                        <li><b>Adventure mode.</b> Up to 70 days with the display, the sensors and the radios shut down, for the trips where a charger is not coming with you.</li>
                         <li><b>Set it down and go.</b> Wireless charging, so there is nothing to plug in and nothing to wear out.</li>
                         <li><b>Wear it everywhere.</b> Rated to 15 ATM, which covers the pool, the sea and the shower without a second thought.</li>
                     </ul>
                 </div>
                 <div class="split-media animate-in delay-1">
-                    <img src="/img/render-charge.webp" width="1200" height="800" alt="MintWatch resting beside its round wireless charging puck" loading="lazy">
+                    <img src="img/render-charge.webp" width="1600" height="1067" alt="MintWatch resting beside its round wireless charging puck" loading="lazy">
                 </div>
             </div>
         </div>
@@ -988,7 +993,7 @@
     a LIVE Stripe link (it was still a /test_ link when it was parked).
     ==========================================================================
 
-    <section class="section warm" id="preorder">
+    <section class="section tint" id="preorder">
         <div class="container-wide center">
             <div class="animate-in">
                 <div class="section-label">Preorder</div>
@@ -1017,7 +1022,7 @@
     -->
 
     <!-- WAITLIST -->
-    <section class="section warm" id="newsletter">
+    <section class="section tint" id="newsletter">
         <div class="container center">
             <div class="animate-in">
                 <div class="section-label">Waitlist</div>
@@ -1057,10 +1062,10 @@
             <div class="animate-in">
                 <div class="section-label">Say hello</div>
                 <h2 class="section-title">We would love to <span class="accent">hear from you</span></h2>
-                <p class="section-desc" style="margin:0 auto;">Questions, ideas, or you just want to know how the build is going. Write to <a href="mailto:contact@mint-ai.tech" style="color:var(--accent);font-weight:600;">contact@mint-ai.tech</a> and a person will answer.</p>
+                <p class="section-desc" style="margin:0 auto;">Questions, ideas, or you just want to know how the build is going. Write to <a href="mailto:contact@mint-ai.tech" style="color:var(--accent);font-weight:600;">contact@mint-ai.tech</a>.</p>
             </div>
             <div class="founder animate-in delay-1">
-                <img src="/img/founder.jpg" alt="Griffin Wyler" width="78" height="78" loading="lazy">
+                <img src="img/founder.jpg" alt="Griffin Wyler" width="78" height="78" loading="lazy">
                 <div>
                     <h4>Griffin Wyler</h4>
                     <p class="role">Founder, Mint Technologies</p>
@@ -1112,6 +1117,16 @@
                 paintMeta();
             });
         }
+
+        // The nav is transparent over the hero and only takes on its background once
+        // the page has moved. Set on load too, in case the browser restores a scroll
+        // position on refresh.
+        const navEl = document.querySelector('nav');
+        function paintNav() {
+            if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 24);
+        }
+        paintNav();
+        window.addEventListener('scroll', paintNav, { passive: true });
 
         // Scroll-in animations
         const observer = new IntersectionObserver((entries) => {

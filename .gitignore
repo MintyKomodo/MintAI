@@ -1,1 +1,6 @@
 .claude/
+
+# refresh_renders.py drops the previous product images here before
+# overwriting them. Local safety net, never part of the deploy.
+img/_pre_refresh/
+tools/__pycache__/
