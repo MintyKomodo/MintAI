@@ -151,9 +151,8 @@
            the same paint, and so it holds still while the page scrolls past.
            background-attachment: fixed is skipped on iOS, hence position: fixed. */
         /* Two versions of the same backdrop. Light mode gets a cut out watch over the
-           page colour, dark mode gets the render shot on black. The light layer
-           stack is: soft ellipse under the copy, light overall veil, the cutout,
-           then the page colour. */
+           page colour, dark mode gets the render shot on black. Each is a veil over
+           the image, over the page colour. */
         .page-bg {
             position: fixed;
             inset: 0;
@@ -161,6 +160,12 @@
             background:
                 linear-gradient(var(--veil), var(--veil)),
                 url('img/view-side-cut.webp') center center / cover no-repeat var(--bg);
+            /* Thrown slightly out of focus so the copy sits in front of it rather
+               than in it. The scale is not cosmetic: blur samples past the element's
+               edges, which would otherwise fade the four sides into the page colour
+               and leave a soft frame around the viewport. */
+            filter: blur(6px);
+            transform: scale(1.05);
             pointer-events: none;
         }
         :root[data-theme="dark"] .page-bg {
