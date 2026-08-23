@@ -849,7 +849,7 @@
                     <ul class="check-list">
                         <li><b>Instant answers, no thinking required.</b> Time, date, heart rate, steps, battery, brightness, your activity so far, timers and the stopwatch come straight back. Nothing wakes up, nothing spins, nothing costs you anything.</li>
                         <li><b>The model on the watch.</b> A roughly 2 billion parameter model on the AI core inside the case. It boots in 1.6 seconds, stays warm for 25 seconds after you stop talking, then powers all the way off. Free, unlimited, and it works in a tunnel.</li>
-                        <li><b>The bigger model in the cloud.</b> Roughly 9 billion parameters, for the hard questions, and only when you allow it. It is metered, so MintAI will not reach for it quietly. It also costs less battery than thinking locally, because only the radio has to wake rather than the whole AI core.</li>
+                        <li><b>The bigger model in the cloud.</b> Roughly 9 billion parameters, for the hard questions, and only when you allow it. It is metered, so MintAI will not reach for it quietly. It also costs less battery than thinking locally, because only the radio has to wake rather than the whole AI core. Nothing you send is kept: the session data is deleted the moment the session ends.</li>
                     </ul>
                     <div class="note">MintAI tells you which of the three answered. There is no silent upgrade to the paid tier.</div>
                 </div>
@@ -1211,12 +1211,14 @@
             </div>
             <div class="feat-grid animate-in delay-1">
                 <div class="feat"><h4>On-device by default</h4><p>Your health, your voice and your habits are processed on the watch. The default setting is on-device only.</p></div>
-                <div class="feat"><h4>Cloud is opt in</h4><p>It exists, it is metered, and it is off unless you turn it on. MintAI will not reach for it quietly.</p></div>
+                <div class="feat"><h4>The cloud is completely optional</h4><p>It exists, it is metered, and it is off unless you turn it on. MintAI will not reach for it quietly, and the watch tells you every time an answer came from there. Turn it off and the watch loses nothing it already does.</p></div>
+                <div class="feat"><h4>Nothing is kept up there</h4><p>A cloud session sends only what that one question needs, and it is deleted the second the session ends. No account history, no transcript, no copy of your health data left sitting on a server.</p></div>
                 <div class="feat"><h4>A hardware mic mute</h4><p>Cuts the microphone at the hardware switch. Voice stops working, which is exactly how you know it worked.</p></div>
                 <div class="feat"><h4>Post-quantum crypto</h4><p>ML-KEM for key exchange and ML-DSA for signatures, the two NIST standards chosen to survive quantum computers. No classical-only fallback.</p></div>
                 <div class="feat"><h4>Nothing sold</h4><p>No data brokers, no ad profiles, no "anonymised partners". There is no business model here that needs your sleep data.</p></div>
                 <div class="feat"><h4>You can see it all</h4><p>Every number the watch holds is readable on the watch, and exportable when you want it elsewhere.</p></div>
             </div>
+            <div class="note animate-in">Where your data lives, in one line. All of it is stored on the watch. If you choose to use the cloud, the part of it that one question needs goes up for the length of that session and is gone the second the session ends. Nothing else is sent, and nothing stays behind.</div>
         </div>
     </section>
 
