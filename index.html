@@ -665,31 +665,6 @@
         .submit-btn:hover:not(:disabled) { background: var(--accent-deep); transform: translateY(-2px); }
         .submit-btn:disabled { opacity: 0.65; cursor: default; }
 
-        /* ========== FOUNDER ========== */
-        .founder {
-            display: flex;
-            align-items: center;
-            gap: 22px;
-            max-width: 540px;
-            margin: 34px auto 0;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: var(--r);
-            padding: 26px;
-            text-align: left;
-            box-shadow: var(--shadow-sm);
-        }
-        .founder img {
-            width: 78px; height: 78px;
-            border-radius: 50%;
-            object-fit: cover;
-            flex-shrink: 0;
-        }
-        .founder h4 { font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 600; }
-        .founder .role { font-size: 13.5px; color: var(--accent); font-weight: 600; margin: 2px 0 8px; }
-        .founder p { font-size: 15px; color: var(--fg-muted); }
-        @media (max-width: 520px) { .founder { flex-direction: column; text-align: center; } }
-
         /* ========== FOOTER ========== */
         .footer {
             padding: 52px 0 44px;
@@ -1078,14 +1053,6 @@
                 <h2 class="section-title">We would love to <span class="accent">hear from you</span></h2>
                 <p class="section-desc" style="margin:0 auto;">Questions, ideas, or you just want to know how the build is going. Write to <a href="mailto:contact@mint-ai.tech" style="color:var(--accent);font-weight:600;">contact@mint-ai.tech</a>.</p>
             </div>
-            <div class="founder animate-in delay-1">
-                <img src="img/founder.jpg" alt="Griffin Wyler" width="78" height="78" loading="lazy">
-                <div>
-                    <h4>Griffin Wyler</h4>
-                    <p class="role">Founder, Mint Technologies</p>
-                    <p>Building MintWatch because a watch should fit the person wearing it, not the other way around.</p>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -1209,7 +1176,7 @@
                     if (!submitting) return;
                     submitting = false;
                     if (btn) { btn.textContent = 'Join the waitlist'; btn.disabled = false; }
-                    show("Hmm, that didn't go through. Please try again, or email griffin@mint-ai.tech.", false);
+                    show("Hmm, that didn't go through. Please try again, or email contact@mint-ai.tech.", false);
                 }, 12000);
             });
             if (nlFrame) {
