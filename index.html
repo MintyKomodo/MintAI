@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MintWatch — AI Smartwatch by Mint Technologies</title>
-    <meta name="description" content="MintWatch is a friendly AI smartwatch. It learns how you live, keeps an eye on your health, and answers right on your wrist. Private by default. Join the waitlist to be first to wear it.">
+    <title>MintWatch: Infinite possibilities on your wrist</title>
+    <meta name="description" content="Infinite possibilities on your wrist. MintWatch learns how you live, keeps an eye on your health, and stays private by default. Join the waitlist to be first to wear it.">
     <link rel="icon" type="image/png" href="img/favicon.png">
     <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
     <meta name="theme-color" content="#F7FAF6" id="themeColor">
@@ -14,33 +14,37 @@
         a dark-mode visitor would get a white flash on every navigation.
     -->
     <script>
-        (function () {
-            try {
-                var saved = localStorage.getItem('mint-theme');
-                var dark = saved ? saved === 'dark'
-                                 : window.matchMedia('(prefers-color-scheme: dark)').matches;
-                document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-            } catch (e) {
-                document.documentElement.setAttribute('data-theme', 'light');
+        // Every scene on this page is set on black, so it always runs in the dark
+        // palette and the light/dark switch is hidden here.
+        document.documentElement.setAttribute('data-theme', 'dark');
+        // A demo can force motion on even where the OS asks for reduced motion
+        // (Windows over Remote Desktop runs with animation effects off): open
+        // the page with ?motion=on. It is remembered; ?motion=auto clears it.
+        try {
+            var motion = new URLSearchParams(location.search).get('motion');
+            if (motion === 'auto') localStorage.removeItem('mint-motion');
+            else if (motion) localStorage.setItem('mint-motion', motion);
+            if ((localStorage.getItem('mint-motion') || '') === 'on') {
+                document.documentElement.setAttribute('data-motion', 'on');
             }
-        })();
+        } catch (e) {}
     </script>
     <!-- Open Graph / Twitter -->
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="MintWatch">
-    <meta property="og:title" content="MintWatch — The AI smartwatch that adapts to you">
+    <meta property="og:title" content="MintWatch: Infinite possibilities on your wrist">
     <meta property="og:description" content="A watch that gets to know you. It learns your routine, looks after your health, and keeps your data on your wrist. Join the waitlist to be first to wear it.">
     <meta property="og:url" content="https://mint-ai.tech/">
     <meta property="og:image" content="https://mint-ai.tech/img/og-image-v2.jpg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="MintWatch — The AI smartwatch that adapts to you">
+    <meta name="twitter:title" content="MintWatch: Infinite possibilities on your wrist">
     <meta name="twitter:description" content="A watch that gets to know you. It learns your routine, looks after your health, and keeps your data on your wrist. Join the waitlist to be first to wear it.">
     <meta name="twitter:image" content="https://mint-ai.tech/img/og-image-v2.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <noscript><style>.animate-in{opacity:1 !important;transform:none !important;}</style></noscript>
     <style>
         *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
@@ -85,8 +89,8 @@
                means this one number serves both the copy's contrast and the
                watch's presence, so the copy carries its own weight instead. */
             --veil: rgba(251, 251, 247, 0.48);
-            --bg-a: rgba(251, 251, 247, 0.96);
-            --bg-tint-a: rgba(241, 248, 242, 0.96);
+            --bg-a: #FBFBF7;
+            --bg-tint-a: #F1F8F2;
             --shadow-sm: 0 2px 8px rgba(26, 37, 31, 0.05);
             --shadow: 0 10px 30px rgba(26, 37, 31, 0.07);
             --shadow-lg: 0 24px 60px rgba(26, 37, 31, 0.10);
@@ -123,8 +127,8 @@
                back and dimming the product just muddies it */
             --img-filter: none;
             --scrim-flat: rgba(0, 0, 0, 0.46);
-            --bg-a: rgba(15, 21, 18, 0.94);
-            --bg-tint-a: rgba(18, 27, 22, 0.94);
+            --bg-a: #0F1512;
+            --bg-tint-a: #121B16;
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.30);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.38);
             --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.46);
@@ -136,7 +140,7 @@
         html { background: var(--bg); }
 
         body {
-            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Manrope', -apple-system, BlinkMacSystemFont, sans-serif;
             background: transparent;
             color: var(--fg);
             min-height: 100vh;
@@ -146,32 +150,34 @@
             line-height: 1.6;
         }
 
-        /* The watch in profile, filling the window behind everything. It is a fixed
-           layer rather than a body background so the scrim can ride on top of it in
-           the same paint, and so it holds still while the page scrolls past.
-           background-attachment: fixed is skipped on iOS, hence position: fixed. */
-        /* Two versions of the same backdrop. Light mode gets a cut out watch over the
-           page colour, dark mode gets the render shot on black. Each is a veil over
-           the image, over the page colour. */
+        /* A reflection sliding along the far bezel of the watch, on pure black,
+           filling the window behind everything. It is a fixed layer so it holds
+           still while the page scrolls past, and it is the same in both themes:
+           the film is black, so the hero is dark in light mode too.
+           No blur and no veil: the highlight is the whole picture, and softening
+           it would leave nothing to see. */
         .page-bg {
             position: fixed;
             inset: 0;
             z-index: -1;
-            background:
-                linear-gradient(var(--veil), var(--veil)),
-                url('img/view-side-cut.webp') center center / cover no-repeat var(--bg);
-            /* Thrown slightly out of focus so the copy sits in front of it rather
-               than in it. The scale is not cosmetic: blur samples past the element's
-               edges, which would otherwise fade the four sides into the page colour
-               and leave a soft frame around the viewport. */
-            filter: blur(6px);
-            transform: scale(1.05);
+            background: #000;
+            overflow: hidden;
             pointer-events: none;
         }
-        :root[data-theme="dark"] .page-bg {
-            background:
-                linear-gradient(var(--scrim-flat), var(--scrim-flat)),
-                url('img/view-side.webp') center center / cover no-repeat;
+        .page-bg video, .page-bg img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            /* Seen from 52 deg the reflection runs along the top of the frame,
+               across the middle. Anchoring there keeps its path in view when a
+               phone crops the sides or a wide window crops the bottom. */
+            object-position: 48% 22%;
+        }
+        .page-bg img { display: none; }
+        @media (prefers-reduced-motion: reduce) {
+            :root:not([data-motion="on"]) .page-bg video { display: none; }
+            :root:not([data-motion="on"]) .page-bg img { display: block; }
         }
 
         /* height:auto is load bearing: every <img> carries width/height attributes for
@@ -208,8 +214,10 @@
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
         }
-        /* only dark mode puts the bar on a dark hero, so only dark mode flips its ink */
-        :root[data-theme="dark"] nav:not(.scrolled) {
+        /* The hero is black in both themes, so the bar flips its ink in both, and
+           keeps it after scrolling until the hero has passed out from under it. */
+        :root[data-theme] nav:not(.scrolled),
+        :root[data-theme] nav.on-hero {
             --fg: #F1F6F2;
             --fg-muted: #C8D5CD;
             --accent: #4FE39A;
@@ -219,16 +227,22 @@
             --border: rgba(255, 255, 255, 0.20);
             --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.30);
         }
+        /* Scrolled but still over the film: a dark frosted bar. The light theme's
+           pale one reads as a grey slab hanging over the black. */
+        nav.scrolled.on-hero {
+            background: rgba(0, 0, 0, 0.62);
+            border-bottom-color: rgba(255, 255, 255, 0.08);
+        }
         /* the mobile drop panel would inherit that translucent white and turn to soup */
-        :root[data-theme="dark"] nav:not(.scrolled) .nav-links.open {
+        :root[data-theme] nav:not(.scrolled) .nav-links.open,
+        :root[data-theme] nav.on-hero .nav-links.open {
             background: rgba(10, 16, 13, 0.96);
             border-bottom-color: rgba(255, 255, 255, 0.14);
             backdrop-filter: blur(18px);
             -webkit-backdrop-filter: blur(18px);
         }
 
-        /* Leaf plus wordmark. The mark on its own reads as decoration; the
-           name is what makes the corner say whose site this is. */
+        /* The leaf on its own. */
         .nav-logo {
             display: flex;
             align-items: center;
@@ -237,16 +251,6 @@
             flex-shrink: 0;
         }
         .nav-logo img { height: 34px; width: auto; }
-        .nav-logo .wordmark {
-            font-family: 'Sora', sans-serif;
-            font-size: 19px;
-            font-weight: 700;
-            letter-spacing: -0.6px;
-            color: var(--fg);
-            white-space: nowrap;
-        }
-        .nav-logo .wordmark span { color: var(--accent); }
-        @media (max-width: 400px) { .nav-logo .wordmark { display: none; } }
 
         .nav-links { display: flex; gap: 30px; align-items: center; }
 
@@ -293,7 +297,7 @@
             gap: 10px;
             padding: 15px 30px;
             border-radius: 999px;
-            font-family: 'DM Sans', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: 16px;
             font-weight: 600;
             text-decoration: none;
@@ -313,30 +317,6 @@
         }
         .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
 
-        .pill-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 7px 16px 7px 13px;
-            border-radius: 999px;
-            font-size: 12.5px;
-            font-weight: 600;
-            color: var(--accent-deep);
-            background: var(--accent-soft);
-            letter-spacing: 0.02em;
-        }
-
-        .pulse-dot {
-            width: 8px; height: 8px;
-            background: var(--accent-bright);
-            border-radius: 50%;
-            animation: pulse 2.4s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.45; transform: scale(0.8); }
-        }
-
         /* ========== HERO ========== */
         /* The hero has no render of its own any more: the watch behind the page is
            the picture. So it is sized to leave that backdrop room to be seen. */
@@ -352,20 +332,9 @@
             text-align: center;
         }
 
-        /* Light mode: the copy sits on the case, not on paper, and the backdrop is
-           only lightly veiled so the watch stays visible. Measured over the veiled
-           dial, the usual muted grey lands at 2.7:1. So the hero drops the muted
-           tier entirely and runs the body copy at full strength: that buys 4.5:1
-           without a local white glow behind the text. */
-        :root[data-theme="light"] .hero {
-            --fg-muted: #1A251F;
-            --fg-dim: #1A251F;
-        }
-
-        /* In dark mode the hero sits on the unkeyed render, so it borrows a light on
-           dark palette locally. In light mode it sits on the cut out over the page
-           colour, where the ordinary theme variables are already right. */
-        :root[data-theme="dark"] .hero {
+        /* The hero sits on the black film in both themes, so it borrows a light on
+           dark palette locally whichever theme the rest of the page is in. */
+        :root[data-theme] .hero {
             --fg: #F1F6F2;
             --fg-muted: #C3D0C8;
             --fg-dim: #9DABA3;
@@ -378,15 +347,7 @@
             --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
             color: var(--fg);
         }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -300px; left: 50%;
-            transform: translateX(-50%);
-            width: 1400px; height: 900px;
-            background: radial-gradient(ellipse at center, var(--glow-a) 0%, var(--glow-b) 45%, transparent 70%);
-            pointer-events: none;
-        }
+        /* No mint glow over the film: it greys the black the reflection needs. */
         .hero-inner {
             position: relative;
             max-width: 1160px;
@@ -395,7 +356,7 @@
         }
 
         .hero-title {
-            font-family: 'Sora', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: clamp(38px, 5.4vw, 58px);
             font-weight: 700;
             letter-spacing: -1.6px;
@@ -413,44 +374,18 @@
         }
         .hero-actions { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-top: 32px; }
 
-        .hero-meta { margin-top: 22px; font-size: 14px; color: var(--fg-dim); }
-        .hero-meta b { color: var(--fg); font-weight: 600; }
 
-        /* trust row under the hero */
-        .trust-row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            max-width: 1160px;
-            margin: 56px auto 0;
-            padding: 0 24px;
-            position: relative;
-        }
-        .trust-chip {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 11px 20px;
-            background: var(--card);
-            border: 1px solid var(--border);
-            border-radius: 999px;
-            font-size: 14px;
-            color: var(--fg-muted);
-            box-shadow: var(--shadow-sm);
-        }
-        .trust-chip b { color: var(--fg); font-weight: 600; }
-        /* both of these are translucent white inside the hero, so they need the blur
-           or the render shows straight through the label */
-        .hero .trust-chip, .hero .btn-outline {
+        /* translucent white inside the hero, so it needs the blur or the film
+           shows straight through the label */
+        .hero .btn-outline {
             backdrop-filter: blur(9px);
             -webkit-backdrop-filter: blur(9px);
         }
-        .trust-chip svg { width: 17px; height: 17px; stroke: var(--accent); fill: none; stroke-width: 2; flex-shrink: 0; }
 
         /* ========== SECTIONS ========== */
-        /* Every section below the fold is near opaque: the backdrop is meant to carry
-           the hero, not to sit under body copy where it would fight the text. */
+        /* Every section below the fold is opaque: the film is meant to carry the
+           hero, and at the old 4 to 6% see-through the moving highlight would
+           glimmer behind the body copy. */
         .section { padding: 88px 0; background: var(--bg-a); }
         .section.tint { background: var(--bg-tint-a); }
 
@@ -465,7 +400,7 @@
         }
 
         .section-title {
-            font-family: 'Sora', sans-serif;
+            font-family: 'Manrope', sans-serif;
             font-size: clamp(28px, 4.2vw, 42px);
             font-weight: 700;
             letter-spacing: -1.1px;
@@ -509,14 +444,50 @@
             margin-bottom: 18px;
         }
         .card .icon svg { width: 23px; height: 23px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-        .card h4 {
-            font-family: 'Sora', sans-serif;
+        .card h4, .card .card-title {
+            font-family: 'Manrope', sans-serif;
             font-size: 19px;
             font-weight: 600;
             letter-spacing: -0.3px;
             margin-bottom: 10px;
         }
         .card p { font-size: 15.5px; color: var(--fg-muted); }
+
+        /* Collapsible cards: the icon and the title show, the paragraph opens
+           under them. Native <details>, like the check-list points. Top-aligned
+           so opening one card does not stretch the others in its row. */
+        .card-grid { align-items: start; }
+        details.card summary {
+            position: relative;
+            display: block;
+            list-style: none;
+            cursor: pointer;
+        }
+        details.card summary::-webkit-details-marker { display: none; }
+        .card .card-title { display: block; margin-bottom: 0; }
+        /* In the card's top corner, level with the icon: after the title it wrapped
+           onto a line of its own under the longer ones. */
+        .card .card-title::after {
+            content: '';
+            position: absolute;
+            top: 18px;
+            right: 4px;
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+            transform: rotate(45deg);
+            transition: transform 0.2s ease;
+        }
+        details.card[open] .card-title::after { transform: translateY(4px) rotate(-135deg); }
+        details.card summary:hover .card-title { color: var(--accent); }
+        details.card summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 10px; }
+        details.card p { margin-top: 10px; }
+        details.card[open] p { animation: point-open 0.25s ease; }
+        @media (prefers-reduced-motion: reduce) {
+            :root:not([data-motion="on"]) details.card[open] p { animation: none; }
+            :root:not([data-motion="on"]) .card .card-title::after { transition: none; }
+        }
 
         /* ========== SPLIT (text beside a render) ========== */
         .split {
@@ -537,40 +508,40 @@
         .check-list { list-style: none; margin-top: 22px; }
         .check-list li {
             position: relative;
-            padding-left: 32px;
             margin-bottom: 13px;
             font-size: 16px;
             color: var(--fg-muted);
         }
-        .check-list li::before {
-            content: '';
-            position: absolute;
-            left: 0; top: 6px;
-            width: 19px; height: 19px;
-            border-radius: 50%;
-            background: var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E9256' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
-        }
         .check-list li b { color: var(--fg); font-weight: 600; }
-
-        /* ========== SPEC STRIP ========== */
-        .spec-strip {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 1px;
-            margin-top: 44px;
-            background: var(--border-soft);
-            border: 1px solid var(--border-soft);
-            border-radius: var(--r);
-            overflow: hidden;
+        /* Collapsible points: only the bold lead shows, the rest opens under it.
+           Native <details>, so it works from the keyboard with no script. */
+        .check-list details summary {
+            display: block;
+            list-style: none;
+            cursor: pointer;
         }
-        .spec {
-            background: var(--card);
-            padding: 24px 20px;
-            text-align: center;
+        .check-list details summary::-webkit-details-marker { display: none; }
+        .check-list details summary::after {
+            content: '';
+            display: inline-block;
+            width: 7px;
+            height: 7px;
+            margin-left: 10px;
+            border-right: 2px solid var(--accent);
+            border-bottom: 2px solid var(--accent);
+            transform: translateY(-3px) rotate(45deg);
+            transition: transform 0.2s ease;
         }
-        .spec svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; margin: 0 auto 10px; }
-        .spec b { display: block; font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 600; }
-        .spec span { font-size: 13.5px; color: var(--fg-dim); }
+        .check-list details[open] summary::after { transform: translateY(1px) rotate(-135deg); }
+        .check-list details summary:hover b { color: var(--accent); }
+        .check-list details summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px; }
+        .check-list details p { margin-top: 6px; }
+        .check-list details[open] p { animation: point-open 0.25s ease; }
+        @keyframes point-open { from { opacity: 0; transform: translateY(-4px); } }
+        @media (prefers-reduced-motion: reduce) {
+            :root:not([data-motion="on"]) .check-list details[open] p { animation: none; }
+            :root:not([data-motion="on"]) .check-list details summary::after { transition: none; }
+        }
 
         /* ========== PRIVACY PROMISE ========== */
         .promise {
@@ -608,7 +579,7 @@
             gap: 14px;
             margin: 8px 0 6px;
         }
-        .price-now { font-family: 'Sora', sans-serif; font-size: 52px; font-weight: 700; letter-spacing: -2px; }
+        .price-now { font-family: 'Manrope', sans-serif; font-size: 52px; font-weight: 700; letter-spacing: -2px; }
         .price-was { font-size: 20px; color: var(--fg-dim); text-decoration: line-through; }
         .price-note { font-size: 15px; color: var(--fg-muted); }
         .price-card .check-list { text-align: left; max-width: 380px; margin: 26px auto 0; }
@@ -702,11 +673,6 @@
         .nav-right { display: flex; align-items: center; gap: 12px; }
 
         /* ========== DARK MODE FIXUPS ========== */
-        /* A data: URI cannot read a CSS variable, so the tick gets a second copy
-           with the lighter stroke rather than a filter that would tint the chip too. */
-        :root[data-theme="dark"] .check-list li::before {
-            background: var(--accent-soft) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233FD98C' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center / 12px no-repeat;
-        }
         /* every product render sits on a bright studio plate; knock it back on dark */
         .split-media img { filter: var(--img-filter); }
 
@@ -720,9 +686,8 @@
         .delay-1 { transition-delay: 0.09s; }
         .delay-2 { transition-delay: 0.18s; }
         @media (prefers-reduced-motion: reduce) {
-            .animate-in { opacity: 1; transform: none; transition: none; }
-            html { scroll-behavior: auto; }
-            .pulse-dot { animation: none; }
+            :root:not([data-motion="on"]) .animate-in { opacity: 1; transform: none; transition: none; }
+            html:not([data-motion="on"]) { scroll-behavior: auto; }
         }
 
         /* ========== RESPONSIVE ========== */
@@ -751,15 +716,212 @@
             .section { padding: 66px 0; }
             .promise, .price-card, .form-card { padding: 34px 24px; }
         }
+
+        /* Headings in italic. Manrope ships no italic face, so the browser slants
+           the upright one; body copy, the bar and the buttons stay upright. */
+        .hero-title, .section-title, .card h4, .card .card-title, .price-now { font-style: italic; }
+
+        /* ========== CINEMATIC ========== */
+        /* Every section is a scene that fills the screen, on black. Content sits
+           in the middle of it, headlines are big, renders run edge to edge and
+           fade into the black instead of sitting in framed cards, and each scene
+           starts a slow push-in as it arrives. Scrolling settles loosely on each
+           one; proximity, not mandatory, so a scene taller than the screen still
+           scrolls freely. */
+        /* black on html only: body stays transparent, or its background paints
+           over the film's z-index -1 layer and the reflection disappears */
+        html { background: #000; scroll-snap-type: y proximity; }
+        .theme-toggle { display: none; }
+        .hero { min-height: 100vh; min-height: 100svh; scroll-snap-align: start; }
+        .hero-title { font-size: clamp(44px, 7.2vw, 100px); letter-spacing: -2.4px; line-height: 1.02; text-wrap: balance; }
+        .hero-subtitle { font-size: clamp(18px, 1.9vw, 23px); max-width: 680px; }
+
+        .section, .section.tint {
+            position: relative;
+            min-height: 100vh;
+            min-height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 0 96px;
+            background: #000;
+            overflow: hidden;
+            scroll-snap-align: start;
+        }
+        .section > .container, .section > .container-wide { position: relative; z-index: 1; width: 100%; }
+        .section-label { letter-spacing: 0.22em; }
+        /* balanced, so a big headline never leaves one word alone on its last line */
+        .section-title { font-size: clamp(34px, 5.8vw, 76px); letter-spacing: -2px; line-height: 1.03; margin-bottom: 22px; text-wrap: balance; }
+        .section-desc { font-size: clamp(17px, 1.55vw, 20px); max-width: 700px; }
+
+        /* renders: no frame, bigger than their column, fading into the black */
+        .split { gap: clamp(32px, 5vw, 88px); }
+        .split-media { background: transparent; box-shadow: none; border-radius: 0; overflow: visible; }
+        .split > .animate-in:first-child { position: relative; z-index: 2; }
+        .split-media img {
+            width: 150%;
+            max-width: none;
+            margin: 0 -25%;
+            -webkit-mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 58%, transparent 100%);
+                    mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 58%, transparent 100%);
+            transform: scale(1.12);
+        }
+
+        /* the quiet scenes get a dim render behind them, vignetted so no frame edge
+           or plate colour ever shows */
+        .scene-bg { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+        /* a pool of dark behind the copy, so a busy render never fights the words */
+        .scene-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 55% 45% at 50% 50%, rgba(0, 0, 0, 0.55), transparent 75%);
+        }
+        .scene-bg img {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+            opacity: 0.4;
+            /* thrown out of focus, like a background plate */
+            filter: blur(4px);
+            -webkit-mask-image: radial-gradient(ellipse 62% 60% at 50% 50%, #000 35%, transparent 100%);
+                    mask-image: radial-gradient(ellipse 62% 60% at 50% 50%, #000 35%, transparent 100%);
+            transform: scale(1.12);
+        }
+        /* renders shot on black show whole; the navy-plate photos keep cover so
+           their plate edges stay off screen */
+        .scene-bg.fit img { object-fit: contain; }
+        #control .scene-bg img, #newsletter .scene-bg img, #safety .scene-bg img { opacity: 0.3; }
+        /* the dial's digits and the board's chip markings sit right behind the
+           headline, so these two go further out of focus */
+        #safety .scene-bg img, #contact .scene-bg img, #privacy .scene-bg img { filter: blur(7px); }
+        #contact .scene-bg img, #privacy .scene-bg img { opacity: 0.32; }
+
+        /* closed cards share one height, so a title that wraps does not leave its
+           card taller than the rest of the row; an open card still grows alone */
+        .card-grid:not(:has(details[open])) { align-items: stretch; }
+
+        .section.in-view .split-media img,
+        .section.in-view .scene-bg img { animation: slow-push 16s cubic-bezier(0.2, 0.6, 0.2, 1) both; }
+        @keyframes slow-push { from { transform: scale(1.12); } to { transform: scale(1); } }
+
+        /* glass over the black and the backdrops */
+        .card, .promise, .form-card {
+            background: rgba(255, 255, 255, 0.045);
+            border-color: rgba(255, 255, 255, 0.10);
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+        }
+        .footer { background: #000; border-top-color: rgba(255, 255, 255, 0.08); scroll-snap-align: end; }
+
+        @media (max-width: 900px) {
+            .hero { min-height: 100vh; min-height: 100svh; }
+            .split-media img { width: 112%; margin: 0 -6%; }
+        }
+        @media (max-width: 760px) {
+            .section, .section.tint { padding: 100px 0 72px; }
+            /* on a portrait phone a whole landscape render is a sliver; run it
+               wider than the screen so the watch fills the scene */
+            .scene-bg.fit img { width: 230%; margin-left: -65%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html:not([data-motion="on"]) { scroll-snap-type: none; }
+            :root:not([data-motion="on"]) .section.in-view .split-media img,
+            :root:not([data-motion="on"]) .section.in-view .scene-bg img { animation: none; transform: none; }
+            :root:not([data-motion="on"]) .split-media img,
+            :root:not([data-motion="on"]) .scene-bg img { transform: none; }
+        }
+
+        /* ========== SCROLL SCRUB ========== */
+        /* Each section with an animation pins for a stretch of scroll while its
+           frames play on a canvas, then lets go, so the scene still fills the
+           screen the whole time. Snapping is off: it would fight the pin. */
+        html { scroll-snap-type: none; }
+        .section.scrub-section {
+            display: block;
+            min-height: 0;
+            height: calc(100vh + var(--scrub-len, 90vh));
+            height: calc(100svh + var(--scrub-len, 90vh));
+            padding: 0;
+            /* clip, not hidden: hidden makes the section a scroll box and the pin
+               would stick to it instead of the page */
+            overflow: clip;
+        }
+        .scrub-section > .pin {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            height: 100svh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 0 96px;
+            overflow: hidden;
+        }
+        .pin > .container, .pin > .container-wide { position: relative; z-index: 1; width: 100%; }
+        /* taller than the screen (a short window, a phone): no pin, it scrolls */
+        .section.scrub-section.no-pin { height: auto; }
+        .scrub-section.no-pin > .pin { position: relative; height: auto; min-height: 100vh; min-height: 100svh; }
+
+        canvas.scrub { display: none; transform: none; }
+        .scrub-box.scrub-ready > canvas.scrub { display: block; }
+        .scrub-box.scrub-ready > img.scrub-still { display: none; }
+        .split-media canvas.scrub {
+            width: 150%;
+            height: auto;
+            max-width: none;
+            margin: 0 -25%;
+            -webkit-mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 58%, transparent 100%);
+                    mask-image: radial-gradient(ellipse 58% 56% at 50% 50%, #000 58%, transparent 100%);
+        }
+        .scene-bg canvas.scrub {
+            width: 100%;
+            height: 100%;
+            max-width: none;
+            object-fit: cover;
+            opacity: 0.58;
+            filter: blur(2px);
+            -webkit-mask-image: radial-gradient(ellipse 62% 60% at 50% 50%, #000 35%, transparent 100%);
+                    mask-image: radial-gradient(ellipse 62% 60% at 50% 50%, #000 35%, transparent 100%);
+        }
+        .scene-bg.fit canvas.scrub { object-fit: contain; }
+        /* busier scenes sit further back behind their copy */
+        #control .scene-bg canvas.scrub, #newsletter .scene-bg canvas.scrub { opacity: 0.48; }
+        #safety .scene-bg canvas.scrub, #privacy .scene-bg canvas.scrub { opacity: 0.52; filter: blur(3px); }
+
+        #contact .scene-bg img {
+            animation: none !important;
+            transform: scale(calc(1.22 - 0.22 * var(--p, 1))) translateY(calc((1 - var(--p, 1)) * 4%));
+        }
+
+        @media (max-width: 900px) {
+            .split-media canvas.scrub { width: 112%; margin: 0 -6%; }
+        }
+        @media (max-width: 760px) {
+            .scrub-section > .pin { padding: 100px 0 72px; }
+            .scene-bg.fit canvas.scrub { width: 230%; margin-left: -65%; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            :root:not([data-motion="on"]) .section.scrub-section { height: auto; }
+            :root:not([data-motion="on"]) .scrub-section > .pin { position: relative; height: auto; min-height: 100vh; min-height: 100svh; }
+            :root:not([data-motion="on"]) #contact .scene-bg img { transform: none; }
+        }
     </style>
 </head>
 <body>
 
-    <div class="page-bg" aria-hidden="true"></div>
+    <div class="page-bg" aria-hidden="true">
+        <video autoplay muted loop playsinline preload="auto" disablepictureinpicture>
+            <source src="img/hero-reflection.mp4" type="video/mp4">
+        </video>
+        <img src="img/hero-reflection.jpg" alt="" width="1920" height="1080">
+    </div>
 
     <!-- NAV -->
     <nav>
-        <a href="#home" class="nav-logo" aria-label="Mint Technologies"><img src="img/mint-tech-logo.png" alt="" width="55" height="34" aria-hidden="true"><span class="wordmark">Mint<span> Technologies</span></span></a>
+        <a href="#home" class="nav-logo" aria-label="MintWatch home"><img src="img/mint-tech-logo.png" alt="" width="55" height="34" aria-hidden="true"></a>
         <div class="nav-links">
             <a href="#what">Features</a>
             <a href="#health">Health</a>
@@ -784,7 +946,6 @@
     <section class="hero" id="home">
         <div class="hero-inner">
             <div class="animate-in">
-                <div class="pill-tag"><span class="pulse-dot"></span>Beta 2026</div>
                 <h1 class="hero-title">A watch that gets to know <span class="accent">you</span>.</h1>
                 <p class="hero-subtitle">MintWatch learns how you live, looks after your health, and answers right there on your wrist.</p>
                 <div class="hero-actions">
@@ -794,175 +955,170 @@
                     <a href="#newsletter" class="btn">Join the waitlist</a>
                     <a href="#what" class="btn-outline">See what it does</a>
                 </div>
-                <!-- PREORDER OFF (3/5): swap the next line for
-                     <p class="hero-meta"><b>$639 preorder</b>, $799 at launch. Join early and save up to 20%. Ships January 2027.</p> -->
-                <p class="hero-meta"><b>From $799</b>. Beta 2026, out January 2027. Newsletter subscribers get <b>20% off</b> at pre-release.</p>
             </div>
-        </div>
-
-        <div class="trust-row animate-in delay-2">
-            <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg><b>The AI runs on the watch</b></span>
-            <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="7" y="2" width="10" height="20" rx="3"/><line x1="11" y1="18" x2="13" y2="18"/></svg><b>Works with any device</b></span>
-            <span class="trust-chip"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><b>Works with nearly any app</b></span>
-            <span class="trust-chip"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v5c0 4.6-3 8.4-7 10-4-1.6-7-5.4-7-10V6z"/></svg><b>Your data stays yours</b></span>
         </div>
     </section>
 
     <!-- WHAT IT DOES -->
-    <section class="section" id="what">
-        <div class="container-wide">
-            <div class="split">
-                <div class="animate-in">
-                    <div class="section-label">What it does</div>
-                    <h2 class="section-title">One watch, <span class="accent">built around you</span>.</h2>
-                    <p class="section-desc">Three things make MintWatch different, and none of them asks you to learn anything new.</p>
-                    <ul class="check-list">
-                        <li><b>You can arrange MintOS completely.</b> Every face, every app, every screen and every number you glance at goes where you want it. Move it yourself, or tell MintAI where you want it and it does the rearranging for you.</li>
-                        <li><b>MintAI is a companion that lives on the watch.</b> Ask it something and it acts: book a ride, change a setting, start a workout, sum up your notifications, explain a health reading in plain words.</li>
-                        <li><b>It answers on the watch</b>, and it still works with your phone left at home. There is a much larger model in the cloud for the hard questions, metered and off until you turn it on, and the watch always tells you which one answered.</li>
-                    </ul>
+    <section class="section scrub-section" id="what">
+        <div class="pin">
+            <div class="container-wide">
+                <div class="split">
+                    <div class="animate-in">
+                        <div class="section-label">What it does</div>
+                        <h2 class="section-title">One watch, <span class="accent">built around you</span>.</h2>
+                        <p class="section-desc">Three things make MintWatch different, and none of them asks you to learn anything new.</p>
+                        <ul class="check-list">
+                            <li><details><summary><b>You can arrange MintOS completely.</b></summary><p>Every face, every app, every screen and every number you glance at goes where you want it. Move it yourself, or tell MintAI where you want it and it does the rearranging for you.</p></details></li>
+                            <li><details><summary><b>MintAI is a companion that lives on the watch.</b></summary><p>Ask it something and it acts: book a ride, change a setting, start a workout, sum up your notifications, explain a health reading in plain words.</p></details></li>
+                            <li><details><summary><b>It answers on the watch</b></summary><p>It still works with your phone left at home. There is a much larger model in the cloud for the hard questions, metered and off until you turn it on, and the watch always tells you which one answered.</p></details></li>
+                        </ul>
+                    </div>
+                    <div class="split-media scrub-box animate-in delay-1">
+                        <img class="scrub-still" src="img/render-angle.webp" width="1600" height="1200" alt="MintWatch at an angle, showing the machined case, the side buttons and the mint activity rings on the display" loading="lazy">
+                        <canvas class="scrub" data-seq="img/scrub/what/" data-count="60" width="1200" height="900" aria-hidden="true"></canvas>
+                    </div>
                 </div>
-                <div class="split-media animate-in delay-1">
-                    <img src="img/render-angle.webp" width="1600" height="1200" alt="MintWatch at an angle, showing the machined case, the side buttons and the mint activity rings on the display" loading="lazy">
-                </div>
-            </div>
-
-            <div class="spec-strip animate-in delay-1">
-                <div class="spec"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg><b>On device</b><span>AI, cloud optional</span></div>
-                <div class="spec"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.6-7-10a7 7 0 0 1 14 0c0 5.4-7 10-7 10z"/><circle cx="12" cy="11" r="2.5"/></svg><b>Built in</b><span>GPS</span></div>
-                <div class="spec"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="17" height="10" rx="3"/><line x1="22" y1="10" x2="22" y2="14"/></svg><b>Up to 15 days</b><span>on a charge</span></div>
-                <div class="spec"><svg viewBox="0 0 24 24"><path d="M12 3c4 5 6 8 6 11a6 6 0 0 1-12 0c0-3 2-6 6-11z"/></svg><b>15 ATM</b><span>swim and dive ready</span></div>
-                <div class="spec"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg><b>Thousands of apps</b><span>any device, nearly any app</span></div>
-                <div class="spec"><svg viewBox="0 0 24 24"><path d="M5 12a10 10 0 0 1 14 0"/><path d="M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></svg><b>Wi-Fi, 5G, satellite</b><span>calls under canopy</span></div>
             </div>
         </div>
     </section>
 
     <!-- BUILD / MATERIALS -->
-    <section class="section tint" id="build">
-        <div class="container-wide center">
-            <div class="animate-in">
-                <div class="section-label">The build</div>
-                <h2 class="section-title">Made to be worn <span class="accent">every single day</span></h2>
-                <p class="section-desc" style="margin:0 auto;">A 47 mm case in a ceramic finish that shrugs off the knocks of a normal day, on a soft 24 mm strap you can swap in seconds.</p>
+    <section class="section tint scrub-section" id="build">
+        <div class="pin">
+            <div class="scene-bg fit scrub-box" aria-hidden="true"><img class="scrub-still" src="img/view-side.webp" alt="" loading="lazy"><canvas class="scrub" data-seq="img/scrub/build/" data-count="60" width="960" height="540" aria-hidden="true"></canvas></div>
+            <div class="container-wide center">
+                <div class="animate-in">
+                    <div class="section-label">The build</div>
+                    <h2 class="section-title">Made to be worn <span class="accent">every single day</span></h2>
+                    <p class="section-desc" style="margin:0 auto;">A 47 mm case in a ceramic finish that shrugs off the knocks of a normal day, on a soft 24 mm strap you can swap in seconds.</p>
+                </div>
             </div>
         </div>
     </section>
 
 
     <!-- EVERYDAY / CONTROL -->
-    <section class="section" id="control">
-        <div class="container-wide">
-            <div class="animate-in center">
-                <div class="section-label">Everyday</div>
-                <h2 class="section-title">Your wrist runs <span class="accent">the things you already own</span></h2>
-                <p class="section-desc" style="margin:0 auto;">MintWatch does more than mirror your phone. It has its own app store, the apps run on the watch itself, and MintAI will drive them for you across the devices already in your life.</p>
+    <section class="section scrub-section" id="control">
+        <div class="pin">
+            <div class="scene-bg fit scrub-box" aria-hidden="true"><img class="scrub-still" src="img/view-three-quarter.webp" alt="" loading="lazy"><canvas class="scrub" data-seq="img/scrub/control/" data-count="60" width="960" height="540" aria-hidden="true"></canvas></div>
+            <div class="container-wide">
+                <div class="animate-in center">
+                    <div class="section-label">Everyday</div>
+                    <h2 class="section-title">Your wrist runs <span class="accent">the things you already own</span></h2>
+                    <p class="section-desc" style="margin:0 auto;">MintWatch does more than mirror your phone. It has its own app store, the apps run on the watch itself, and MintAI will drive them for you across the devices already in your life.</p>
+                </div>
+                <div class="card-grid animate-in delay-1">
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span><span class="card-title">Apps that run on the watch</span></summary>
+                        <p>MintWatch has its own app store with thousands of apps, and they run <b>on the watch</b> instead of being mirrored from your phone, so they work with your phone left at home. You can also skip the app: say <q>Hey Mint, get me an Uber from where I am to the airport</q> and MintAI books it.</p>
+                    </details>
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></span><span class="card-title">Control your computer</span></summary>
+                        <p>MintWatch can open apps, pull up projects and send files to your laptop from your wrist. Say "open my email on my Mac" and your Mac opens it.</p>
+                    </details>
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></span><span class="card-title">Run your smart home</span></summary>
+                        <p>MintWatch runs your smart home with a word or a tap. Turn on the kitchen light, lock the door, start the coffee and set the evening scene before you have put your keys down.</p>
+                    </details>
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 14V9a8 8 0 0 1 16 0v5"/><rect x="2" y="13" width="5" height="7" rx="2"/><rect x="17" y="13" width="5" height="7" rx="2"/></svg></span><span class="card-title">Handle calls and music</span></summary>
+                        <p>Take calls on MintWatch, move a song from your headphones to the kitchen speaker, and find the phone you left on the sofa, all without reaching for your pocket.</p>
+                    </details>
+                </div>
+                <p class="section-desc center" style="margin:30px auto 0;">It fits around what you already own: any phone, nearly any app, your headphones, your smart home. There is no new ecosystem to buy into.</p>
             </div>
-            <div class="card-grid animate-in delay-1">
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></div>
-                    <h4>Your apps</h4>
-                    <p>Its own app store, thousands of apps deep, and they run <b>on the watch</b> rather than as a card mirrored off your phone. Open one and use it the normal way with your phone left at home. Or do not open it at all: say <q>Hey Mint, get me an Uber from where I am to the airport</q> and MintAI books it.</p>
-                </div>
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/></svg></div>
-                    <h4>Your computer</h4>
-                    <p>Open an app, pull up a project, send a file to your laptop from your wrist. Say "open my email on my Mac" and it opens.</p>
-                </div>
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg></div>
-                    <h4>Your home</h4>
-                    <p>Kitchen light on, door locked, coffee started, the evening scene running before you have put your keys down. A word or a tap, hands free.</p>
-                </div>
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 14V9a8 8 0 0 1 16 0v5"/><rect x="2" y="13" width="5" height="7" rx="2"/><rect x="17" y="13" width="5" height="7" rx="2"/></svg></div>
-                    <h4>Your calls and music</h4>
-                    <p>Take a call, move a song from your headphones to the kitchen speaker, find the phone you left on the sofa. No digging in pockets.</p>
-                </div>
-            </div>
-            <p class="section-desc center" style="margin:30px auto 0;">It fits around what you already own: any phone, nearly any app, your headphones, your smart home. There is no new ecosystem to buy into.</p>
         </div>
     </section>
 
     <!-- HEALTH -->
-    <section class="section tint" id="health">
-        <div class="container-wide">
-            <div class="split flip">
-                <div class="animate-in">
-                    <div class="section-label">Health and fitness</div>
-                    <h2 class="section-title">A coach that <span class="accent">actually knows your body</span></h2>
-                    <p class="section-desc">Tell MintWatch what you are working toward and it builds the plan, then adjusts it around how your week is really going.</p>
-                    <ul class="check-list">
-                        <li><b>Goals, not step counts.</b> Say "bench 200 lb by spring" and it works backward: what to lift today, what to add around it, and when to ease off because your recovery says so.</li>
-                        <li><b>Show me how.</b> Not sure of your form? It plays a 3D render of the movement right there on the dial.</li>
-                        <li><b>A gentle heads up.</b> Round the clock heart rate, sleep, temperature and stress let it notice you are run down before you feel it, so you can take the easy day.</li>
-                    </ul>
-                </div>
-                <div class="split-media animate-in delay-1">
-                    <img src="img/render-face.webp" width="1600" height="1067" alt="Close up of the MintWatch dial showing the date, the time and a 62 bpm heart rate on mint coloured activity rings" loading="lazy">
+    <section class="section tint scrub-section" id="health">
+        <div class="pin">
+            <div class="container-wide">
+                <div class="split flip">
+                    <div class="animate-in">
+                        <div class="section-label">Health and fitness</div>
+                        <h2 class="section-title">A coach that <span class="accent">actually knows your body</span></h2>
+                        <p class="section-desc">Tell MintWatch what you are working toward and it builds the plan, then adjusts it around how your week is really going.</p>
+                        <ul class="check-list">
+                            <li><details><summary><b>Goals, not step counts.</b></summary><p>Say "bench 200 lb by spring" and it works backward: what to lift today, what to add around it, and when to ease off because your recovery says so.</p></details></li>
+                            <li><details><summary><b>Show me how.</b></summary><p>Not sure of your form? It plays a 3D render of the movement right there on the dial.</p></details></li>
+                            <li><details><summary><b>A gentle heads up.</b></summary><p>Round the clock heart rate, sleep, temperature and stress let it notice you are run down before you feel it, so you can take the easy day.</p></details></li>
+                        </ul>
+                    </div>
+                    <div class="split-media scrub-box animate-in delay-1">
+                        <img class="scrub-still" src="img/render-face.webp" width="1600" height="1067" alt="Close up of the MintWatch dial showing the date, the time and a 62 bpm heart rate on mint coloured activity rings" loading="lazy">
+                        <canvas class="scrub" data-seq="img/scrub/health/" data-count="48" width="1200" height="800" aria-hidden="true"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- PEACE OF MIND -->
-    <section class="section" id="safety">
-        <div class="container-wide">
-            <div class="animate-in center">
-                <div class="section-label">Peace of mind</div>
-                <h2 class="section-title">Quietly looking out for you, <span class="accent">in the background</span></h2>
-                <p class="section-desc" style="margin:0 auto;">This is the part you should never have to think about. MintWatch reads its sensors all day and stays out of the way. If a moment ever does go wrong, it already knows what to do.</p>
-            </div>
-            <div class="card-grid animate-in delay-1">
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div>
-                    <h4>It notices</h4>
-                    <p>A hard fall, a car crash, a heart rhythm that is out of character. It reads the moment as it happens and can tell a real emergency apart from an ordinary bump.</p>
+    <section class="section scrub-section" id="safety">
+        <div class="pin">
+            <div class="scene-bg fit scrub-box" aria-hidden="true"><img class="scrub-still" src="img/render-face.webp" alt="" loading="lazy"><canvas class="scrub" data-seq="img/scrub/safety/" data-count="60" width="960" height="540" aria-hidden="true"></canvas></div>
+            <div class="container-wide">
+                <div class="animate-in center">
+                    <div class="section-label">Peace of mind</div>
+                    <h2 class="section-title">Quietly looking out for you, <span class="accent">in the background</span></h2>
+                    <p class="section-desc" style="margin:0 auto;">This is the part you should never have to think about. MintWatch reads its sensors all day and stays out of the way. If a moment ever does go wrong, it already knows what to do.</p>
                 </div>
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h2l2 5-2 1a12 12 0 0 0 5 5l1-2 5 2v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/></svg></div>
-                    <h4>It speaks up for you</h4>
-                    <p>If you cannot answer, MintAI calls emergency services and talks to the dispatcher, handing over where you are and what they need to know so help arrives ready.</p>
-                </div>
-                <div class="card">
-                    <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M2 12h3M19 12h3M12 2v3M12 19v3"/></svg></div>
-                    <h4>It gets through</h4>
-                    <p>Satellite reception advanced enough to hold a link through tree cover. In the middle of the Amazon rainforest, on the ground under the canopy, you can take a call. Deep in a canyon, underground, miles from the nearest tower, it reaches help where a phone gives up.</p>
+                <div class="card-grid animate-in delay-1">
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></span><span class="card-title">Spots falls, crashes and odd heart rhythms</span></summary>
+                        <p>A hard fall, a car crash, a heart rhythm that is out of character. It reads the moment as it happens and can tell a real emergency apart from an ordinary bump.</p>
+                    </details>
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h2l2 5-2 1a12 12 0 0 0 5 5l1-2 5 2v2a2 2 0 0 1-2 2A16 16 0 0 1 4 5z"/></svg></span><span class="card-title">Calls for help when you can't</span></summary>
+                        <p>If you cannot answer, MintAI calls emergency services and talks to the dispatcher, handing over where you are and what they need to know so help arrives ready.</p>
+                    </details>
+                    <details class="card">
+                        <summary><span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="7"/><path d="M2 12h3M19 12h3M12 2v3M12 19v3"/></svg></span><span class="card-title">Reaches help by satellite</span></summary>
+                        <p>Satellite reception advanced enough to hold a link through tree cover. In the middle of the Amazon rainforest, on the ground under the canopy, you can take a call. Deep in a canyon, underground, miles from the nearest tower, it reaches help where a phone gives up.</p>
+                    </details>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- LIVING WITH IT -->
-    <section class="section tint" id="battery">
-        <div class="container-wide">
-            <div class="split">
-                <div class="animate-in">
-                    <div class="section-label">Living with it</div>
-                    <h2 class="section-title">Charge it about as often as <span class="accent">you water a plant</span></h2>
-                    <p class="section-desc">Set it down on the puck, pick it up later. No cable to line up, no nightly ritual, no watch that quits halfway through a hike.</p>
-                    <ul class="check-list">
-                        <li><b>Days, not hours.</b> About 7 days with the display always on, about 10 on automatic, and up to 15 in power saver.</li>
-                        <li><b>Adventure mode.</b> Up to 70 days with the display, the sensors and the radios shut down, for the trips where a charger is not coming with you.</li>
-                        <li><b>Set it down and go.</b> Wireless charging, so there is nothing to plug in and nothing to wear out.</li>
-                        <li><b>Wear it everywhere.</b> Rated to 15 ATM, which covers the pool, the sea and the shower without a second thought.</li>
-                    </ul>
-                </div>
-                <div class="split-media animate-in delay-1">
-                    <img src="img/render-charge.webp" width="1600" height="1067" alt="MintWatch resting beside its round wireless charging puck" loading="lazy">
+    <section class="section tint scrub-section" id="battery">
+        <div class="pin">
+            <div class="container-wide">
+                <div class="split">
+                    <div class="animate-in">
+                        <div class="section-label">Living with it</div>
+                        <h2 class="section-title">Charge it about as often as <span class="accent">you water a plant</span></h2>
+                        <p class="section-desc">Set it down on the puck, pick it up later. No cable to line up, no nightly ritual, no watch that quits halfway through a hike.</p>
+                        <ul class="check-list">
+                            <li><details><summary><b>Days, not hours.</b></summary><p>About 7 days with the display always on, about 10 on automatic, and up to 15 in power saver.</p></details></li>
+                            <li><details><summary><b>Adventure mode.</b></summary><p>Up to 70 days with the display, the sensors and the radios shut down, for the trips where a charger is not coming with you.</p></details></li>
+                            <li><details><summary><b>Set it down and go.</b></summary><p>Wireless charging, so there is nothing to plug in and nothing to wear out.</p></details></li>
+                            <li><details><summary><b>Wear it everywhere.</b></summary><p>Rated up to 10 ATM, which covers the pool, the sea and the shower without a second thought.</p></details></li>
+                        </ul>
+                    </div>
+                    <div class="split-media scrub-box animate-in delay-1">
+                        <img class="scrub-still" src="img/render-charge.webp" width="1600" height="1067" alt="MintWatch resting beside its round wireless charging puck" loading="lazy">
+                        <canvas class="scrub" data-seq="img/scrub/battery/" data-count="60" width="1200" height="800" aria-hidden="true"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- PRIVACY -->
-    <section class="section" id="privacy">
-        <div class="container">
-            <div class="promise animate-in">
-                <div class="lock"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
-                <div class="section-label">Privacy</div>
-                <h2 class="section-title">Your data stays <span class="accent">on your wrist</span></h2>
-                <p class="section-desc" style="margin:0 auto;">MintAI runs on the watch, so your health, your voice and your habits never have to leave it. Nothing is sold. Nothing is shared. Cloud features exist, and they are always yours to switch on or leave off.</p>
+    <section class="section scrub-section" id="privacy">
+        <div class="pin">
+            <div class="scene-bg scrub-box" aria-hidden="true"><img class="scrub-still" src="img/case.jpg" alt="" loading="lazy"><canvas class="scrub" data-seq="img/scrub/privacy/" data-count="60" width="960" height="540" aria-hidden="true"></canvas></div>
+            <div class="container">
+                <div class="promise animate-in">
+                    <div class="lock"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></div>
+                    <div class="section-label">Privacy</div>
+                    <h2 class="section-title">Your data stays <span class="accent">on your wrist</span></h2>
+                    <p class="section-desc" style="margin:0 auto;">MintAI runs on the watch, so your health, your voice and your habits never have to leave it. Nothing is sold. Nothing is shared. Cloud features exist, and they are always yours to switch on or leave off.</p>
+                </div>
             </div>
         </div>
     </section>
@@ -1011,42 +1167,46 @@
     -->
 
     <!-- WAITLIST -->
-    <section class="section tint" id="newsletter">
-        <div class="container center">
-            <div class="animate-in">
-                <div class="section-label">Waitlist</div>
-                <h2 class="section-title">Sign up and get <span class="accent">20% off</span> at pre-release</h2>
-                <p class="section-desc" style="margin:0 auto;">MintWatch is not on sale yet. Join the newsletter and you will hear the moment it is, before we announce it anywhere else, with 20% off your pre-release order.</p>
-            </div>
-            <div class="form-card animate-in delay-1">
-                <p>Sign up for the newsletter and get 20% off at pre-release, plus launch news and pricing first. No spam, one click to unsubscribe.</p>
-                <!--
-                    MailerLite subscribe form (account 2477841 / form 191634247631504476).
-                    Posts to a hidden iframe so the visitor stays on the page; MailerLite stores
-                    the subscriber and handles unsubscribe + mailing address in sent emails.
-                -->
-                <form id="newsletterForm"
-                      action="https://assets.mailerlite.com/jsonp/2477841/forms/191634247631504476/subscribe"
-                      method="post"
-                      target="ml-hidden-iframe">
-                    <div class="form-group">
-                        <label for="nlEmail">Email</label>
-                        <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" autocomplete="email" required>
-                    </div>
-                    <!-- simple honeypot to deter bots -->
-                    <input type="text" name="b_honeypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
-                    <input type="hidden" name="ml-submit" value="1">
-                    <input type="hidden" name="anticsrf" value="true">
-                    <button type="submit" class="submit-btn">Join the waitlist</button>
-                    <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
-                </form>
-                <iframe name="ml-hidden-iframe" style="display:none;" aria-hidden="true" title="newsletter"></iframe>
+    <section class="section tint scrub-section" id="newsletter">
+        <div class="pin">
+            <div class="scene-bg fit scrub-box" aria-hidden="true"><img class="scrub-still" src="img/view-side-cut.webp" alt="" loading="lazy"><canvas class="scrub" data-seq="img/scrub/newsletter/" data-count="48" width="960" height="540" aria-hidden="true"></canvas></div>
+            <div class="container center">
+                <div class="animate-in">
+                    <div class="section-label">Waitlist</div>
+                    <h2 class="section-title">Sign up and get <span class="accent">20% off</span> at pre-release</h2>
+                    <p class="section-desc" style="margin:0 auto;">MintWatch is not on sale yet. Join the newsletter and you will hear the moment it is, before we announce it anywhere else, with 20% off your pre-release order.</p>
+                </div>
+                <div class="form-card animate-in delay-1">
+                    <p>Sign up for the newsletter and get 20% off at pre-release, plus launch news and pricing first. No spam, one click to unsubscribe.</p>
+                    <!--
+                        MailerLite subscribe form (account 2477841 / form 191634247631504476).
+                        Posts to a hidden iframe so the visitor stays on the page; MailerLite stores
+                        the subscriber and handles unsubscribe + mailing address in sent emails.
+                    -->
+                    <form id="newsletterForm"
+                          action="https://assets.mailerlite.com/jsonp/2477841/forms/191634247631504476/subscribe"
+                          method="post"
+                          target="ml-hidden-iframe">
+                        <div class="form-group">
+                            <label for="nlEmail">Email</label>
+                            <input type="email" id="nlEmail" name="fields[email]" placeholder="you@example.com" autocomplete="email" required>
+                        </div>
+                        <!-- simple honeypot to deter bots -->
+                        <input type="text" name="b_honeypot" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px;" aria-hidden="true">
+                        <input type="hidden" name="ml-submit" value="1">
+                        <input type="hidden" name="anticsrf" value="true">
+                        <button type="submit" class="submit-btn">Join the waitlist</button>
+                        <p id="newsletterMsg" style="display:none;margin-top:16px;font-size:14px;color:var(--accent);"></p>
+                    </form>
+                    <iframe name="ml-hidden-iframe" style="display:none;" aria-hidden="true" title="newsletter"></iframe>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="section tint" id="contact">
+    <section class="section tint" id="contact" data-push>
+        <div class="scene-bg" aria-hidden="true"><img src="img/board.jpg" alt="" loading="lazy"></div>
         <div class="container center">
             <div class="animate-in">
                 <div class="section-label">Say hello</div>
@@ -1075,8 +1235,9 @@
         const themeMeta = document.getElementById('themeColor');
         function paintMeta() {
             if (!themeMeta) return;
-            const dark = document.documentElement.getAttribute('data-theme') === 'dark';
-            themeMeta.setAttribute('content', dark ? '#0F1512' : '#F7FAF6');
+            // The first screen is the black film in both themes, so the browser
+            // chrome above it matches that rather than the page colour below.
+            themeMeta.setAttribute('content', '#000000');
         }
         paintMeta();
         if (themeBtn) {
@@ -1103,11 +1264,133 @@
         // the page has moved. Set on load too, in case the browser restores a scroll
         // position on refresh.
         const navEl = document.querySelector('nav');
+        const heroEl = document.getElementById('home');
         function paintNav() {
-            if (navEl) navEl.classList.toggle('scrolled', window.scrollY > 24);
+            if (!navEl) return;
+            navEl.classList.toggle('scrolled', window.scrollY > 24);
+            // While any of the black hero is still under the bar, keep it dark.
+            navEl.classList.toggle('on-hero',
+                !!heroEl && heroEl.getBoundingClientRect().bottom > navEl.offsetHeight);
         }
         paintNav();
         window.addEventListener('scroll', paintNav, { passive: true });
+        window.addEventListener('resize', paintNav);
+
+        // Scenes: each section starts its slow push-in when it comes on screen.
+        const sceneObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    sceneObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.section').forEach((sec) => sceneObserver.observe(sec));
+
+        // Scroll-scrubbed pictures: a section's canvas draws the frame that matches
+        // how far you are through the section. Pinned sections run from where they
+        // pin to where they let go; unpinned ones from entering to settling in.
+        (function () {
+            const reduce = document.documentElement.getAttribute('data-motion') !== 'on' &&
+                window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const pad = (i) => String(i).padStart(3, '0');
+            const scrubs = Array.from(document.querySelectorAll('canvas.scrub')).map((cv) => ({
+                cv, ctx: cv.getContext('2d'), sec: cv.closest('.section'), box: cv.parentElement,
+                base: cv.dataset.seq, n: parseInt(cv.dataset.count, 10), frames: [], started: false, drawn: null,
+            }));
+            const pushers = Array.from(document.querySelectorAll('.section[data-push]'));
+            if (!scrubs.length && !pushers.length) return;
+
+            function fetchFrames(s) {
+                if (s.started) return;
+                s.started = true;
+                // Ends first, then coarse to fine, so scrubbing works before the
+                // whole sequence has arrived.
+                const order = [0, s.n - 1];
+                for (let step = 8; step >= 1; step = step / 2) {
+                    for (let i = 0; i < s.n; i += step) if (order.indexOf(i) < 0) order.push(i);
+                }
+                order.forEach((i) => {
+                    const im = new Image();
+                    im.decoding = 'async';
+                    im.onload = () => {
+                        s.frames[i] = im;
+                        if (!s.box.classList.contains('scrub-ready') && s.frames[0] && s.frames[s.n - 1]) {
+                            s.box.classList.add('scrub-ready');
+                        }
+                        request();
+                    };
+                    im.src = s.base + 'f' + pad(i) + '.webp';
+                });
+            }
+
+            function pinned(sec) {
+                return sec.classList.contains('scrub-section') && !sec.classList.contains('no-pin');
+            }
+
+            function progress(sec) {
+                const r = sec.getBoundingClientRect();
+                const vh = window.innerHeight;
+                if (pinned(sec)) {
+                    const run = r.height - vh;
+                    return run > 0 ? Math.min(1, Math.max(0, -r.top / run)) : 1;
+                }
+                return Math.min(1, Math.max(0, (vh * 0.95 - r.top) / (vh * 0.8)));
+            }
+
+            function nearest(s, i) {
+                if (s.frames[i]) return s.frames[i];
+                for (let d = 1; d < s.n; d++) {
+                    if (s.frames[i - d]) return s.frames[i - d];
+                    if (s.frames[i + d]) return s.frames[i + d];
+                }
+                return null;
+            }
+
+            let ticking = false;
+            function draw() {
+                ticking = false;
+                const vh = window.innerHeight;
+                scrubs.forEach((s) => {
+                    const r = s.sec.getBoundingClientRect();
+                    if (r.bottom < -vh || r.top > vh * 2.5) return;
+                    fetchFrames(s);
+                    const i = Math.round((reduce ? 1 : progress(s.sec)) * (s.n - 1));
+                    const im = nearest(s, i);
+                    if (!im || im === s.drawn) return;
+                    s.ctx.drawImage(im, 0, 0, s.cv.width, s.cv.height);
+                    s.drawn = im;
+                });
+                pushers.forEach((sec) => sec.style.setProperty('--p', reduce ? 1 : progress(sec).toFixed(3)));
+            }
+            function request() {
+                if (!ticking) { ticking = true; requestAnimationFrame(draw); }
+            }
+
+            // A pin needs the copy to fit the screen; otherwise it scrolls. Measured
+            // off the copy, not the pin: the backdrop is scaled past the pin's edges
+            // on purpose and would always read as overflow.
+            function fitPins() {
+                document.querySelectorAll('.scrub-section').forEach((sec) => {
+                    sec.classList.remove('no-pin');
+                    const pin = sec.querySelector('.pin');
+                    const copy = pin && pin.querySelector(':scope > .container, :scope > .container-wide');
+                    let need = 0;
+                    if (copy) {
+                        const cs = getComputedStyle(pin);
+                        need = copy.offsetHeight + parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
+                    }
+                    if (reduce || window.innerWidth <= 760 || need > window.innerHeight + 2) {
+                        sec.classList.add('no-pin');
+                    }
+                });
+            }
+            fitPins();
+            window.addEventListener('scroll', request, { passive: true });
+            window.addEventListener('resize', () => { fitPins(); request(); });
+            window.addEventListener('load', () => { fitPins(); request(); });
+            request();
+        })();
 
         // Scroll-in animations
         const observer = new IntersectionObserver((entries) => {
