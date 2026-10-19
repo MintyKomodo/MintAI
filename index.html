@@ -1289,7 +1289,7 @@
 
         // Scroll-scrubbed pictures: a section's canvas draws the frame that matches
         // how far you are through the section. Pinned sections run from where they
-        // pin to where they let go; unpinned ones from entering to settling in.
+        // pin to where they let go; unpinned ones follow the picture itself.
         (function () {
             const reduce = document.documentElement.getAttribute('data-motion') !== 'on' &&
                 window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1338,6 +1338,17 @@
                 return Math.min(1, Math.max(0, (vh * 0.95 - r.top) / (vh * 0.8)));
             }
 
+            // Unpinned (always on phones), a scrub runs off its own picture, not the
+            // section: on a phone the picture stacks under the copy and would be
+            // mostly played out before it came on screen. It starts as the picture
+            // rises past 90% of the screen and lands as its middle reaches 40%.
+            function scrubProgress(s) {
+                if (pinned(s.sec)) return progress(s.sec);
+                const r = s.box.getBoundingClientRect();
+                const vh = window.innerHeight;
+                return Math.min(1, Math.max(0, (vh * 0.9 - r.top) / (vh * 0.5 + r.height / 2)));
+            }
+
             function nearest(s, i) {
                 if (s.frames[i]) return s.frames[i];
                 for (let d = 1; d < s.n; d++) {
@@ -1355,7 +1366,7 @@
                     const r = s.sec.getBoundingClientRect();
                     if (r.bottom < -vh || r.top > vh * 2.5) return;
                     fetchFrames(s);
-                    const i = Math.round((reduce ? 1 : progress(s.sec)) * (s.n - 1));
+                    const i = Math.round((reduce ? 1 : scrubProgress(s)) * (s.n - 1));
                     const im = nearest(s, i);
                     if (!im || im === s.drawn) return;
                     s.ctx.drawImage(im, 0, 0, s.cv.width, s.cv.height);
